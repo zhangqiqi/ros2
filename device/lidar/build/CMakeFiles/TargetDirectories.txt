@@ -1,3 +1,0 @@
-G:/myGitDir/ros2/device/lidar/build/CMakeFiles/N10_test.dir
-G:/myGitDir/ros2/device/lidar/build/CMakeFiles/edit_cache.dir
-G:/myGitDir/ros2/device/lidar/build/CMakeFiles/rebuild_cache.dir
