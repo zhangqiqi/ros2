@@ -18,7 +18,7 @@ extern TIM_HandleTypeDef htim3;
 extern TIM_HandleTypeDef htim4;
 extern TIM_HandleTypeDef htim6;
 
-extern UART_HandleTypeDef huart1;
+extern UART_HandleTypeDef huart5;
 extern UART_HandleTypeDef huart2;
 
 extern osSemaphoreId init_complete;
