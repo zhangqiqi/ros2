@@ -1,0 +1,15 @@
+轮子	6.5cm	65mm
+轮间距	17cm	170mm
+
+
+
+v  = 转速/转速比 * 2 * pi * r     mm/min
+
+
+
+V m/s = n/75 *2* pi *r 
+
+
+speed 0.0021400 m/s    turn 0.010
+
+v m/s = v*1000 * 60 mm/s
