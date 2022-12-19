@@ -8,20 +8,26 @@
 
 char prtBuf[128];
 
+#if 0
 #define LOG_UART_SEND(src, len)do\
 							{\
 								if(osKernelRunning() > 0)\
 								{\
-									HAL_UART_Transmit_DMA(&huart1, (uint8_t *)src, len);\
+									HAL_UART_Transmit_DMA(&huart5, (uint8_t *)src, len);\
 									osSemaphoreWait(semlog_tx_cpt, 20);\
 								}\
 								else\
 								{\
-									HAL_UART_Transmit(&huart1, (uint8_t *)src, len, 0xFFFF);\
+									HAL_UART_Transmit(&huart5, (uint8_t *)src, len, 0xFFFF);\
 								}\
 							}\
 							while(0)
-
+#endif
+#define LOG_UART_SEND(src, len)do\
+							{\
+								HAL_UART_Transmit(&huart5, (uint8_t *)src, len, 0xFFFF);\
+							}\
+							while(0)
 
 static void send_log_info(char *pFormat, int new_line, va_list args)
 {

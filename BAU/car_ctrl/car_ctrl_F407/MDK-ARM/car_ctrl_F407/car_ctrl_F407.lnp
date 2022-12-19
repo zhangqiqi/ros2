@@ -1,4 +1,4 @@
---cpu=Cortex-M4.fp
+--cpu Cortex-M4.fp
 "car_ctrl_f407\port.o"
 "car_ctrl_f407\croutine.o"
 "car_ctrl_f407\event_groups.o"
