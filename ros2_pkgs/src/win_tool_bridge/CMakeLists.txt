@@ -10,7 +10,11 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
-add_executable(win_tool_bridge src/win_tool_bridge.cpp)
+
+include_directories(${COMMON_LIB_PATH}/include/)
+link_directories(${COMMON_LIB_PATH}/lib/)
+
+add_executable(win_tool_bridge src/win_tool_bridge.cpp ${CJSON_SRC})
 target_include_directories(win_tool_bridge PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
@@ -20,6 +24,8 @@ ament_target_dependencies(
   "rclcpp"
   "std_msgs"
 )
+
+target_link_libraries(win_tool_bridge cJSON)
 
 install(TARGETS win_tool_bridge
   DESTINATION lib/${PROJECT_NAME})
