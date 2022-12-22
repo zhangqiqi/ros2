@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets SerialPort)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -20,8 +20,8 @@ set(PROJECT_SOURCES
         mainwindow.h
 )
 
-include_directories(../../libs/include)
-link_directories(../../libs/lib)
+
+message("${PROJECT_SOURCES}")
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(device_tools
@@ -41,12 +41,12 @@ else()
 #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
         add_executable(device_tools
-            ${PROJECT_SOURCES}
+	    ${PROJECT_SOURCES}
         )
     endif()
 endif()
 
-target_link_libraries(device_tools PRIVATE Qt${QT_VERSION_MAJOR}::Widgets wheeltec_lidar)
+target_link_libraries(device_tools PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::SerialPort)
 
 set_target_properties(device_tools PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
