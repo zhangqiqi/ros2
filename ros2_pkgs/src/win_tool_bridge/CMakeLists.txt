@@ -14,7 +14,7 @@ find_package(std_msgs REQUIRED)
 include_directories(${COMMON_LIB_PATH}/include/)
 link_directories(${COMMON_LIB_PATH}/lib/)
 
-add_executable(win_tool_bridge src/win_tool_bridge.cpp ${CJSON_SRC})
+add_executable(win_tool_bridge src/win_tool_bridge.cpp)
 target_include_directories(win_tool_bridge PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
@@ -25,7 +25,7 @@ ament_target_dependencies(
   "std_msgs"
 )
 
-target_link_libraries(win_tool_bridge cJSON)
+target_link_libraries(win_tool_bridge cJSON event)
 
 install(TARGETS win_tool_bridge
   DESTINATION lib/${PROJECT_NAME})
