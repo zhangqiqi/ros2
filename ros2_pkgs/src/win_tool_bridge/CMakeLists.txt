@@ -12,9 +12,13 @@ find_package(std_msgs REQUIRED)
 
 
 include_directories(${COMMON_LIB_PATH}/include/)
+include_directories(include/)
 link_directories(${COMMON_LIB_PATH}/lib/)
 
-add_executable(win_tool_bridge src/win_tool_bridge.cpp)
+
+aux_source_directory(./src WTB_SRCS)
+
+add_executable(win_tool_bridge ${WTB_SRCS})
 target_include_directories(win_tool_bridge PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
