@@ -6,6 +6,8 @@
 
 #include <thread>
 
+#include "wtb_protocol.h"
+
 
 class WtbServer : public std::thread
 {
@@ -13,7 +15,7 @@ public:
     WtbServer(uint16_t port);
 
 private:
-    void run();
+    void run(uint16_t port);
 };
 
 

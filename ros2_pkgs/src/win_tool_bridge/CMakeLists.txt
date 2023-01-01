@@ -29,7 +29,7 @@ ament_target_dependencies(
   "std_msgs"
 )
 
-target_link_libraries(win_tool_bridge cJSON event)
+target_link_libraries(win_tool_bridge cJSON event wtb_protocol)
 
 install(TARGETS win_tool_bridge
   DESTINATION lib/${PROJECT_NAME})

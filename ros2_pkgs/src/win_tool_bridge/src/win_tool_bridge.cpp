@@ -31,7 +31,7 @@ private:
 
 int main(int argc, char ** argv)
 {
-    WtbServer server{9000};
+    WtbServer server{WTB_PORT};
 
     rclcpp::init(argc, argv);
     rclcpp::spin(std::make_shared<WinToolBridge>());
