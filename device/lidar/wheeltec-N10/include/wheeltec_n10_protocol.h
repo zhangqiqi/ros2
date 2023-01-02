@@ -29,7 +29,7 @@ struct WHEELTEC_N10_FRAME {
 	uint8_t speed_l;      /**< 转速信息低字节 */
 	uint8_t start_angle_h;      /**< 帧数据起始角度高字节 */
 	uint8_t start_angle_l;      /**< 帧数据起始角度低字节 */
-	struct WHEELTEC_N10_POINT points[18];      /**< 根据协议文档，每帧数据包含18个点信息 */
+    struct WHEELTEC_N10_POINT points[16];      /**< 根据协议文档，每帧数据包含16个点信息 */
 	uint8_t stop_angle_h;      /**< 帧数据结束角度高字节 */
 	uint8_t stop_angle_l;      /**< 帧数据结束角度低字节 */
 	uint8_t crc;      /**< 从帧头开始到crc前一个字节的和校验 */

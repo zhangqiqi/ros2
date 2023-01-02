@@ -4,3 +4,4 @@ project(common VERSION 1.0)
 
 add_subdirectory(cJSON/)
 
+add_subdirectory(wtb_protocol/)

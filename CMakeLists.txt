@@ -6,6 +6,7 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/libs/)
 
 add_subdirectory(common/)
 add_subdirectory(device/)
+add_subdirectory(opensource/)
 
 add_custom_target(
     ros2_pkgs

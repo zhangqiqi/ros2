@@ -3,12 +3,16 @@
 #include <functional>
 #include <memory>
 #include <string>
+#include <thread>
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
+#include "wtb_server.h"
+
 
 using namespace std::chrono_literals;
+
 
 class WinToolBridge : public rclcpp::Node
 {
@@ -27,6 +31,8 @@ private:
 
 int main(int argc, char ** argv)
 {
+    WtbServer server{WTB_PORT};
+
     rclcpp::init(argc, argv);
     rclcpp::spin(std::make_shared<WinToolBridge>());
     rclcpp::shutdown();
