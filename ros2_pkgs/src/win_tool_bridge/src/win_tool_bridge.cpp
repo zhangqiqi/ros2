@@ -22,7 +22,7 @@ public:
     }
 private:
     void timer_cb() {
-        RCLCPP_INFO(this->get_logger(), "timer start...");
+        // RCLCPP_INFO(this->get_logger(), "timer start...");
     }
 
     rclcpp::TimerBase::SharedPtr timer;

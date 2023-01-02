@@ -34,7 +34,6 @@ extern "C" {
 static void
 conn_writecb(struct bufferevent *bev, void *user_data)
 {
-    printf("%s %d\r\n", __func__, __LINE__);
 	struct evbuffer *output = bufferevent_get_output(bev);
 	if (evbuffer_get_length(output) == 0) {
 		// printf("flushed answer\n");
@@ -51,7 +50,6 @@ conn_readcb(struct bufferevent *bev, void *user_data)
     uint8_t buffer[1024] = {0};
     uint32_t size = 0;
 
-    printf("%s %d\r\n", __func__, __LINE__);
     while ((size = evbuffer_copyout(read_buffer, buffer, sizeof(buffer))) > 0)
     {
         struct WTB_PACKAGE *package = NULL;
@@ -59,7 +57,9 @@ conn_readcb(struct bufferevent *bev, void *user_data)
 
         if (NULL != package)
         {
-            printf("wtb server receive new msg, type: %d\r\n");
+			printf("wtb receive mgs head: %x, len: %d, type: %d, check: %d\r\n",
+				package->magic, package->payload_len, package->payload_type, package->payload_check
+			);
         }
 
         printf("wtb server drain bytes size: %d\r\n", size);
@@ -71,7 +71,6 @@ conn_readcb(struct bufferevent *bev, void *user_data)
 static void
 conn_eventcb(struct bufferevent *bev, short events, void *user_data)
 {
-    printf("%s %d\r\n", __func__, __LINE__);
 	if (events & BEV_EVENT_EOF) {
 		printf("Connection closed.\n");
 	} else if (events & BEV_EVENT_ERROR) {

@@ -43,7 +43,7 @@ uint32_t wtb_package_unpack(uint8_t *in_buffer, uint32_t in_size, struct WTB_PAC
             continue;
         }
 
-        ret_size += sizeof(struct WTB_PACKAGE) + package->payload_check;
+        ret_size += sizeof(struct WTB_PACKAGE) + package->payload_len;
         *out_package = package;
         break;
     }

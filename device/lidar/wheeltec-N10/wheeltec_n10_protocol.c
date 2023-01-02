@@ -1,6 +1,7 @@
 #include "wheeltec_n10_protocol.h"
 
 #include <stdint.h>
+#include <stddef.h>
 
 /**
  * @brief n10帧数据和校验算法
