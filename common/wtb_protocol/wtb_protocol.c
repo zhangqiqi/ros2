@@ -54,5 +54,18 @@ uint32_t wtb_package_unpack(uint8_t *in_buffer, uint32_t in_size, struct WTB_PAC
 
 uint32_t wtb_package_pack(enum WTB_DATA_TYPE type, uint8_t *in_buffer, uint32_t in_size, uint8_t *out_buffer, uint32_t out_size)
 {
+	if (out_size < (in_size + sizeof(struct WTB_PACKAGE)))
+	{
+		return 0;
+	}
 
+	struct WTB_PACKAGE *package = (struct WTB_PACKAGE *)out_buffer;
+
+	package->magic = WTB_MAGIC;
+	package->payload_len = in_size;
+	package->payload_type = type;
+	package->payload_check = wtb_checksum(in_buffer, in_size);
+	memcpy(package->payload, in_buffer, in_size);
+
+	return in_size + sizeof(struct WTB_PACKAGE);
 }
