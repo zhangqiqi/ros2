@@ -1,6 +1,6 @@
-#include "device_defs.h"
 #include "wheeltec_n10_protocol.h"
 
+#include <stdint.h>
 
 /**
  * @brief n10帧数据和校验算法
@@ -30,7 +30,6 @@ static uint8_t wheeltec_n10_checksum(uint8_t *data, int32_t len)
  */
 int32_t wheeltec_n10_frame_unpack(uint8_t *data, int32_t len, struct WHEELTEC_N10_FRAME **frame)
 {
-	int32_t read_len = 0;
 	struct WHEELTEC_N10_FRAME *_frame = NULL;
 	*frame = NULL;
 
@@ -45,7 +44,7 @@ int32_t wheeltec_n10_frame_unpack(uint8_t *data, int32_t len, struct WHEELTEC_N1
 
 		if ((len - i) < sizeof(struct WHEELTEC_N10_FRAME))
 		{
-			continue;
+			break;
 		}
 
 		if (wheeltec_n10_checksum(data + i, sizeof(struct WHEELTEC_N10_FRAME) - 1) != _frame->crc)
@@ -54,9 +53,9 @@ int32_t wheeltec_n10_frame_unpack(uint8_t *data, int32_t len, struct WHEELTEC_N1
 		}
 
 		*frame = _frame;
-		read_len = sizeof(struct WHEELTEC_N10_FRAME) + i;
+		i = i + sizeof(struct WHEELTEC_N10_FRAME);
 		break;
 	}
 
-	return read_len;
+	return i;
 }

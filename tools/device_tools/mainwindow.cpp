@@ -1,29 +1,19 @@
 #include "mainwindow.h"
+#include "n10lidarbridgewidget.h"
 
-#include <QDebug>
-
+#include <QTabWidget>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), sp(new QSerialPort)
+    : QMainWindow(parent)
 {
-    sp->setPortName("COM8");
-    sp->setBaudRate(230400);
+    QTabWidget *tabwidget = new QTabWidget(this);
+    this->setCentralWidget(tabwidget);
 
-    connect(sp, SIGNAL(readyRead()), this, SLOT(slot_read_serialport_data()));
-
-    sp->open(QSerialPort::ReadOnly);
+    N10LidarBridgeWidget *n10bridge_widget = new N10LidarBridgeWidget(tabwidget);
+    tabwidget->addTab(n10bridge_widget, "N10 Lidar Bridge");
 }
 
 MainWindow::~MainWindow()
 {
 }
 
-void MainWindow::slot_read_serialport_data()
-{
-    QByteArray data;
-    while (this->sp->bytesAvailable()) {
-        data += this->sp->readAll();
-    }
-
-    qDebug() << "read bytes num: " << data.length();
-}
