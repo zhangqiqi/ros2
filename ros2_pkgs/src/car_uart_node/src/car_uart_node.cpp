@@ -54,9 +54,10 @@ public:
     CarUartNode() : Node("car_uart_node") {
       subscription_ = this->create_subscription<geometry_msgs::Twist>(
       "cmd_vel", 10, std::bind(&CarUartNode::topic_callback, this, _1));
-      publisher_ = this->create_publisher<tf2_ros::StaticTransformBroadcaster>("odom", 10);
+      tf_publisher_ = std::make_shared<tf2_ros::StaticTransformBroadcaster>(this);
       timer_ = this->create_wall_timer(
         10ms, std::bind(&CarUartNode::timer_callback, this));
+      odom_publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
     }
 
 private:
@@ -91,6 +92,7 @@ private:
       // todo write uart to motor
 //      my_serial.write(speed_data,10);
     }
+
     void timer_callback()
     {
       string rec_buffer;  //串口数据接收变量
@@ -135,74 +137,32 @@ private:
         t.transform.rotation.w = q.w();
 
         tf_publisher_->sendTransform(t);
-      }
 
-      static tf::TransformBroadcaster odom_broadcaster;//定义tf对象
-      geometry_msgs::TransformStamped odom_trans;//创建一个tf发布需要使用的TransformStamped类型消息
-      nav_msgs::Odometry odom;//定义里程计对象
-      geometry_msgs::Quaternion odom_quat; //四元数变量
-      string rec_buffer;  //串口数据接收变量
-//      rec_buffer =my_serial.readline(25,"\n");    //获取串口发送来的数据
-//      const char *receive_data=rec_buffer.data(); //保存串口发送来的数据
-// todo get msg from uart car
-      const char *receive_data=rec_buffer.data(); //保存串口发送来的数据
-      if(rec_buffer.length()==21) //串口接收的数据长度正确就处理并发布里程计数据消息
-      {
-          for(int i=0;i<4;i++)//提取X，Y坐标，方向，线速度，角速度
-          {
-              position_x.data[i]=receive_data[i];
-              position_y.data[i]=receive_data[i+4];
-              oriention.data[i]=receive_data[i+8];
-              vel_linear.data[i]=receive_data[i+12];
-              vel_angular.data[i]=receive_data[i+16];
-          }
-          //将X，Y坐标，线速度缩小1000倍
-          position_x.d/=1000; //m
-          position_y.d/=1000; //m
-          vel_linear.d/=1000; //m/s
-
-          //里程计的偏航角需要转换成四元数才能发布
-          odom_quat = tf::createQuaternionMsgFromYaw(oriention.d);//将偏航角转换成四元数
-
-          //载入坐标（tf）变换时间戳
-          odom_trans.header.stamp = ros::Time::now();
-          //发布坐标变换的父子坐标系
-          odom_trans.header.frame_id = "odom";     
-          odom_trans.child_frame_id = "base_footprint";       
-          //tf位置数据：x,y,z,方向
-          odom_trans.transform.translation.x = position_x.d;
-          odom_trans.transform.translation.y = position_y.d;
-          odom_trans.transform.translation.z = 0.0;
-          odom_trans.transform.rotation = odom_quat;        
-          //发布tf坐标变化
-          odom_broadcaster.sendTransform(odom_trans);
-
-          //载入里程计时间戳
-          odom.header.stamp = ros::Time::now(); 
-          //里程计的父子坐标系
-          odom.header.frame_id = "odom";
-          odom.child_frame_id = "base_footprint";       
-          //里程计位置数据：x,y,z,方向
-          odom.pose.pose.position.x = position_x.d;     
-          odom.pose.pose.position.y = position_y.d;
-          odom.pose.pose.position.z = 0.0;
-          odom.pose.pose.orientation = odom_quat;       
-          //载入线速度和角速度
-          odom.twist.twist.linear.x = vel_linear.d;
-          //odom.twist.twist.linear.y = odom_vy;
-          odom.twist.twist.angular.z = vel_angular.d;    
-          //发布里程计
-          odom_pub.publish(odom);
-
-
+        nav_msgs::Odometry odom;//定义里程计对象
+        //载入里程计时间戳
+        odom.header.stamp = this->get_clock()->now();
+        //里程计的父子坐标系
+        odom.header.frame_id = "odom";
+        odom.child_frame_id = "base_footprint";       
+        //里程计位置数据：x,y,z,方向
+        odom.pose.pose.position.x = position_x.d;     
+        odom.pose.pose.position.y = position_y.d;
+        odom.pose.pose.position.z = 0.0;
+        odom.pose.pose.orientation = odom_quat;       
+        //载入线速度和角速度
+        odom.twist.twist.linear.x = vel_linear.d;
+        //odom.twist.twist.linear.y = odom_vy;
+        odom.twist.twist.angular.z = vel_angular.d;    
+        //发布里程计
         RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", "odom");
-        publisher_->publish(odom);
+        odom_publisher_->publish(odom);
       }
     }
 
     rclcpp::Subscription<geometry_msgs::Twist>::SharedPtr subscription_;
     rclcpp::TimerBase::SharedPtr timer_;
-    rclcpp::Publisher<nav_msgs::Odometry>::SharedPtr publisher_;
+    std::shared_ptr<tf2_ros::StaticTransformBroadcaster> tf_publisher_;
+    rclcpp::Publisher<nav_msgs::Odometry>::SharedPtr odom_publisher_;
 };
 
 
