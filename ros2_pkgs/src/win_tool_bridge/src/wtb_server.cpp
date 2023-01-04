@@ -55,6 +55,10 @@ conn_readcb(struct bufferevent *bev, void *user_data)
         struct WTB_PACKAGE *package = NULL;
         size = wtb_package_unpack(buffer, size, &package);
 
+		if (0 == size)
+		{
+			break;
+		}
         if (NULL != package)
         {
 			printf("wtb receive mgs head: %x, len: %d, type: %d, check: %d\r\n",
