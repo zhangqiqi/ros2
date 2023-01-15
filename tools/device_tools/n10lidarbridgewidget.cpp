@@ -1,5 +1,6 @@
 #include "n10lidarbridgewidget.h"
 #include "wheeltec_n10_protocol.h"
+#include "wtb_protocol.h"
 
 #include <QSerialPortInfo>
 #include <QVBoxLayout>
@@ -128,7 +129,7 @@ void N10LidarBridgeWidget::slot_sp_data_recv()
         sp_raw_data += this->sp->readAll();
     }
 
-    while (sp_raw_data.length() > 0)
+    while (sp_raw_data.length() >= sizeof(struct WHEELTEC_N10_FRAME))
     {
         struct WHEELTEC_N10_FRAME *frame = nullptr;
         int32_t processd_size = wheeltec_n10_frame_unpack((uint8_t *)sp_raw_data.data(), sp_raw_data.length(), &frame);
@@ -136,15 +137,28 @@ void N10LidarBridgeWidget::slot_sp_data_recv()
         qDebug() << "ready read serialport bytes: " << sp_raw_data.length()
                 << "processed size: " << processd_size;
 
+        if (processd_size <= 0)
+        {
+            break;
+        }
 
         if (nullptr != frame)
         {
             qDebug() << "speed: " << (frame->speed_h << 8) + frame->speed_l
                     << "start angle: " << (frame->start_angle_h << 8) + frame->start_angle_l
                     << "stop angle: " << (frame->stop_angle_h << 8) + frame->stop_angle_l;
+
+            uint8_t wtb_buffer[1024] = {0};
+            uint8_t wtb_write_size = wtb_package_pack(LIDAR_WHEELTEC_N10_DATA_UPLOAD, (uint8_t *)frame, sizeof(struct WHEELTEC_N10_FRAME), wtb_buffer, sizeof(wtb_buffer));
+
+            if (nullptr != this->socket && this->socket->isOpen())
+            {
+                this->socket->write((char *)wtb_buffer, wtb_write_size);
+            }
         }
 
         sp_raw_data.remove(0, processd_size);
+
     }
 
 }

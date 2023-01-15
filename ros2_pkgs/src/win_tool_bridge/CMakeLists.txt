@@ -9,6 +9,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 
 include_directories(${COMMON_LIB_PATH}/include/)
@@ -17,6 +18,7 @@ link_directories(${COMMON_LIB_PATH}/lib/)
 
 
 aux_source_directory(./src WTB_SRCS)
+
 
 add_executable(win_tool_bridge ${WTB_SRCS})
 target_include_directories(win_tool_bridge PUBLIC
@@ -27,6 +29,7 @@ ament_target_dependencies(
   win_tool_bridge
   "rclcpp"
   "std_msgs"
+  "sensor_msgs"
 )
 
 target_link_libraries(win_tool_bridge cJSON event wtb_protocol)

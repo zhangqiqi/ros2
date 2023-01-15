@@ -1,6 +1,7 @@
 {
     "files.associations": {
-        "PID.C": "cpp"
-    },
+		"PID.C": "cpp",
+		"chrono": "cpp"
+	},
     "ros.distro": "humble"
 }
