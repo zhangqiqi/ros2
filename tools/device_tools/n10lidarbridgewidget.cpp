@@ -35,7 +35,7 @@ N10LidarBridgeWidget::N10LidarBridgeWidget(QWidget *parent)
     QGridLayout *socket_layout = new QGridLayout();
 
     socket_layout->addWidget(new QLabel("服务器地址：", this), 0, 0);
-    socket_addr = new QLineEdit("127.0.0.1", this);
+    socket_addr = new QLineEdit("192.168.17.130", this);
     socket_layout->addWidget(socket_addr, 0, 1);
 
     socket_layout->addWidget(new QLabel("服务器端口：", this), 1, 0);
