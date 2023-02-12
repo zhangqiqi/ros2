@@ -1,7 +1,11 @@
 {
     "files.associations": {
 		"PID.C": "cpp",
-		"chrono": "cpp"
+		"chrono": "cpp",
+		"queue.h": "c",
+		"snp_defs.h": "c",
+		"memory.h": "c",
+		"stddef.h": "c"
 	},
     "ros.distro": "humble"
 }

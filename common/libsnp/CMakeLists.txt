@@ -1,0 +1,16 @@
+cmake_minimum_required (VERSION 3.16)
+
+project(libsnp VERSION 1.0)
+
+include_directories(./include)
+include_directories(./src/include)
+
+aux_source_directory(./src/ LIBSNP_SRC)
+
+aux_source_directory(./test/ LIBSNP_TEST_SRC)
+
+add_library(snp SHARED ${LIBSNP_SRC})
+
+add_executable(snp_test ${LIBSNP_TEST_SRC})
+
+target_link_libraries(snp_test snp)
