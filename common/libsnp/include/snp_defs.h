@@ -5,11 +5,11 @@
 #include <stddef.h>
 #include <memory.h>
 #include <malloc.h>
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 
 #define SNP_DEBUG(fmt, ...) if (NULL != snp_log_print) snp_log_print(SLT_DEBUG, fmt, ##__VA_ARGS__);
 #define SNP_NOTICE(fmt, ...) if (NULL != snp_log_print) snp_log_print(SLT_NOTICE, fmt, ##__VA_ARGS__);

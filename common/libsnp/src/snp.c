@@ -8,8 +8,6 @@ SNP_LOG_IF snp_log_print = NULL;      /**< 协议栈日志输出接口 */
  */
 struct SNP {
 	struct SNP_NODE_LIST *nodes;
-
-
 };
 
 
@@ -43,6 +41,16 @@ SNP_RET_TYPE snp_exec(struct SNP *handle)
 {
 	SNP_RET_TYPE ret_code = SNP_RET_OK;
 
+	if (NULL == handle)
+	{
+		return SNP_RET_NULLPTR_ERR;
+	}
+
+	do
+	{
+		snp_node_exec(handle->nodes);
+	} while (true);
+	
 
 	return ret_code;
 }
@@ -60,11 +68,23 @@ struct SNP *snp_create(void)
 
 	struct SNP_NODE *_main_node = snp_node_create(_new_snp->nodes);
 
-	struct SNP_NODE *_sub_test_node = snp_node_create(_new_snp->nodes);
-
-	struct SNP_LINK *_test_link = snp_link_create(_main_node, _sub_test_node);
-
 	return _new_snp;
+}
+
+
+/**
+ * @brief 获取目标协议栈的节点集合
+ * @param handle 目标协议栈对象指针
+ * @return struct SNP_NODE_LIST* 获取到的协议栈节点集合指针
+ */
+struct SNP_NODE_LIST *snp_get_nodes(struct SNP *handle)
+{
+	if (NULL == handle)
+	{
+		return NULL;
+	}
+
+	return handle->nodes;
 }
 
 

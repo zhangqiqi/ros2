@@ -27,8 +27,40 @@ int main(int argc, char **argv)
 {
 	struct SNP *snp_handle = snp_create();
 
-	printf("new snp handle: %p\r\n", snp_handle);
-	printf("set snp log if(%p) ret: %x\r\n", test_snp_log_print, snp_set_log_if(test_snp_log_print));
+	snp_set_log_if(test_snp_log_print);
+
+	struct SNP_NODE_LIST *nodes = snp_get_nodes(snp_handle);
+
+	struct SNP_NODE *root_node = snp_node_get_root(nodes);
+	struct SNP_NODE *test_node1 = snp_node_create(nodes);
+	struct SNP_NODE *test_node2 = snp_node_create(nodes);
+	struct SNP_NODE *test_node3 = snp_node_create(nodes);
+	struct SNP_NODE *test_node4 = snp_node_create(nodes);
+	struct SNP_NODE *test_node5 = snp_node_create(nodes);
+	struct SNP_NODE *test_node6 = snp_node_create(nodes);
+
+	snp_link_create(root_node, test_node1);
+	snp_link_create(root_node, test_node2);
+	snp_link_create(root_node, test_node3);
+	snp_link_create(root_node, test_node4);
+	snp_link_create(root_node, test_node5);
+	snp_link_create(root_node, test_node6);
+	snp_link_create(test_node1, test_node2);
+	snp_link_create(test_node1, test_node3);
+	snp_link_create(test_node1, test_node4);
+	snp_link_create(test_node1, test_node5);
+	snp_link_create(test_node1, test_node6);
+	snp_link_create(test_node2, test_node3);
+	snp_link_create(test_node2, test_node1);
+	snp_link_create(test_node3, test_node1);
+	snp_link_create(test_node3, test_node2);
+	snp_link_create(test_node3, test_node3);
+	snp_link_create(test_node3, test_node4);
+	snp_link_create(test_node3, test_node5);
+	snp_link_create(test_node3, test_node6);
+	snp_link_create(test_node4, test_node5);
+	snp_link_create(test_node5, test_node6);
+
 
 	snp_print_all(snp_handle);
 

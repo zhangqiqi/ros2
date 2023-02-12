@@ -1,4 +1,6 @@
 #include "snp_node.h"
+#include "snp_parse.h"
+#include "snp_buffer.h"
 
 #include "queue.h"
 
@@ -11,6 +13,7 @@ struct SNP_LINK {
 	struct SNP_NODE *dst_node;      /**< 一个连接的目标节点 */
 
 	void *link_handle;
+	struct SNP_BUFFER *read_buffer;
 	SNP_NODE_READ link_read;      /**< 节点数据读取接口 */
 	SNP_NODE_WRITE link_write;      /**< 节点数据写入接口 */
 
@@ -25,6 +28,11 @@ LIST_HEAD(SNP_LINK_LIST, SNP_LINK);
  */
 struct SNP_NODE
 {
+	char name[16];      /**< 节点设备名 */
+	int32_t type;      /**< 节点设备类型 */
+	int32_t id;      /**< 节点标识符 */
+	int32_t seq;      /**< 节点消息序列号 */
+
 	struct SNP_LINK_LIST links;      /**< 节点支持的外部连接 */
 
 	TAILQ_ENTRY(SNP_NODE) NODE;
@@ -120,6 +128,43 @@ void snp_nodes_print_all(struct SNP_NODE_LIST *node_list)
 		LIST_FOREACH(_var_link, &_var_node->links, LINK)
 		{
 			SNP_DEBUG("    [node 0x%p] -----> [node 0x%p]\r\n", _var_link->src_node, _var_link->dst_node);
+		}
+	}
+}
+
+
+/**
+ * @brief 获取根节点
+ * @param node_list 节点集合
+ * @return struct SNP_NODE* 获取到的根节点对象
+ */
+struct SNP_NODE *snp_node_get_root(struct SNP_NODE_LIST *node_list)
+{
+	if (NULL == node_list)
+	{
+		return NULL;
+	}
+
+	return TAILQ_FIRST(node_list);
+}
+
+
+/**
+ * @brief 执行当前可用节点 实际上是遍历执行主节点的所有可用连接，从这些连接上获取数据
+ * @param node_list 节点列表 
+ */
+void snp_node_exec(struct SNP_NODE_LIST *node_list)
+{
+	struct SNP_LINK *_var_link = NULL;
+
+	struct SNP_NODE *_exec_node = TAILQ_FIRST(node_list);
+
+	/**< 遍历根节点的所有可读连接，读取并处理这些连接的数据 */
+	LIST_FOREACH(_var_link, &_exec_node->links, LINK)
+	{
+		if (NULL != _var_link->link_read)
+		{
+			_var_link->link_read(_var_link->link_handle, NULL, 0);
 		}
 	}
 }
