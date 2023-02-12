@@ -4,11 +4,18 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-void snp_log_print(enum SNP_LOG_TYPE type, char *fmt, ...)
+const char *type_str[3] = {
+	"D",
+	"N",
+	"E"
+};
+
+void test_snp_log_print(enum SNP_LOG_TYPE type, char *fmt, ...)
 {
 	char prefix[128] = {0};
+	static uint16_t cnt = 0;
 
-	snprintf(prefix, sizeof(prefix) - 1, "[%d]%s", type, fmt);
+	snprintf(prefix, sizeof(prefix) - 1, "[%5d][%s]%s", cnt++, type_str[type], fmt);
 
 	va_list args;
 	va_start(args, fmt);
@@ -19,11 +26,11 @@ void snp_log_print(enum SNP_LOG_TYPE type, char *fmt, ...)
 int main(int argc, char **argv)
 {
 	struct SNP *snp_handle = snp_create();
-	struct SNP_NODE *snp_node = snp_node_create();
 
 	printf("new snp handle: %p\r\n", snp_handle);
+	printf("set snp log if(%p) ret: %x\r\n", test_snp_log_print, snp_set_log_if(test_snp_log_print));
 
-	printf("set snp(%p) log if(%p) ret: %x\r\n", snp_handle, snp_log_print, snp_set_log_if(snp_handle, snp_log_print));
+	snp_print_all(snp_handle);
 
 	return 0;
 }

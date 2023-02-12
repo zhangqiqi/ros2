@@ -1,12 +1,15 @@
 #include "snp.h"
+#include "snp_node.h"
 
-
+SNP_LOG_IF snp_log_print = NULL;      /**< 协议栈日志输出接口 */
 
 /**
  * @brief 协议栈管理结构
  */
 struct SNP {
-	SNP_LOG_IF log_print;      /**< 协议栈日志输出接口 */
+	struct SNP_NODE_LIST *nodes;
+
+
 };
 
 
@@ -16,15 +19,16 @@ struct SNP {
  * @param log_if 待设置的信息输出接口
  * @return SNP_RET_OK 成功 其他 失败
  */
-SNP_RET_TYPE snp_set_log_if(struct SNP *snp, SNP_LOG_IF log_if)
+SNP_RET_TYPE snp_set_log_if(SNP_LOG_IF log_if)
 {
-	if ((NULL == snp) || (NULL == log_if))
+	if (NULL == log_if)
 	{
 		return SNP_RET_NULLPTR_ERR;
 	}
 
-	snp->log_print = log_if;
-	snp->log_print(SLT_NOTICE, "snp(%p) setup log if %p success\r\n", snp, log_if);
+	snp_log_print = log_if;
+
+	SNP_NOTICE("snp setup log if %p success\r\n", log_if);
 
 	return SNP_RET_OK;
 }
@@ -52,5 +56,23 @@ struct SNP *snp_create(void)
 {
 	struct SNP *_new_snp = (struct SNP *)malloc(sizeof(struct SNP));
 
+	_new_snp->nodes = snp_node_list_create();
+
+	struct SNP_NODE *_main_node = snp_node_create(_new_snp->nodes);
+
+	struct SNP_NODE *_sub_test_node = snp_node_create(_new_snp->nodes);
+
+	struct SNP_LINK *_test_link = snp_link_create(_main_node, _sub_test_node);
+
 	return _new_snp;
+}
+
+
+/**
+ * @brief 打印协议栈的全部信息，包括构造信息，统计信息等
+ * @param handle 
+ */
+void snp_print_all(struct SNP *handle)
+{
+	snp_nodes_print_all(handle->nodes);
 }

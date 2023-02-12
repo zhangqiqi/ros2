@@ -12,11 +12,11 @@ struct SNP;
 
 struct SNP *snp_create(void);
 
-SNP_RET_TYPE snp_set_log_if(struct SNP *snp, SNP_LOG_IF log_if);
+SNP_RET_TYPE snp_set_log_if(SNP_LOG_IF log_if);
 
 SNP_RET_TYPE snp_exec(struct SNP *handle);
 
-
+void snp_print_all(struct SNP *handle);
 
 #ifdef __cplusplus
 }
