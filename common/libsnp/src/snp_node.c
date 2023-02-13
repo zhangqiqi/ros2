@@ -14,8 +14,8 @@ struct SNP_LINK {
 
 	void *link_handle;
 	struct SNP_BUFFER *read_buffer;
-	SNP_NODE_READ link_read;      /**< 节点数据读取接口 */
-	SNP_NODE_WRITE link_write;      /**< 节点数据写入接口 */
+	SNP_LINK_READ link_read;      /**< 连接的数据读取接口 */
+	SNP_LINK_WRITE link_write;      /**< 连接的数据写入接口 */
 
 	LIST_ENTRY(SNP_LINK) LINK;
 };
@@ -164,7 +164,7 @@ void snp_node_exec(struct SNP_NODE_LIST *node_list)
 	{
 		if (NULL != _var_link->link_read)
 		{
-			_var_link->link_read(_var_link->link_handle, NULL, 0);
+			_var_link->link_read(_var_link->link_handle, _var_link->read_buffer);
 		}
 	}
 }

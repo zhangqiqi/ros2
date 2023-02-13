@@ -12,6 +12,10 @@ struct SNP_BUFFER;
 
 struct SNP_BUFFER *snp_buffer_create(int32_t size);
 
+int32_t snp_buffer_write(struct SNP_BUFFER *buffer, uint8_t *data, int32_t len);
+
+int32_t snp_buffer_read(struct SNP_BUFFER *buffer, uint8_t *data, int32_t len);
+
 #ifdef __cplusplus
 }
 #endif

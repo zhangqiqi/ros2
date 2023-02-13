@@ -12,8 +12,8 @@ extern "C" {
 struct SNP_NODE;
 struct SNP_NODE_LIST;
 
-typedef int32_t (*SNP_NODE_READ)(void *handle, uint8_t *buffer, int32_t size);
-typedef int32_t (*SNP_NODE_WRITE)(void *handle, uint8_t *buffer, int32_t size);
+typedef int32_t (*SNP_LINK_READ)(void *handle, struct SNP_BUFFER *buffer);
+typedef int32_t (*SNP_LINK_WRITE)(void *handle, struct SNP_BUFFER *buffer);
 
 struct SNP_NODE_LIST *snp_node_list_create();
 

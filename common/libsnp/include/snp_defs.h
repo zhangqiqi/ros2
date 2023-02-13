@@ -19,6 +19,7 @@ extern "C" {
 struct SNP;
 struct SNP_NODE;
 struct SNP_NODE_LIST;
+struct SNP_BUFFER;
 
 typedef int32_t SNP_RET_TYPE;
 #define SNP_RET_OK (0)      /**< 返回成功 */
@@ -34,7 +35,6 @@ enum SNP_LOG_TYPE {
 };
 
 typedef void (*SNP_LOG_IF)(enum SNP_LOG_TYPE type, char *fmt, ...);
-
 
 extern SNP_LOG_IF snp_log_print;
 

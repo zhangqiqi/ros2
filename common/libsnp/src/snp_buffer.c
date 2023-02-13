@@ -36,3 +36,31 @@ struct SNP_BUFFER *snp_buffer_create(int32_t size)
 }
 
 
+/**
+ * @brief 缓存区数据写入接口
+ * @param buffer 缓存区
+ * @param data 待写入数据
+ * @param len 待写入数据长度
+ * @return int32_t 实际写入的数据长度
+ */
+int32_t snp_buffer_write(struct SNP_BUFFER *buffer, uint8_t *data, int32_t len)
+{
+	int32_t ret_len = 0;
+
+	return ret_len;
+}
+
+
+/**
+ * @brief 缓存区数据读取接口
+ * @param buffer 缓存区
+ * @param data 待读取数据写入地址
+ * @param len 期望读取到的数据长度
+ * @return int32_t 实际读取到的数据长度
+ */
+int32_t snp_buffer_read(struct SNP_BUFFER *buffer, uint8_t *data, int32_t len)
+{
+	int32_t ret_len = 0;
+
+	return ret_len;
+}
