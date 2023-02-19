@@ -5,10 +5,7 @@
  * @brief 电机描述结构体
  */
 struct MOTOR {
-
-	int32_t encoder_cnt[MOROT_ENCODER_CNT_NUM];      /**< 电机编码器计数数组 */
-	void *encoder_handle;      /**< 编码器读取对象指针 */
-	MOTOR_READ_ENCODER encoder_read;      /**< 编码器值读取接口 */
+	struct MOTOR_ENCODER *encoder;      /**< 编码器对象 */
 
 };
 
@@ -37,27 +34,10 @@ int32_t motor_set_encoder_read_if(struct MOTOR *motor, void *encoder_handle, MOT
 
 
 /**
- * @brief 更新电机的编码器值
- * @param motor 目标电机对象
- */
-static void motor_encoder_cnt_update(struct MOTOR *motor)
-{
-	if (NULL == motor->encoder_read)
-	{
-		return;
-	}
-
-	int32_t _new_cnt = motor->encoder_read(motor->encoder_handle);
-
-	memmove(motor->encoder_cnt, motor->encoder_cnt + 1, MOROT_ENCODER_CNT_NUM - 1);
-	motor->encoder_cnt[MOROT_ENCODER_CNT_NUM - 1] = _new_cnt;
-}
-
-/**
  * @brief 执行目标电机的控制
  * @param motor 目标电机对象
  */
-void motor_exec(struct MOTOR *motor, )
+void motor_exec(struct MOTOR *motor)
 {
 
 }

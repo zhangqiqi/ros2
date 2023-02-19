@@ -9,7 +9,6 @@ extern "C" {
 
 struct MOTOR;
 
-
 int32_t motor_set_encoder_read_if(struct MOTOR *motor, void *encoder_handle, MOTOR_READ_ENCODER read_if);
 
 void motor_exec(struct MOTOR *motor);
