@@ -1,6 +1,5 @@
 #include "snp_msgs.h"
-#include "queue.h"
-
+#include "snp_defs_p.h"
 
 /**
  * @brief snp消息发布管理结构体

@@ -1,10 +1,11 @@
 #ifndef __LIBSNP_INCLUDE_SNP_DEFS_H__
 #define __LIBSNP_INCLUDE_SNP_DEFS_H__
 
+#include <stdio.h>
 #include <stdint.h>
 #include <stddef.h>
-#include <memory.h>
-#include <malloc.h>
+// #include <memory.h>
+// #include <malloc.h>
 #include <stdbool.h>
 #include <string.h>
 
