@@ -1,6 +1,9 @@
-cmake_minimum_required (VERSION 3.16)
+cmake_minimum_required (VERSION 3.8.2)
 
 project(libsnp VERSION 1.0)
+
+
+SET(CMAKE_BUILD_TYPE "Debug")
 
 include_directories(./include)
 include_directories(./src/include)
