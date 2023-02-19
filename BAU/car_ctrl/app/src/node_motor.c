@@ -23,6 +23,7 @@ void node_tx_task(void const * argument)
 	while(1)
 	{
 		result = xQueueReceive(queue_odom_handle, (void *)&ros_odom_type, 100);
+		//osDelay(20);
 		if(pdTRUE == result)
 		{
 			memcpy(odometry_data, &head, sizeof(head));

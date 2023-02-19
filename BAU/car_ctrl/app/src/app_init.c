@@ -8,7 +8,7 @@
 
 
 
-/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ID*/
+/*Ö÷ÈÎÎñµÄÐÅºÅÁ¿ºÍÈÎÎñID*/
 osSemaphoreId init_complete;
 osSemaphoreId sem_odometry_cal;
 osSemaphoreId semlog_tx_cpt;
@@ -22,7 +22,7 @@ osThreadId system_task_id, node_recv_task_id, node_tx_task_id;
 
 QueueHandle_t queue_odom_handle;
 
-/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ID*/
+/*Ö÷ÈÎÎñµÄÐÅºÅÁ¿ºÍÈÎÎñID*/
 
 
 RX_BUF_TYPE recv_buf_ctrl, parse_buf_ctrl;
@@ -31,31 +31,31 @@ uint8_t parse_rx_buf[MAX_RECV_SIZE];
 
 
 
-extern float position_x,position_y,oriention,velocity_linear,velocity_angular;         //ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½Öµ
+extern float position_x,position_y,oriention,velocity_linear,velocity_angular;         //¼ÆËãµÃµ½µÄÀï³Ì¼ÆÊýÖµ
 
 
 uint32_t Milemeter_L_Motor = 0,Milemeter_R_Motor = 0;
-float odometry_right=0,odometry_left=0;//ï¿½ï¿½ï¿½ÚµÃµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
+float odometry_right=0,odometry_left=0;//´®¿ÚµÃµ½µÄ×óÓÒÂÖËÙ¶È
 
 
-union odometry  //ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½
+union odometry  //Àï³Ì¼ÆÊý¾Ý¹²ÓÃÌå
 {
 	float odoemtry_float;
 	unsigned char odometry_char[4];
-}x_data,y_data,theta_data,vel_linear,vel_angular,actual_left_speed,actual_right_speed;     //Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½Ö±ï¿½Îªï¿½ï¿½Xï¿½ï¿½Yï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½Ä¾ï¿½ï¿½ë£¬ï¿½ï¿½Ç°ï¿½Ç¶È£ï¿½ï¿½ï¿½ï¿½Ù¶È£ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
+}x_data,y_data,theta_data,vel_linear,vel_angular,actual_left_speed,actual_right_speed;     //Òª·¢²¼µÄÀï³Ì¼ÆÊý¾Ý£¬·Ö±ðÎª£ºX£¬Y·½ÏòÒÆ¶¯µÄ¾àÀë£¬µ±Ç°½Ç¶È£¬ÏßËÙ¶È£¬½ÇËÙ¶È
 
-union recieveData  //ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+union recieveData  //½ÓÊÕµ½µÄÊý¾Ý
 {
-	float d;    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
+	float d;    //×óÓÒÂÖËÙ¶È
 	unsigned char data[4];
-}leftdata,rightdata;       //ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+}leftdata,rightdata;       //½ÓÊÕµÄ×óÓÒÂÖÊý¾Ý
 
-//static unsigned int hRot_Speed2;//ï¿½ï¿½ï¿½AÆ½ï¿½ï¿½×ªï¿½Ù»ï¿½ï¿½ï¿½
-//static unsigned int hRot_Speed1;//ï¿½ï¿½ï¿½BÆ½ï¿½ï¿½×ªï¿½Ù»ï¿½ï¿½ï¿½
+//static unsigned int hRot_Speed2;//µç»úAÆ½¾ù×ªËÙ»º´æ
+//static unsigned int hRot_Speed1;//µç»úBÆ½¾ù×ªËÙ»º´æ
 
 
 
-uint32_t span;//ï¿½É¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶È²ï¿½Öµ
+uint32_t span;//²É¼¯»ØÀ´µÄ×óÓÒÂÖËÙ¶È²îÖµ
 
 
 
@@ -88,85 +88,112 @@ void queue_init(void)
 	queue_odom_handle = xQueueCreate(3,sizeof(MSG_ROS_ODOM_TYPE));
 }
 
+
+static uint32_t get_motor_encoder_cnt(TIM_HandleTypeDef *htim)
+{
+	uint32_t encoder_cnt = 0;
+	int32_t dir = 0;
+	
+		/**< ¶ÁÈ¡±àÂëÆ÷Öµ²¢Çå¿Õ¼ÆÊýÆ÷ */
+	/**< ¶ÁÈ¡±àÂëÆ÷·½Ïò */
+	dir = __HAL_TIM_IS_TIM_COUNTING_DOWN(htim);
+	if ((1 == dir) && (__HAL_TIM_GET_COUNTER(htim) != 0))
+	{
+		/**< »ñÈ¡·´Ïò±àÂëÆ÷Öµ */
+		encoder_cnt = htim->Init.Period - __HAL_TIM_GET_COUNTER(htim);
+	}
+	else
+	{
+		/**< »ñÈ¡ÕýÏò±àÂëÆ÷Öµ */
+		encoder_cnt = __HAL_TIM_GET_COUNTER(htim);
+	}
+	__HAL_TIM_SET_COUNTER(htim, 0);
+	
+	return encoder_cnt;
+}
+
+
 void odometry_task(void const * argument)
 {
-	uint8_t bSpeed_Buffer_Index = 0;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	int32_t hSpeed_Buffer2[3]={0}, hSpeed_Buffer1[3]={0};//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶È»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	struct PID Control_left  ={0.9,0.01,0.5,0,0,0,0,0,0};//ï¿½ï¿½ï¿½ï¿½PIDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½4096
-	struct PID Control_right ={0.9,0.01,0.5,0,0,0,0,0,0};//ï¿½ï¿½ï¿½ï¿½PIDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½4096
+	uint8_t bSpeed_Buffer_Index = 0;//»º´æ×óÓÒÂÖ±àÂëÊýµ½Êý×é±äÁ¿
+	int32_t hSpeed_Buffer2[3]={0}, hSpeed_Buffer1[3]={0};//×óÓÒÂÖËÙ¶È»º´æÊý×é
+	struct PID Control_left  ={0.9,0.01,0.5,0,0,0,0,0,0};//×óÂÖPID²ÎÊý£¬ÊÊÓÚÐÂµç»ú4096
+	struct PID Control_right ={0.9,0.01,0.5,0,0,0,0,0,0};//ÓÒÂÖPID²ÎÊý£¬ÊÊÓÚÐÂµç»ú4096
 	unsigned long long wtemp3=0;
 	unsigned long long wtemp4=0;
-	unsigned int hRot_Speed2;//ï¿½ï¿½ï¿½AÆ½ï¿½ï¿½×ªï¿½Ù»ï¿½ï¿½ï¿½
-	unsigned int hRot_Speed1;//ï¿½ï¿½ï¿½BÆ½ï¿½ï¿½×ªï¿½Ù»ï¿½ï¿½ï¿½
-	unsigned int Speed2=0; //ï¿½ï¿½ï¿½AÆ½ï¿½ï¿½×ªï¿½ï¿½ r/minï¿½ï¿½PIDï¿½ï¿½ï¿½ï¿½
-	unsigned int Speed1=0; //ï¿½ï¿½ï¿½BÆ½ï¿½ï¿½×ªï¿½ï¿½ r/minï¿½ï¿½PIDï¿½ï¿½ï¿½ï¿½
-	float pulse = 0;//ï¿½ï¿½ï¿½A PIDï¿½ï¿½ï¿½Úºï¿½ï¿½PWMÖµï¿½ï¿½ï¿½ï¿½
-	float pulse1 = 0;//ï¿½ï¿½ï¿½B PIDï¿½ï¿½ï¿½Úºï¿½ï¿½PWMÖµï¿½ï¿½ï¿½ï¿½
+	unsigned int hRot_Speed2;//µç»úAÆ½¾ù×ªËÙ»º´æ
+	unsigned int hRot_Speed1;//µç»úBÆ½¾ù×ªËÙ»º´æ
+	unsigned int Speed2=0; //µç»úAÆ½¾ù×ªËÙ r/min£¬PIDµ÷½Ú
+	unsigned int Speed1=0; //µç»úBÆ½¾ù×ªËÙ r/min£¬PIDµ÷½Ú
+	float pulse = 0;//µç»úA PIDµ÷½ÚºóµÄPWMÖµ»º´æ
+	float pulse1 = 0;//µç»úB PIDµ÷½ÚºóµÄPWMÖµ»º´æ
 	int right_speed, left_speed;
+	static int right_dir = 0, left_dir = 0;      /**< ×óÓÒÂÖ·½Ïò */
 	int32_t left_pwm_out = 0, right_pwm_out = 0;
 	int32_t i = 0, j = 0;
 	uint32_t time_cnt = 0;
-	float k2=22.0368358	;	   //ï¿½Ù¶ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,×ª/ï¿½ï¿½ï¿½ï¿½ mm/s *60* 44 = n/min   Ò»×ª 44ï¿½ï¿½ï¿½ï¿½ 853.266392 19.392418 0.440736 9.696209006074964  969.6207771515426 10ms
-								//V mm/s = V * 60 * m/min    ×ªï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ = V * 60 * ×ªï¿½Ù±ï¿½ * 
+	float k2=22.0368358	;	   //ËÙ¶È×ª»»±ÈÀý,×ª/·ÖÖÓ mm/s *60* 44 = n/min   Ò»×ª 44Âö³å 853.266392 19.392418 0.440736 9.696209006074964  969.6207771515426 10ms
+								//V mm/s = V * 60 * m/min    ×ª»»³É Âö³å = V * 60 * ×ªËÙ±È * 
 	MSG_ROS_ODOM_TYPE queue_odom_tx;
 	SPEED_PULSE_CNT speed_pluse_cnt;
 	memset(&queue_odom_tx, 0, sizeof(queue_odom_tx));
 	memset(&speed_pluse_cnt, 0, sizeof(speed_pluse_cnt));	
-	osSemaphoreWait(init_complete, osWaitForever);		/*ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½*/
-	HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
-	HAL_TIM_Encoder_Start(&htim6, TIM_CHANNEL_ALL);
+	osSemaphoreWait(init_complete, osWaitForever);		/*µÈ´ýÈÎÎñ³õÊ¼»¯Íê³É*/
 	while(1)
 	{
-		osSemaphoreWait(sem_odometry_cal, 10);  /*Ä¬ï¿½ï¿½10msï¿½Í·ï¿½ï¿½Åºï¿½ï¿½ï¿½*/
+		osSemaphoreWait(sem_odometry_cal, 5);  /*Ä¬ÈÏ10msÊÍ·ÅÐÅºÅÁ¿*/
 //		LOGI("Milemeter_R_Motor %d %d \r\n", Milemeter_R_Motor, Milemeter_L_Motor);
 
-		speed_pluse_cnt.left_cnt = Milemeter_L_Motor;
-		speed_pluse_cnt.right_cnt = Milemeter_R_Motor;
+//		speed_pluse_cnt.left_cnt = Milemeter_L_Motor;
+		
+		speed_pluse_cnt.left_cnt = get_motor_encoder_cnt(&htim2);
+		
+		speed_pluse_cnt.right_cnt = get_motor_encoder_cnt(&htim3);
 		
 		Milemeter_R_Motor = 0;
 		Milemeter_L_Motor = 0;
         /************************ 3 ***************************/
         
-        //ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        //¿ªÊ¼»º´æ×óÓÒÂÖ±àÂëÊýµ½Êý×é
 		
         hSpeed_Buffer2[bSpeed_Buffer_Index] = speed_pluse_cnt.right_cnt;
         hSpeed_Buffer1[bSpeed_Buffer_Index] = speed_pluse_cnt.left_cnt;
 
 		
-        bSpeed_Buffer_Index++;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»
+        bSpeed_Buffer_Index++;//Êý×éÒÆÎ»
 
 		wtemp4 = 0;
 		wtemp3 = 0;
-        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
+        //»º´æ×óÓÒÂÖ±àÂëÊýµ½Êý×é½áÊøÅÐ¶Ï
         if(bSpeed_Buffer_Index >=3)
         {
-            bSpeed_Buffer_Index=0;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            bSpeed_Buffer_Index=0;//»º´æ×óÓÒÂÖ±àÂëÊýµ½Êý×é±äÁ¿ÇåÁã
         }
-            //ï¿½Û¼Ó»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½Ù¶ï¿½Öµ
+            //ÀÛ¼Ó»º´æ´ÎÊýÄÚµÄËÙ¶ÈÖµ
 		for (i=0;i<3;i++)
 		{
 			wtemp4 += hSpeed_Buffer2[i];
 			wtemp3 += hSpeed_Buffer1[i];
 		}
 	    
-	    //È¡Æ½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»Îª ï¿½ï¿½/s	
+	    //È¡Æ½¾ù£¬Æ½¾ùÂö³åÊýµ¥Î»Îª ¸ö/s	
 		wtemp3 /= (3);
-		wtemp4 /= (3); //Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½/s		
+		wtemp4 /= (3); //Æ½¾ùÂö³åÊý ¸ö/s		
 //		LOGI("uartsend %lld %lld \r\n", wtemp3, wtemp4);	    
-	    //ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»×ªÎª r/min
-		wtemp3 = (wtemp3 * 200)*60/44; 	//5ms ×ªï¿½ï¿½   r/min  13  (wtemp3 * 50)*60/(44);
+	    //½«Æ½¾ùÂö³åÊýµ¥Î»×ªÎª r/min
+		wtemp3 = (wtemp3 * 200)*60/44; 	//5ms ×ª³É   r/min  13  (wtemp3 * 50)*60/(44);
 		wtemp4 = (wtemp4 * 200)*60/44; 	//	
 //		LOGI("uartsend %lld %lld \r\n", wtemp3, wtemp4);
 
-		hRot_Speed2= ((int16_t)(wtemp4));//Æ½ï¿½ï¿½×ªï¿½ï¿½ r/min
-		hRot_Speed1= ((int16_t)(wtemp3));//Æ½ï¿½ï¿½×ªï¿½ï¿½ r/min
-		Speed2=hRot_Speed2;//Æ½ï¿½ï¿½×ªï¿½ï¿½ r/min
-		Speed1=hRot_Speed1;//Æ½ï¿½ï¿½×ªï¿½ï¿½ r/min
+		hRot_Speed2= ((int16_t)(wtemp4));//Æ½¾ù×ªËÙ r/min
+		hRot_Speed1= ((int16_t)(wtemp3));//Æ½¾ù×ªËÙ r/min
+		Speed2=hRot_Speed2;//Æ½¾ù×ªËÙ r/min
+		Speed1=hRot_Speed1;//Æ½¾ù×ªËÙ r/min
 //		LOGI("Speed2 %d Speed2 %d \r\n", hRot_Speed2, hRot_Speed1);
         /************************ 4 ***************************/
 
 
-		//ï¿½ï¿½ï¿½Ó´ï¿½ï¿½Ú½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½Ù¶ï¿½×ªï¿½ï¿½ï¿½ï¿½Êµï¿½Ê¿ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶È£ï¿½ï¿½ï¿½ï¿½ï¿½PWMï¿½ï¿½
+		//½«´Ó´®¿Ú½ÓÊÕµ½µÄËÙ¶È×ª»»³ÉÊµ¼Ê¿ØÖÆÐ¡³µµÄËÙ¶È£¿»¹ÊÇPWM£¿
 		// 
 		right_speed = (int)k2*odometry_right;// + 10000;
 		left_speed = (int)k2*odometry_left;// + 10000;
@@ -174,8 +201,8 @@ void odometry_task(void const * argument)
 		Control_right.OwenValue = fabs(k2*odometry_right);
 //		LOGI("Control_right.OwenValue %f", Control_right.OwenValue);
 //		LOGI("right_speed %d left_speed %d hRot_Speed1 %d hRot_Speed2:%d\r\n", right_speed, left_speed, hRot_Speed1, hRot_Speed2);      
-		span=1*(Speed1-Speed2);//ï¿½É¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶È²ï¿½Öµ
-		pulse = (pulse + PID_calculate(&Control_right,hRot_Speed2));//PIDï¿½ï¿½ï¿½ï¿½  
+		span=1*(Speed1-Speed2);//²É¼¯»ØÀ´µÄ×óÓÒÂÖËÙ¶È²îÖµ
+		pulse = (pulse + PID_calculate(&Control_right,hRot_Speed2));//PIDµ÷½Ú  
 		right_pwm_out = (int32_t)pulse;
 		right_pwm_out = fabs(right_pwm_out);
 		if (right_pwm_out > 8400)
@@ -186,10 +213,10 @@ void odometry_task(void const * argument)
 		{
 			right_pwm_out = 0;
 		}
-		//pwmï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		//pwm·ù¶ÈÒÖÖÆ
 //        LOGI("right_speed %d left_speed %d\r\n", right_speed, left_speed);
-        span=1*(Speed2-Speed1);//ï¿½É¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶È²ï¿½Öµ
-		pulse1 = (pulse1 + PID_calculate(&Control_left,hRot_Speed1));//PIDï¿½ï¿½ï¿½ï¿½
+        span=1*(Speed2-Speed1);//²É¼¯»ØÀ´µÄ×óÓÒÂÖËÙ¶È²îÖµ
+		pulse1 = (pulse1 + PID_calculate(&Control_left,hRot_Speed1));//PIDµ÷½Ú
 	    left_pwm_out = (int32_t)pulse1;
 		left_pwm_out = fabs(left_pwm_out);
 //		LOGI("pulse %f pulse1 %f\r\n", pulse, pulse1); 	
@@ -210,16 +237,24 @@ void odometry_task(void const * argument)
 		{
 			right_pwm_out = 0;
 		}		
-//		LOGI("right_pwm_out %d left_pwm_out %d\r\n", right_pwm_out, left_pwm_out);        
-		if (right_speed > 0)    /*ï¿½ï¿½ï¿½ï¿½*/
+//		LOGI("right_pwm_out %d left_pwm_out %d\r\n", right_pwm_out, left_pwm_out);     
+
+#if 0
+			htim4.Instance->CCR3 = 0;
+			htim4.Instance->CCR4 = 840;	
+			htim4.Instance->CCR1 = 0;
+			htim4.Instance->CCR2 = 840;
+#else		
+		if (right_speed > 0)    /*Õý´«*/
+		{
+			htim4.Instance->CCR3 = 0;
+			htim4.Instance->CCR4 = right_pwm_out;	
+
+		}
+		else if (right_speed < 0) /*·´´«*/
 		{
 			htim4.Instance->CCR3 = right_pwm_out;
 			htim4.Instance->CCR4 = 0;
-		}
-		else if (right_speed < 0) /*ï¿½ï¿½ï¿½ï¿½*/
-		{
-			htim4.Instance->CCR3 = 0;
-			htim4.Instance->CCR4 = right_pwm_out;			
 		}
 		else
 		{
@@ -229,25 +264,24 @@ void odometry_task(void const * argument)
 	
 		if (left_speed > 0)
 		{
-			htim3.Instance->CCR1 = left_pwm_out;
-			htim3.Instance->CCR2 = 0;
-
+			htim4.Instance->CCR1 = 0;
+			htim4.Instance->CCR2 = left_pwm_out;
 		}
 		else if (left_speed < 0)
 		{
-			htim3.Instance->CCR1 = 0;
-			htim3.Instance->CCR2 = left_pwm_out;
-			
+			htim4.Instance->CCR1 = left_pwm_out;
+			htim4.Instance->CCR2 = 0;
 		}
 		else
 		{
-			htim3.Instance->CCR1 = 0;
-			htim3.Instance->CCR2 = 0;
+			htim4.Instance->CCR1 = 0;
+			htim4.Instance->CCR2 = 0;
 
 		}
+#endif 
 
 //		LOGI("right_pwm_out %d left_pwm_out %d\r\n", right_pwm_out, left_pwm_out);  
-		odometry(&speed_pluse_cnt, &queue_odom_tx);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½
+		odometry(&speed_pluse_cnt, &queue_odom_tx);//¼ÆËãÀï³Ì¼Æ
 //		LOGI("odom %d %d",speed_pluse_cnt.left_cnt,speed_pluse_cnt.right_cnt);
 //		LOGI("queue_odom %f %f %f %f %f", queue_odom_tx.x_data, queue_odom_tx.y_data, queue_odom_tx.vel_linear, queue_odom_tx.vel_angular, queue_odom_tx.theta_data);
 		if (time_cnt++ > 5)
@@ -284,11 +318,11 @@ void node_recv_task(void const * argument)
 	memset(rx_buf, 1, sizeof(rx_buf));
 	uint32_t t = 0;
 	HAL_UART_Receive_DMA(&huart2, recv_buf->rx_buf, recv_buf->rx_size);
-	osSemaphoreWait(init_complete, osWaitForever);		/*ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½*/	
+	osSemaphoreWait(init_complete, osWaitForever);		/*µÈ´ýÈÎÎñ³õÊ¼»¯Íê³É*/	
 	while(1)
 	{
 		osSemaphoreWait(semnode_rx_cpt, 1);
-		recv_buf->pWritePtr = huart2.RxXferSize - huart2.hdmarx->Instance->NDTR;	/*ï¿½Ü³ï¿½ï¿½ï¿½-Ê£ï¿½à³¤ï¿½ï¿½ = ï¿½ï¿½ï¿½Õ³ï¿½ï¿½ï¿½*/
+		recv_buf->pWritePtr = huart2.RxXferSize - huart2.hdmarx->Instance->NDTR;	/*×Ü³¤¶È-Ê£Óà³¤¶È = ½ÓÊÕ³¤¶È*/
 //		LOGI("..... parse_buf->pWritePtr:%d recv_buf->pWritePtr:%d huart1.RxXferSize:%d huart1.hdmarx->Instance->NDTR:%d recv_len:%d parse_buf->pReadPtr:%d recv_buf->pReadPtr:%d",
 //								parse_buf->pWritePtr, recv_buf->pWritePtr, huart1.RxXferSize, huart1.hdmarx->Instance->NDTR, recv_len, parse_buf->pReadPtr, recv_buf->pReadPtr);
 		recv_len = get_data_from_rx_buf(recv_buf, parse_buf->rx_buf + parse_buf->pWritePtr, parse_buf->rx_size - parse_buf->pWritePtr);
@@ -304,10 +338,10 @@ void node_recv_task(void const * argument)
 
 	//		LOGI("..... %d %d", parse_buf->pWritePtr, recv_buf->pWritePtr);
 			parse_speed_cmd(parse_buf);
-	        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
+	        //½ÓÊÕ×óÓÒÂÖËÙ¶È
 			LOGI("odometry_right %f odometry_left %f", ros_speed_data.right_motor_data, ros_speed_data.left_motor_data);
-			odometry_right = ros_speed_data.right_motor_data;
-			odometry_left = ros_speed_data.left_motor_data;
+			//odometry_right = ros_speed_data.right_motor_data;
+			//odometry_left = ros_speed_data.left_motor_data;
 		}
 		
 
@@ -333,8 +367,12 @@ void system_task(void const * argument)
 	node_tx_task_id = osThreadCreate(osThread(node_tx), NULL);
 
 	HAL_TIM_Base_Start_IT(&htim6);
-	HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_1);
-	HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_2);
+	
+	HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
+	HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
+	
+	HAL_TIM_PWM_Start(&htim4,TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(&htim4,TIM_CHANNEL_2);
 	
 	HAL_TIM_PWM_Start(&htim4,TIM_CHANNEL_3);
 	HAL_TIM_PWM_Start(&htim4,TIM_CHANNEL_4);
@@ -361,7 +399,7 @@ void system_task(void const * argument)
 
 void main_app(void)
 {
-	/*ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í³Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½*/
+	/*³õÊ¼»¯ÈÎÎñÍ³Ò»¿ªÆôÐÅºÅÁ¿*/
 	osSemaphoreDef(sem);
 	init_complete = osSemaphoreCreate(osSemaphore(sem), 1);
 	

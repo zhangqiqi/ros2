@@ -141,9 +141,9 @@ void odometry(SPEED_PULSE_CNT *pluse_cnt, MSG_ROS_ODOM_TYPE *odom_type)
 	{
 		delta_distance = distance_sum;
 		delta_oriention = distance_diff;
-		LOGI("pluse_cnt %d %d", pluse_cnt->right_cnt, pluse_cnt->left_cnt);
-		LOGI("delta %f %f\r\n", distance_sum, distance_diff);
-		LOGI("delta %f %f\r\n", delta_distance, delta_oriention);
+		//LOGI("pluse_cnt %d %d", pluse_cnt->right_cnt, pluse_cnt->left_cnt);
+		//LOGI("delta %f %f\r\n", distance_sum, distance_diff);
+		//LOGI("delta %f %f\r\n", delta_distance, delta_oriention);
 	}
 	else if((odometry_right<0)&&(odometry_left<0))       //×óÓÒ¾ù¸º
 	{
