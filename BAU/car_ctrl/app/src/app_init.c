@@ -29,8 +29,6 @@ RX_BUF_TYPE recv_buf_ctrl, parse_buf_ctrl;
 uint8_t rx_buf[MAX_RECV_SIZE];
 uint8_t parse_rx_buf[MAX_RECV_SIZE];
 
-
-
 extern float position_x,position_y,oriention,velocity_linear,velocity_angular;         //����õ�����̼���ֵ
 
 
@@ -357,6 +355,8 @@ void system_task(void const * argument)
 	sem_init();
 	queue_init();
 	
+	libsnp_app_init();
+	
 	osThreadDef(odom, odometry_task, osPriorityAboveNormal, 0, 1024);
 	system_task_id = osThreadCreate(osThread(odom), NULL);	
 
@@ -393,8 +393,7 @@ void system_task(void const * argument)
 	{
 
 //		HAL_UART_Transmit_DMA(&huart1, send_buf, 10);
-		// osDelay(5000);
-		libsnp_app_init();
+		osDelay(5000);
 		// LOGI("func %s\r\n", __FUNCTION__);
 	}
 }

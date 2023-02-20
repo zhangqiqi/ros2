@@ -1,9 +1,16 @@
 #include "snp.h"
 #include "snp_node.h"
+#include "snp_defs.h"
 #include "snp_defs_p.h"
 #include "snp_std_process.h"
 
+// #include <memory.h>
+// #include <malloc.h>
+
 SNP_LOG_IF snp_log_print = NULL;      /**< 协议栈日志输出接口 */
+
+SNP_MALLOC snp_malloc = malloc;      /**< 动态内存分配接口重载指针 */
+SNP_FREE snp_free = free;      /**< 动态内存释放接口重载指针 */
 
 /**
  * @brief 协议栈管理结构
@@ -32,6 +39,26 @@ SNP_RET_TYPE snp_set_log_if(SNP_LOG_IF log_if)
 	snp_log_print = log_if;
 
 	SNP_NOTICE("snp setup log if %p success\r\n", log_if);
+
+	return SNP_RET_OK;
+}
+
+
+/**
+ * @brief 设置协议栈动态内存分配相关接口
+ * @param malloc_if 动态内存申请接口
+ * @param free_if 动态内存释放接口
+ * @return SNP_RET_TYPE SNP_RET_OK 成功 其它 失败
+ */
+SNP_RET_TYPE snp_set_mem_if(SNP_MALLOC malloc_if, SNP_FREE free_if)
+{
+	if (NULL == malloc_if || NULL == free_if)
+	{
+		return SNP_RET_NULLPTR_ERR;
+	}
+
+	snp_malloc = malloc_if;
+	snp_free = free_if;
 
 	return SNP_RET_OK;
 }
@@ -99,7 +126,7 @@ SNP_RET_TYPE snp_exec(struct SNP *handle)
  */
 struct SNP *snp_create(char *name, int32_t type, int32_t id)
 {
-	struct SNP *_new_snp = (struct SNP *)malloc(sizeof(struct SNP));
+	struct SNP *_new_snp = (struct SNP *)snp_malloc(sizeof(struct SNP));
 
 	if (NULL == _new_snp)
 	{

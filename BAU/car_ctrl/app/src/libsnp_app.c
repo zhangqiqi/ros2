@@ -120,8 +120,8 @@ void libsnp_app_init(void)
 	osSemaphoreDef(sem);
 	snp_set_sem_if(snp_handle, snp_wait_cb, snp_wake_cb, osSemaphoreCreate(osSemaphore(sem), 1));
 
-	// osThreadDef(libsnp_task_thread, libsnp_task_thread_exec, osPriorityBelowNormal, 0, 10240);
-	// osThreadCreate(osThread(libsnp_task_thread), NULL);
+	osThreadDef(libsnp_task_thread, libsnp_task_thread_exec, osPriorityNormal, 0, 2048);
+	osThreadCreate(osThread(libsnp_task_thread), NULL);
 
-	libsnp_task_thread_exec(NULL);
+	// libsnp_task_thread_exec(NULL);
 }
