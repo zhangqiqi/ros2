@@ -79,6 +79,16 @@ do\
 } while (false)
 
 
+#define SNP_DEBUG(fmt, ...) if (NULL != snp_log_print) snp_log_print(SLT_DEBUG, fmt, ##__VA_ARGS__);
+#define SNP_NOTICE(fmt, ...) if (NULL != snp_log_print) snp_log_print(SLT_NOTICE, fmt, ##__VA_ARGS__);
+#define SNP_ERROR(fmt, ...) if (NULL != snp_log_print) snp_log_print(SLT_ERROR, fmt, ##__VA_ARGS__);
+
+
+extern SNP_LOG_IF snp_log_print;
+
+extern SNP_MALLOC snp_malloc;
+extern SNP_FREE snp_free;
+
 
 #ifdef __cplusplus
 }

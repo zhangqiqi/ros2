@@ -4,19 +4,12 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stddef.h>
-// #include <memory.h>
-// #include <malloc.h>
 #include <stdbool.h>
 #include <string.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#define SNP_DEBUG(fmt, ...) if (NULL != snp_log_print) snp_log_print(SLT_DEBUG, fmt, ##__VA_ARGS__);
-#define SNP_NOTICE(fmt, ...) if (NULL != snp_log_print) snp_log_print(SLT_NOTICE, fmt, ##__VA_ARGS__);
-#define SNP_ERROR(fmt, ...) if (NULL != snp_log_print) snp_log_print(SLT_ERROR, fmt, ##__VA_ARGS__);
-
 
 struct SNP;
 struct SNP_NODE;
@@ -59,7 +52,9 @@ enum SNP_DEV_TYPE {
 
 
 typedef void (*SNP_LOG_IF)(enum SNP_LOG_TYPE type, char *fmt, ...);
-extern SNP_LOG_IF snp_log_print;
+
+typedef void *(*SNP_MALLOC)(uint32_t size);
+typedef void (*SNP_FREE)(void *);
 
 typedef int32_t (*SNP_LOCK)(void *handle);
 typedef int32_t (*SNP_UNLOCK)(void *handle);

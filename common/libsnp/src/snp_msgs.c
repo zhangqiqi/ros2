@@ -22,7 +22,7 @@ TAILQ_HEAD(SNP_MSGS_PUB_LIST, SNP_MSGS_PUB);
  */
 struct SNP_MSGS_PUB_LIST *snp_msgs_create_pub_list(void)
 {
-	struct SNP_MSGS_PUB_LIST *_ret_pub_list = (struct SNP_MSGS_PUB_LIST *)malloc(sizeof(struct SNP_MSGS_PUB_LIST));
+	struct SNP_MSGS_PUB_LIST *_ret_pub_list = (struct SNP_MSGS_PUB_LIST *)snp_malloc(sizeof(struct SNP_MSGS_PUB_LIST));
 
 	if (NULL != _ret_pub_list)
 	{
@@ -48,7 +48,7 @@ SNP_RET_TYPE snp_msgs_add_pub_cb(struct SNP_MSGS_PUB_LIST *pub_list, int32_t typ
 		return SNP_RET_NULLPTR_ERR;
 	}
 
-	struct SNP_MSGS_PUB *_new_msg_pub = (struct SNP_MSGS_PUB *)malloc(sizeof(struct SNP_MSGS_PUB));
+	struct SNP_MSGS_PUB *_new_msg_pub = (struct SNP_MSGS_PUB *)snp_malloc(sizeof(struct SNP_MSGS_PUB));
 	if (NULL == _new_msg_pub)
 	{
 		return SNP_RET_NO_MEM;

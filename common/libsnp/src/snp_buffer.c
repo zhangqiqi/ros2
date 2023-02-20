@@ -23,7 +23,7 @@ struct SNP_BUFFER {
  */
 struct SNP_BUFFER *snp_buffer_create(int32_t size)
 {
-	struct SNP_BUFFER *_new_buffer = (struct SNP_BUFFER *)malloc(sizeof(struct SNP_BUFFER) + size);
+	struct SNP_BUFFER *_new_buffer = (struct SNP_BUFFER *)snp_malloc(sizeof(struct SNP_BUFFER) + size);
 
 	if (NULL != _new_buffer)
 	{

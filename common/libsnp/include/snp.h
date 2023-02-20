@@ -20,6 +20,8 @@ void snp_set_sem_if(struct SNP *snp, SNP_SEM_WAIT wait, SNP_SEM_WAKE wake, void 
 /**< 协议栈通用配置接口 */
 SNP_RET_TYPE snp_set_log_if(SNP_LOG_IF log_if);
 
+SNP_RET_TYPE snp_set_mem_if(SNP_MALLOC malloc_if, SNP_FREE free_if);
+
 void snp_print_all(struct SNP *handle);
 
 #ifdef __cplusplus

@@ -22,7 +22,7 @@ struct SNP_LINK *snp_link_create(struct SNP_NODE *src, struct SNP_NODE *dst, enu
 		return _new_link;
 	}
 
-	_new_link = (struct SNP_LINK *)malloc(sizeof(struct SNP_LINK));
+	_new_link = (struct SNP_LINK *)snp_malloc(sizeof(struct SNP_LINK));
 	if (NULL != _new_link)
 	{
 		memset(_new_link, 0, sizeof(struct SNP_LINK));
@@ -49,7 +49,7 @@ struct SNP_LINK *snp_link_create(struct SNP_NODE *src, struct SNP_NODE *dst, enu
  */
 struct SNP_NODE *snp_node_create(struct SNP_NODE_LIST *node_list, char *name, int32_t type, int32_t id)
 {
-	struct SNP_NODE *_snp_node = (struct SNP_NODE *)malloc(sizeof(struct SNP_NODE));
+	struct SNP_NODE *_snp_node = (struct SNP_NODE *)snp_malloc(sizeof(struct SNP_NODE));
 
 	if (NULL != _snp_node)
 	{
@@ -80,7 +80,7 @@ struct SNP_NODE *snp_node_create(struct SNP_NODE_LIST *node_list, char *name, in
  */
 struct SNP_NODE_LIST *snp_node_list_create()
 {
-	struct SNP_NODE_LIST *_snp_node_list = (struct SNP_NODE_LIST *)malloc(sizeof(struct SNP_NODE_LIST));
+	struct SNP_NODE_LIST *_snp_node_list = (struct SNP_NODE_LIST *)snp_malloc(sizeof(struct SNP_NODE_LIST));
 
 	if (NULL != _snp_node_list)
 	{

@@ -1,3 +1,4 @@
+#include "snp_defs_p.h"
 #include "snp_parse.h"
 #include "snp_msgs.h"
 
