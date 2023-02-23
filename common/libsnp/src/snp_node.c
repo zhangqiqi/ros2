@@ -221,12 +221,42 @@ int32_t snp_link_write(struct SNP_LINK *link, int32_t msg_type, void *msg, int32
 
 
 /**
- * @brief 广播节点消息
+ * @brief 从指定节点广播一条消息
+ * @param node 指定节点对象
+ * @param msg_type 消息类型
+ * @param msg 消息体
+ * @param size 消息体大小
+ * @return int32_t SNP_RET_OK 成功 其它 失败
+ */
+int32_t snp_node_broadcast_msg(struct SNP_NODE *node, int32_t msg_type, void *msg, int32_t size)
+{
+	struct SNP_LINK *_link = NULL;
+
+	if (NULL == node)
+	{
+		return SNP_RET_NULLPTR_ERR;
+	}
+
+	SNP_LOCK(node);
+
+	LIST_FOREACH(_link, &node->links, LINK)
+	{
+		snp_link_send_broadcast_msg(_link, msg_type, msg, size);
+	}
+
+	SNP_UNLOCK(node);
+
+	return SNP_RET_OK;
+}
+
+
+/**
+ * @brief 传递广播消息
  * @param[in] link 消息所属的连接
  * @param[in] frame 消息帧
  * @return SNP_RET_OK 成功 其它 失败
  */
-static SNP_RET_TYPE snp_node_msg_boardcast(struct SNP_LINK *link, struct SNP_FRAME *frame)
+static SNP_RET_TYPE snp_node_broadcast_msg_forward(struct SNP_LINK *link, struct SNP_FRAME *frame)
 {
 	struct SNP_NODE *src_node = link->src_node;
 	struct SNP_LINK *_var_link = NULL;
@@ -239,12 +269,7 @@ static SNP_RET_TYPE snp_node_msg_boardcast(struct SNP_LINK *link, struct SNP_FRA
 			continue;
 		}
 		/**< 有连接能够发送数据，则尝试转发该消息 */
-		if (NULL != _var_link->link_write)
-		{
-			snp_buffer_write(_var_link->write_buffer, (uint8_t *)frame, sizeof(struct SNP_FRAME) + frame->frame_len);
-
-			_var_link->link_write(_var_link->rw_handle, _var_link->write_buffer);
-		}
+		snp_link_forward_msg(_var_link, frame);
 	}
 
 	return SNP_RET_OK;
@@ -271,13 +296,8 @@ static SNP_RET_TYPE snp_node_msg_forward(struct SNP_LINK *link, struct SNP_FRAME
 			continue;
 		}
 		/**< 有连接的目标节点，和该条消息的目标节点一致，使用该节点进行消息的传递 */
-		if (NULL != _var_link->link_write)
-		{
-			snp_buffer_write(_var_link->write_buffer, (uint8_t *)frame, sizeof(struct SNP_FRAME) + frame->frame_len);
-
-			_var_link->link_write(_var_link->rw_handle, _var_link->write_buffer);
-			break;
-		}
+		snp_link_forward_msg(_var_link, frame);
+		break;
 	}
 
 	if (NULL == _var_link)
@@ -361,11 +381,11 @@ static SNP_RET_TYPE snp_node_msg_proc(struct SNP_LINK *link, struct SNP_FRAME *f
 		/**< 本机尝试处理消息 */
 		ret = snp_node_msg_publish(link, frame);
 	}
-	else if (SNP_BOARDCAST_ID == frame->dst_node_id)
+	else if (SNP_BROADCAST_ID == frame->dst_node_id)
 	{
 		/**< 广播消息，本机尝试处理消息，并转发该广播 */
 		ret = snp_node_msg_publish(link, frame);
-		ret = snp_node_msg_boardcast(link, frame);
+		ret = snp_node_broadcast_msg_forward(link, frame);
 	}
 	else if (frame->dst_node_id == src_node->id)
 	{

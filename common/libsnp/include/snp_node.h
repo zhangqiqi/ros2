@@ -15,7 +15,14 @@ struct SNP_NODE_LIST;
 
 struct SNP_NODE_LIST *snp_node_list_create();
 
+struct SNP_NODE *snp_node_create(struct SNP_NODE_LIST *node_list, char *name, int32_t type, int32_t id);
+
+void snp_node_destory(struct SNP_NODE *node);
+
 void snp_node_exec(struct SNP_NODE_LIST *node_list);
+
+int32_t snp_node_broadcast_msg(struct SNP_NODE *node, int32_t msg_type, void *msg, int32_t size);
+
 
 /**< 节点访问相关节点 */
 struct SNP_NODE *snp_node_get_root(struct SNP_NODE_LIST *node_list);
@@ -28,10 +35,6 @@ struct SNP_LINK *snp_link_get_by_id(struct SNP_NODE *src_node, int32_t id);
 
 int32_t snp_link_write(struct SNP_LINK *link, int32_t msg_type, void *msg, int32_t size);
 
-/**< 节点构造相关接口 */
-struct SNP_NODE *snp_node_create(struct SNP_NODE_LIST *node_list, char *name, int32_t type, int32_t id);
-
-void snp_node_destory(struct SNP_NODE *node);
 
 /**< 节点调测相关接口 */
 void snp_nodes_print_all(struct SNP_NODE_LIST *node_list);

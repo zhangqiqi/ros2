@@ -16,7 +16,7 @@ int32_t test_snp_link_read(void *handle, struct SNP_BUFFER *buffer)
 	struct SNP_NODE *_node = (struct SNP_NODE *)handle;
 
 	frame.src_node_id = _node->id;
-	frame.dst_node_id = SNP_BOARDCAST_ID;
+	frame.dst_node_id = SNP_BROADCAST_ID;
 	frame.frame_type = SSM_DISCOVERY_RES;
 	frame.frame_seq = _node->seq++;
 

@@ -221,6 +221,31 @@ int32_t snp_send_msg_by_node(struct SNP *handle, struct SNP_NODE *dst_node, int3
 
 
 /**
+ * @brief 从协议栈广播一条消息
+ * @param handle 目标协议栈对象
+ * @param msg_type 消息类型
+ * @param msg 消息体
+ * @param size 消息体长度
+ * @return int32_t SNP_RET_OK 成功 其它 失败
+ */
+int32_t snp_broadcast_msg(struct SNP *handle, int32_t msg_type, void *msg, int32_t size)
+{
+	if (NULL == handle)
+	{
+		SNP_ERROR("%s %d: handle ptr is %p\r\n", __func__, __LINE__, handle);
+		return SNP_RET_NULLPTR_ERR;
+	}
+
+	SNP_LOCK(handle);
+	struct SNP_NODE *root = snp_node_get_root(handle->nodes);
+	SNP_UNLOCK(handle);
+
+
+	return snp_node_broadcast_msg(root, msg_type, msg, size);
+}
+
+
+/**
  * @brief 向协议栈的指定节点发送消息
  * @param handle 协议栈对象
  * @param name 目标节点名

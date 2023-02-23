@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 
-#define SNP_BOARDCAST_ID (-1)      /**< 广播消息，标识需要接收到的节点，将该消息发送给该节点的所有可用连接 */
+#define SNP_BROADCAST_ID (-1)      /**< 广播消息，标识需要接收到的节点，将该消息发送给该节点的所有可用连接 */
 #define SNP_SINGLE_ID (0)      /**< 单连接消息，标识直接连接的两个节点的消息交互 */
 
 /**
@@ -18,7 +18,7 @@ extern "C" {
 struct SNP_FRAME {
 	int32_t magic;      /**< 栈帧识别符 */
 	int32_t src_node_id;      /**< 帧源设备标识符 */
-	int32_t dst_node_id;      /**< 帧目标设备标识符 SNP_BOARDCAST_ID SNP_SINGLE_ID 或任意有效节点ID值 */
+	int32_t dst_node_id;      /**< 帧目标设备标识符 SNP_BROADCAST_ID SNP_SINGLE_ID 或任意有效节点ID值 */
 	int32_t frame_type;      /**< 帧消息类型 */
 	int32_t frame_seq;      /**< 帧消息序列号 */
 	int32_t frame_len;      /**< 帧消息负载长度 */

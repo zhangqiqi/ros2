@@ -27,8 +27,13 @@ void snp_link_destory(struct SNP_LINK *link);
 
 int32_t snp_link_setup_rw_cb(struct SNP_LINK *link, SNP_LINK_READ read, SNP_LINK_WRITE write, void *handle);
 
+int32_t snp_link_forward_msg(struct SNP_LINK *link, struct SNP_FRAME *frame);
 
+int32_t snp_link_send_broadcast_msg(struct SNP_LINK *link, int32_t msg_type, void *msg, int32_t size);
 
+int32_t snp_link_send_single_msg(struct SNP_LINK *link, int32_t msg_type, void *msg, int32_t size);
+
+int32_t snp_link_send_direct_msg(struct SNP_LINK *link, int32_t msg_type, void *msg, int32_t size);
 
 #ifdef __cplusplus
 }

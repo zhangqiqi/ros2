@@ -20,9 +20,12 @@ SNP_RET_TYPE snp_exec(struct SNP *handle, int32_t elapsed_ms);
 struct SNP_NODE *snp_get_local_node(struct SNP *handle);
 
 int32_t snp_send_msg_by_node(struct SNP *handle, struct SNP_NODE *dst_node, int32_t msg_type, void *msg, int32_t size);
+
 int32_t snp_send_msg_by_name(struct SNP *handle, char *name, int32_t msg_type, void *msg, int32_t size);
+
 int32_t snp_send_msg_by_id(struct SNP *handle, int32_t id, int32_t msg_type, void *msg, int32_t size);
 
+int32_t snp_broadcast_msg(struct SNP *handle, int32_t msg_type, void *msg, int32_t size);
 
 /**< 协议栈通用配置接口 */
 SNP_RET_TYPE snp_set_log_if(SNP_LOG_IF log_if);
