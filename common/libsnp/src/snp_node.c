@@ -75,6 +75,15 @@ struct SNP_NODE *snp_node_create(struct SNP_NODE_LIST *node_list, char *name, in
 
 
 /**
+ * @brief 节点销毁接口
+ */
+void snp_node_destory(struct SNP_NODE *node)
+{
+
+}
+
+
+/**
  * @brief 创建节点列表对象
  * @return struct SNP_NODE_LIST* 
  */
@@ -93,69 +102,77 @@ struct SNP_NODE_LIST *snp_node_list_create()
 
 
 /**
- * @brief 获取节点的类型信息
- * @param node 目标节点对象
- * @return 获取到的类型信息
+ * @brief 获取源节点和目标节点的可用连接路径，通过目标节点对象搜索
+ * @param src 源节点
+ * @param dst 目的节点
+ * @return 得到的可用连接 NULL 目标节点不可达
  */
-int32_t snp_node_get_type(struct SNP_NODE *node)
+struct SNP_LINK *snp_link_get(struct SNP_NODE *src_node, struct SNP_NODE *dst)
 {
-	if (NULL == node)
+	struct SNP_LINK *_link = NULL;
+	SNP_LOCK(src_node);
+
+	LIST_FOREACH(_link, &src_node->links, LINK)
 	{
-		return SDT_UNKNOWN_DEV;
+		if (dst == _link->dst_node)
+		{
+			break;
+		}
 	}
 
-	return node->type;
+	SNP_UNLOCK(src_node);
+
+	return _link;
 }
 
 
 /**
- * @brief 获取节点的标识符信息
- * @param node 目标节点对象
- * @return 获取到的标识符信息
+ * @brief 获取源节点和目标节点的可用连接路径，通过目标节点名搜索
+ * @param src 源节点
+ * @param name 目标节点名
+ * @return 得到的可用连接 NULL 目标节点不可
  */
-int32_t snp_node_get_id(struct SNP_NODE *node)
+struct SNP_LINK *snp_link_get_by_name(struct SNP_NODE *src_node, char *name)
 {
-	if (NULL == node)
+	struct SNP_LINK *_link = NULL;
+	SNP_LOCK(src_node);
+
+	LIST_FOREACH(_link, &src_node->links, LINK)
 	{
-		return SNP_RET_NULLPTR_ERR;
+		if (0 == strcmp(_link->dst_node->name, name))
+		{
+			break;
+		}
 	}
 
-	return node->id;
+	SNP_UNLOCK(src_node);
+
+	return _link;
 }
 
 
 /**
- * @brief 获取节点的seq信息
- * @param node 目标节点
- * @return 获取到的节点seq值
+ * @brief 获取源节点和目标节点的可用连接路径，通过目标节点id搜索
+ * @param src 源节点
+ * @param id 目标节点id
+ * @return 得到的可用连接 NULL 目标节点不可
  */
-int32_t snp_node_get_seq(struct SNP_NODE *node)
+struct SNP_LINK *snp_link_get_by_id(struct SNP_NODE *src_node, int32_t id)
 {
-	if (NULL == node)
+	struct SNP_LINK *_link = NULL;
+	SNP_LOCK(src_node);
+
+	LIST_FOREACH(_link, &src_node->links, LINK)
 	{
-		return SNP_RET_NULLPTR_ERR;
+		if (id == _link->dst_node->id)
+		{
+			break;
+		}
 	}
 
-	return node->seq;
-}
+	SNP_UNLOCK(src_node);
 
-
-/**
- * @brief 获取节点名字符串
- * @param node 目标节点对象
- * @param name 节点名字符串写入地址
- * @param size 节点名写入地址区域大小
- * @return 获取到的节点名数据长度 小于0 失败
- */
-int32_t snp_node_get_name(struct SNP_NODE *node, char *name, int32_t size)
-{
-	if (NULL == node)
-	{
-		return SNP_RET_NULLPTR_ERR;
-	}
-
-	strncpy(name, node->name, size - 1);
-	return strlen(node->name) + 1;
+	return _link;
 }
 
 
@@ -251,6 +268,38 @@ SNP_RET_TYPE snp_link_setup_rw_cb(struct SNP_LINK *link, SNP_LINK_READ read, SNP
 	link->rw_handle = handle;
 
 	return SNP_RET_OK;
+}
+
+
+/**
+ * @brief 通过连接发送消息
+ * @param link 目标连接
+ * @param msg_type 消息类型
+ * @param msg 消息数据
+ * @param size 消息数据长度
+ * @return 发送成功的数据长度
+ */
+int32_t snp_link_write(struct SNP_LINK *link, int32_t msg_type, void *msg, int32_t size)
+{
+	if (NULL == link || NULL == link->link_write)
+	{
+		return 0;
+	}
+
+	struct SNP_FRAME frame = {
+		.src_node_id = link->src_node->id,
+		.dst_node_id = link->dst_node->id,
+		.frame_type = msg_type,
+		.frame_seq = link->src_node->seq++
+	};
+
+	if (NULL != link->write_buffer)
+	{
+		snp_proto_pack(link->write_buffer, &frame, (uint8_t *)msg, size);
+		return link->link_write(link->rw_handle, link->write_buffer);
+	}
+	
+	return 0;
 }
 
 

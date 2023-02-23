@@ -18,6 +18,8 @@ enum SNP_STD_MSGS_TYPE {
 	SSM_DISCOVERY_REQ,      /**< 设备发现请求 */
 	SSM_DISCOVERY_RES,      /**< 设备发现请求响应 */
 
+	SSM_LOG_MSG,      /**< 标准日志消息 */
+
 	SSM_APP_MSG_FIELD_BEGIN = 1024,      /**< 应用层消息域起始枚举 应用层协议号从此开始 */
 };
 

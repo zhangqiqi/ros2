@@ -1,0 +1,5 @@
+#ifndef __LIBSNP_INCLUDE_SNP_LINK_H__
+#define __LIBSNP_INCLUDE_SNP_LINK_H__
+
+
+#endif // __LIBSNP_INCLUDE_SNP_LINK_H__
