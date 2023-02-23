@@ -9,22 +9,9 @@
 extern "C" {
 #endif
 
-/**
- * @brief 连接对象类型
- */
-enum SNP_LINK_TYPE {
-	SLT_UNKNOWN,      /**< 未知类型 */
-	SLT_PHYSICAL_LINK,      /**< 物理连接 */
-	SLT_SOFTWARE_LINK,      /**< 软件连接 */
-	SLT_VIRTUAL_LINK,      /**< 虚拟连接 */
-};
-
 
 struct SNP_NODE;
 struct SNP_NODE_LIST;
-
-typedef int32_t (*SNP_LINK_READ)(void *handle, struct SNP_BUFFER *buffer);
-typedef int32_t (*SNP_LINK_WRITE)(void *handle, struct SNP_BUFFER *buffer);
 
 struct SNP_NODE_LIST *snp_node_list_create();
 
@@ -43,12 +30,8 @@ int32_t snp_link_write(struct SNP_LINK *link, int32_t msg_type, void *msg, int32
 
 /**< 节点构造相关接口 */
 struct SNP_NODE *snp_node_create(struct SNP_NODE_LIST *node_list, char *name, int32_t type, int32_t id);
+
 void snp_node_destory(struct SNP_NODE *node);
-
-/**< 连接构造相关接口 */
-struct SNP_LINK *snp_link_create(struct SNP_NODE *src, struct SNP_NODE *dst, enum SNP_LINK_TYPE type);
-
-SNP_RET_TYPE snp_link_setup_rw_cb(struct SNP_LINK *link, SNP_LINK_READ read, SNP_LINK_WRITE write, void *handle);
 
 /**< 节点调测相关接口 */
 void snp_nodes_print_all(struct SNP_NODE_LIST *node_list);

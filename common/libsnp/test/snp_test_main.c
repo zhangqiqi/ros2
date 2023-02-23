@@ -2,7 +2,6 @@
 #include "snp_node.h"
 #include "snp_buffer.h"
 #include "snp_msgs.h"
-#include "snp_parse.h"
 #include "snp_node_internal.h"
 
 #include <stdio.h>
@@ -16,16 +15,16 @@ int32_t test_snp_link_read(void *handle, struct SNP_BUFFER *buffer)
 
 	struct SNP_NODE *_node = (struct SNP_NODE *)handle;
 
-	frame.src_node_id = snp_node_get_id(_node);
+	frame.src_node_id = _node->id;
 	frame.dst_node_id = SNP_BOARDCAST_ID;
 	frame.frame_type = SSM_DISCOVERY_RES;
 	frame.frame_seq = _node->seq++;
 
-	snp_node_get_name(_node, msg.name, sizeof(msg.name));
-	msg.type = snp_node_get_type(_node);
-	msg.id = snp_node_get_id(_node);
+	strncpy(msg.name, _node->name, sizeof(msg.name));
+	msg.type = _node->type;
+	msg.id = _node->id;
 
-	int pack_size = snp_proto_pack(buffer, &frame, (uint8_t *)&msg, sizeof(msg));
+	int pack_size = snp_msgs_pack(buffer, &frame, (uint8_t *)&msg, sizeof(msg));
 	printf("read buffer size: %d\r\n", pack_size);
 
 	return 0;

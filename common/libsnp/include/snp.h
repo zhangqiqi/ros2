@@ -3,6 +3,7 @@
 
 #include "snp_defs.h"
 #include "snp_node.h"
+#include "snp_link.h"
 
 #ifdef __cplusplus
 extern "C" {

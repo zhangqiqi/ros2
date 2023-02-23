@@ -2,7 +2,6 @@
 #include "snp_defs_p.h"
 #include "snp_msgs.h"
 #include "snp_std_msgs.h"
-#include "snp_parse.h"
 #include "snp_node_internal.h"
 
 
@@ -31,7 +30,7 @@ int32_t snp_node_dev_discovery(struct SNP_LINK *link)
 
 	strncpy(discovery_req_msg.name, link->src_node->name, sizeof(discovery_req_msg.name) - 1);
 
-	snp_proto_pack(link->write_buffer, &frame, (uint8_t *)&discovery_req_msg, sizeof(discovery_req_msg));
+	snp_msgs_pack(link->write_buffer, &frame, (uint8_t *)&discovery_req_msg, sizeof(discovery_req_msg));
 
 	link->link_write(link->rw_handle, link->write_buffer);
 
@@ -66,7 +65,7 @@ static int32_t snp_node_dev_discovery_req_msg_proc(void *cb_handle, struct SNP_L
 	res_msg.id = link->src_node->id;
 	strncpy(res_msg.name, link->src_node->name, sizeof(res_msg.name) - 1);
 
-	snp_proto_pack(link->write_buffer, &frame, (uint8_t *)&res_msg, sizeof(res_msg));
+	snp_msgs_pack(link->write_buffer, &frame, (uint8_t *)&res_msg, sizeof(res_msg));
 
 	return 0;
 }

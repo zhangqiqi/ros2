@@ -30,6 +30,10 @@ struct SNP_MSGS_PUB_LIST;
 
 typedef int32_t (*SNP_MSG_CB)(void *cb_handle, struct SNP_LINK *link, struct SNP_FRAME *msg);
 
+uint32_t snp_msgs_unpack(struct SNP_BUFFER *buffer, struct SNP_FRAME **frame);
+
+uint32_t snp_msgs_pack(struct SNP_BUFFER *buffer, struct SNP_FRAME *frame, uint8_t *msg, int32_t len);
+
 struct SNP_MSGS_PUB_LIST *snp_msgs_create_pub_list(void);
 
 SNP_RET_TYPE snp_msgs_add_pub_cb(struct SNP_MSGS_PUB_LIST *pub_list, int32_t type, SNP_MSG_CB msg_cb, void *cb_handle);

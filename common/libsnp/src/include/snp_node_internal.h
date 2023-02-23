@@ -4,6 +4,7 @@
 #include "snp_defs.h"
 #include "snp_defs_p.h"
 #include "snp_node.h"
+#include "snp_link.h"
 
 #include "queue.h"
 

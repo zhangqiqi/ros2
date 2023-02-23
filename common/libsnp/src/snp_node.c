@@ -1,42 +1,10 @@
 #include "snp_node.h"
-#include "snp_parse.h"
 #include "snp_defs_p.h"
 #include "snp_msgs.h"
 #include "snp_node_internal.h"
 #include "snp_std_process.h"
 
 
-/**
- * @brief 创建节点连接构造接口
- * @param src 连接的源节点
- * @param dst 连接的目标节点
- * @param type 创建的新连接的连接类型
- * @return struct SNP_LINK* 
- */
-struct SNP_LINK *snp_link_create(struct SNP_NODE *src, struct SNP_NODE *dst, enum SNP_LINK_TYPE type)
-{
-	struct SNP_LINK *_new_link = NULL;
-
-	if (NULL == src || NULL == dst)
-	{
-		return _new_link;
-	}
-
-	_new_link = (struct SNP_LINK *)snp_malloc(sizeof(struct SNP_LINK));
-	if (NULL != _new_link)
-	{
-		memset(_new_link, 0, sizeof(struct SNP_LINK));
-		_new_link->src_node = src;
-		_new_link->dst_node = dst;
-		_new_link->link_type = type;
-
-		SNP_LOCK(src);
-		LIST_INSERT_HEAD(&src->links, _new_link, LINK);
-		SNP_UNLOCK(src);
-	}
-
-	return _new_link;
-}
 
 
 /**
@@ -107,7 +75,7 @@ struct SNP_NODE_LIST *snp_node_list_create()
  * @param dst 目的节点
  * @return 得到的可用连接 NULL 目标节点不可达
  */
-struct SNP_LINK *snp_link_get(struct SNP_NODE *src_node, struct SNP_NODE *dst)
+struct SNP_LINK *snp_link_get_by_node(struct SNP_NODE *src_node, struct SNP_NODE *dst)
 {
 	struct SNP_LINK *_link = NULL;
 	SNP_LOCK(src_node);
@@ -221,57 +189,6 @@ struct SNP_NODE *snp_node_get_root(struct SNP_NODE_LIST *node_list)
 
 
 /**
- * @brief 设置连接的读写接口
- * @param[in] link 待设置的连接对象
- * @param[in] read 读接口函数
- * @param[in] write 写接口函数
- * @param[in] handle 读写接口操作句柄
- * @return SNP_RET_OK 成功 其它 失败
- */
-SNP_RET_TYPE snp_link_setup_rw_cb(struct SNP_LINK *link, SNP_LINK_READ read, SNP_LINK_WRITE write, void *handle)
-{
-	if (NULL == link)
-	{
-		return SNP_RET_NULLPTR_ERR;
-	}
-
-	if (NULL != read)
-	{
-		/**< 初始化读接口相关资源 */
-		if (NULL == link->read_buffer)
-		{
-			link->read_buffer = snp_buffer_create(SNP_DEFAULT_BUFFER_SIZE);
-		}
-
-		if (NULL == link->read_buffer)
-		{
-			return SNP_RET_NO_MEM;
-		}
-		link->link_read = read; 
-	}
-
-	if (NULL != write)
-	{
-		/**< 初始化写接口相关资源 */
-		if (NULL == link->write_buffer)
-		{
-			link->write_buffer = snp_buffer_create(SNP_DEFAULT_BUFFER_SIZE);
-		}
-
-		if (NULL == link->write_buffer)
-		{
-			return SNP_RET_NO_MEM;
-		}
-		link->link_write = write;
-	}
-
-	link->rw_handle = handle;
-
-	return SNP_RET_OK;
-}
-
-
-/**
  * @brief 通过连接发送消息
  * @param link 目标连接
  * @param msg_type 消息类型
@@ -295,7 +212,7 @@ int32_t snp_link_write(struct SNP_LINK *link, int32_t msg_type, void *msg, int32
 
 	if (NULL != link->write_buffer)
 	{
-		snp_proto_pack(link->write_buffer, &frame, (uint8_t *)msg, size);
+		snp_msgs_pack(link->write_buffer, &frame, (uint8_t *)msg, size);
 		return link->link_write(link->rw_handle, link->write_buffer);
 	}
 	
@@ -478,7 +395,7 @@ static void snp_link_exec(struct SNP_LINK *link)
 	{
 		link->link_read(link->rw_handle, link->read_buffer);
 
-		uint32_t drain_size = snp_proto_unpack(link->read_buffer, &_new_frame);
+		uint32_t drain_size = snp_msgs_unpack(link->read_buffer, &_new_frame);
 		if (NULL != _new_frame)
 		{
 			/**< 从连接中得到了新帧，识别并转换为系统消息，发布给对应的消息处理函数 */
