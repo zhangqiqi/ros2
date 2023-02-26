@@ -3,6 +3,7 @@
 #include "snp_buffer.h"
 #include "snp_msgs.h"
 #include "snp_node_internal.h"
+#include "snp_buffer_link.h"
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -49,7 +50,100 @@ int32_t test_snp_link_write(void *handle, struct SNP_BUFFER *buffer)
 }
 
 
-int main(int argc, char **argv)
+/**
+ * @brief 多设备组网测试
+ * @param cnt 执行循环次数
+ */
+static void snp_dev_network_sync_test(int32_t cnt)
+{
+	/**< 协议栈 1 构造 */
+	struct SNP *snp_relay_server_1 = snp_create("relay_server1", SDT_RELAY_SERVER, 1);
+	snp_create_software_node(snp_relay_server_1, NULL, NULL, NULL);
+	snp_create_software_node(snp_relay_server_1, NULL, NULL, NULL);
+
+
+	/**< 协议栈 2 构造 */
+	struct SNP *snp_relay_server_2 = snp_create("relay_server2", SDT_RELAY_SERVER, 2);
+	snp_create_software_node(snp_relay_server_2, NULL, NULL, NULL);
+	snp_create_software_node(snp_relay_server_2, NULL, NULL, NULL);
+	snp_create_software_node(snp_relay_server_2, NULL, NULL, NULL);
+
+	/**< 协议栈 3 构造 */
+	struct SNP *snp_relay_server_3 = snp_create("relay_server3", SDT_RELAY_SERVER, 3);
+	snp_create_software_node(snp_relay_server_3, NULL, NULL, NULL);
+	snp_create_software_node(snp_relay_server_3, NULL, NULL, NULL);
+
+	/**< 协议栈 1 和 2 建立关联 */
+	struct SNP_BUFFER_LINK *_test_buffer_link_1_to_2 = snp_buffer_link_create(1024);
+	snp_create_software_node(snp_relay_server_1, snp_buffer_link_src_read, snp_buffer_link_src_write, _test_buffer_link_1_to_2);
+	snp_create_software_node(snp_relay_server_2, snp_buffer_link_dst_read, snp_buffer_link_dst_write, _test_buffer_link_1_to_2);
+
+	/**< 协议栈2 和 3 建立关联 */
+	struct SNP_BUFFER_LINK *_test_buffer_link_2_to_3 = snp_buffer_link_create(1024);
+	snp_create_software_node(snp_relay_server_2, snp_buffer_link_src_read, snp_buffer_link_src_write, _test_buffer_link_2_to_3);
+	snp_create_software_node(snp_relay_server_3, snp_buffer_link_dst_read, snp_buffer_link_dst_write, _test_buffer_link_2_to_3);
+
+	int32_t cycle_cnt = 0;
+	do
+	{
+		// sleep(1);
+		printf("\r\nsnp wake up cnt: %d\r\n", ++cycle_cnt);
+		printf("######################### snp server 1 #################################\r\n");
+		snp_exec(snp_relay_server_1, 1 * 1000);
+		snp_print_all(snp_relay_server_1);
+		printf("########################################################################\r\n");
+
+		printf("######################### snp server 2 #################################\r\n");
+		snp_exec(snp_relay_server_2, 1 * 1000);
+		snp_print_all(snp_relay_server_2);
+		printf("########################################################################\r\n");
+
+		printf("######################### snp server 3 #################################\r\n");
+		snp_exec(snp_relay_server_3, 1 * 1000);
+		snp_print_all(snp_relay_server_3);
+		printf("########################################################################\r\n");
+	} while (--cnt);
+}
+
+
+/**
+ * @brief 缓存区连接测试
+ * @param cnt 执行循环次数
+ */
+static void snp_buffer_link_test(int32_t cnt)
+{
+	struct SNP *snp_relay_server_1 = snp_create("relay_server1", SDT_RELAY_SERVER, 1);
+	struct SNP *snp_relay_server_2 = snp_create("relay_server2", SDT_RELAY_SERVER, 2);
+
+	struct SNP_BUFFER_LINK *_test_buffer_link = snp_buffer_link_create(1024);
+
+	snp_create_software_node(snp_relay_server_1, snp_buffer_link_src_read, snp_buffer_link_src_write, _test_buffer_link);
+	snp_create_software_node(snp_relay_server_2, snp_buffer_link_dst_read, snp_buffer_link_dst_write, _test_buffer_link);
+
+	int32_t cycle_cnt = 0;
+	do
+	{
+		sleep(1);
+		printf("\r\nsnp wake up cnt: %d\r\n", ++cycle_cnt);
+		printf("######################### snp server 1 #################################\r\n");
+		snp_exec(snp_relay_server_1, 1 * 1000);
+		snp_print_all(snp_relay_server_1);
+		printf("########################################################################\r\n");
+
+		printf("######################### snp server 2 #################################\r\n");
+		snp_exec(snp_relay_server_2, 1 * 1000);
+		snp_print_all(snp_relay_server_2);
+		printf("########################################################################\r\n");
+	} while (--cnt);
+	
+}
+
+
+/**
+ * @brief 协议栈构造测试
+ * @param cnt 执行循环次数
+ */
+static void snp_construct_test(int32_t cnt)
 {
 	struct SNP *snp_relay_server_handle = snp_create("relay_server", SDT_RELAY_SERVER, 1);
 
@@ -65,13 +159,24 @@ int main(int argc, char **argv)
 
 	snp_print_all(snp_relay_server_handle);
 
-	int32_t cnt = 0;
+	int32_t cycle_cnt = 0;
 	do
 	{
-		sleep(1);
-		printf("\r\nsnp wake up cnt: %d\r\n", ++cnt);
+		// sleep(1);
+		printf("\r\nsnp wake up cnt: %d\r\n", ++cycle_cnt);
 		snp_exec(snp_relay_server_handle, 1 * 1000);
-	} while (true);
+	} while (--cnt);
+}
+
+
+int main(int argc, char **argv)
+{
+	snp_set_log_level(SLT_DEBUG);
+
+	snp_dev_network_sync_test(7);
+	// snp_buffer_link_test(1000);
+
+	// snp_construct_test(2);
 
 	return 0;
 }

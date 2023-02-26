@@ -18,12 +18,27 @@ enum SNP_LINK_TYPE {
 };
 
 
+/**
+ * @brief 读取数据到指定buffer
+ * @param handle 读操作句柄
+ * @param buffer 写入buffer
+ * @return 0 成功 其它 失败
+ */
 typedef int32_t (*SNP_LINK_READ)(void *handle, struct SNP_BUFFER *buffer);
+
+/**
+ * @brief 将buffer数据发送出去
+ * @param handle 写操作句柄
+ * @param buffer 读出buffer
+ * @return 0 成功 其它 失败
+ */
 typedef int32_t (*SNP_LINK_WRITE)(void *handle, struct SNP_BUFFER *buffer);
 
 struct SNP_LINK *snp_link_create(struct SNP_NODE *src, struct SNP_NODE *dst, enum SNP_LINK_TYPE type);
 
 void snp_link_destory(struct SNP_LINK *link);
+
+void snp_link_exec(struct SNP_LINK *link);
 
 int32_t snp_link_setup_rw_cb(struct SNP_LINK *link, SNP_LINK_READ read, SNP_LINK_WRITE write, void *handle);
 

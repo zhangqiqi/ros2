@@ -22,12 +22,19 @@ struct SNP_FRAME;
 struct SNP_MSGS_PUB_LIST;
 
 #define SNP_DEFAULT_BUFFER_SIZE (512)      /**< 默认创建协议栈每个缓存区的大小 */
+#define SNP_LINK_PROC_MSG_MAX_NUM (10)      /**< 连接单次处理消息的最大条数 */
+#define SNP_NETWORK_SYNC_TICK_CNT (5000)     /**< 协议栈网络同步计数 单位ms */
+#define SNP_SINGLE_NODE_LINK_NUM (16)      /**< 单个节点的最大连接个数 */
+#define SNP_NODE_NAME_SIZE (16)      /**< 节点名最大长度 */
+
 
 typedef int32_t SNP_RET_TYPE;
 #define SNP_RET_OK (0)      /**< 返回成功 */
 #define SNP_RET_NULLPTR_ERR (-1)      /**< 空指针错误 */
 #define SNP_RET_NO_MEM (-2)      /**< 内存不足 分配失败 */
 #define SNP_RET_MSG_SEQ_ERR (-3)      /**< 消息序号错误 */
+#define SNP_RET_DEV_NOT_DISCOVERED (-4)      /**< 设备还未被发现 */
+
 
 /**
  * @brief 调试信息输出枚举

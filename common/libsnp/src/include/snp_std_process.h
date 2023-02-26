@@ -8,10 +8,12 @@
 extern "C" {
 #endif
 
+int32_t snp_link_dev_discovery(struct SNP_LINK *link);
+
+int32_t snp_dev_network_sync(struct SNP_NODE *node);
 
 int32_t snp_std_process_setup(struct SNP_NODE *node);
 
-int32_t snp_node_dev_discovery(struct SNP_LINK *link);
 
 #ifdef __cplusplus
 }

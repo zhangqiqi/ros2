@@ -3,6 +3,11 @@
 
 
 /**
+ * @brief 获取缓存区数据长度
+ */
+#define BUFFER_DATA_LENGTH(buffer) ((buffer)->write_index - (buffer)->read_index)
+
+/**
  * @brief 缓存区管理结构体
  * 
  */
@@ -35,6 +40,16 @@ struct SNP_BUFFER *snp_buffer_create(int32_t size)
 	}
 
 	return _new_buffer;
+}
+
+
+/**
+ * @brief 销毁缓存区对象
+ * @param buffer 待销毁的缓存区对象
+ */
+void snp_buffer_destory(struct SNP_BUFFER *buffer)
+{
+
 }
 
 
@@ -147,6 +162,48 @@ int32_t snp_buffer_copyout_ptr(struct SNP_BUFFER *buffer, uint8_t **data, int32_
 	*data = buffer->buffer + buffer->read_index;
 
 	SNP_UNLOCK(buffer);
+
+	return ret_len;
+}
+
+
+/**
+ * @brief 从一个缓存区拷贝数据到另一个缓存区
+ * @param dst_buffer 目标缓存区
+ * @param src_buffer 源数据缓存区
+ * @return 实际拷贝的数据长度
+ */
+int32_t snp_buffer_copyout_from(struct SNP_BUFFER *dst_buffer, struct SNP_BUFFER *src_buffer)
+{
+	int32_t ret_len = 0;
+	int32_t copy_size = 0;
+
+	SNP_LOCK(src_buffer);
+	copy_size = BUFFER_DATA_LENGTH(src_buffer);
+	ret_len = snp_buffer_write(dst_buffer, src_buffer->buffer + src_buffer->read_index, copy_size);
+	SNP_UNLOCK(src_buffer);
+
+	return ret_len;
+}
+
+
+/**
+ * @brief 从一个缓存区读取数据到另一个缓存区
+ * @param dst_buffer 目标缓存区
+ * @param src_buffer 源缓存区
+ * @return 实际拷贝的数据长度
+ */
+int32_t snp_buffer_read_from(struct SNP_BUFFER *dst_buffer, struct SNP_BUFFER *src_buffer)
+{
+	int32_t ret_len = 0;
+	int32_t copy_size = 0;
+
+	SNP_LOCK(src_buffer);
+	copy_size = BUFFER_DATA_LENGTH(src_buffer);
+	ret_len = snp_buffer_write(dst_buffer, src_buffer->buffer + src_buffer->read_index, copy_size);
+	SNP_UNLOCK(src_buffer);
+
+	snp_buffer_drain(src_buffer, ret_len);
 
 	return ret_len;
 }

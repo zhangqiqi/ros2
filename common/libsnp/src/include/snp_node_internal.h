@@ -12,6 +12,11 @@
 extern "C" {
 #endif
 
+/**
+ * @brief 获取节点的可用seq，每次获取后，该seq都递增
+ */
+#define SNP_NODE_GET_NEW_SEQ(node) (((node)->seq++ <= 0) ? 1 : (node)->seq)
+
 
 /**
  * @brief @brief 系统节点连接描述结构
@@ -43,7 +48,7 @@ struct SNP_NODE
 {
 	SNP_LOCKER_CREATE();
 
-	char name[32];      /**< 节点设备名 */
+	char name[SNP_NODE_NAME_SIZE];      /**< 节点设备名 */
 	int32_t type;      /**< 节点设备类型 */
 	int32_t id;      /**< 节点标识符 */
 	int32_t seq;      /**< 节点消息序列号 每次发送一条从该节点发布的消息，seq需要 +1 */

@@ -1,5 +1,6 @@
 #include "snp_msgs.h"
 #include "snp_defs_p.h"
+#include "snp_buffer.h"
 
 #define SNP_MSG_MAGIC (0x5AA55AA5)      /**< 默认栈帧标识符 */
 
