@@ -38,10 +38,10 @@ struct SNP {
  */
 SNP_RET_TYPE snp_set_log_if(SNP_LOG_IF log_if)
 {
-	if (NULL == log_if)
-	{
-		return SNP_RET_NULLPTR_ERR;
-	}
+	// if (NULL == log_if)
+	// {
+	// 	return SNP_RET_NULLPTR_ERR;
+	// }
 
 	snp_log_print = log_if;
 

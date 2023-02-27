@@ -315,32 +315,33 @@ void node_recv_task(void const * argument)
 	memset(&ros_speed_data, 0, sizeof(ros_speed_data));
 	memset(rx_buf, 1, sizeof(rx_buf));
 	uint32_t t = 0;
-	HAL_UART_Receive_DMA(&huart2, recv_buf->rx_buf, recv_buf->rx_size);
+	// HAL_UART_Receive_DMA(&huart2, recv_buf->rx_buf, recv_buf->rx_size);
 	osSemaphoreWait(init_complete, osWaitForever);		/*�ȴ������ʼ�����*/	
 	while(1)
 	{
 		osSemaphoreWait(semnode_rx_cpt, 1);
-		recv_buf->pWritePtr = huart2.RxXferSize - huart2.hdmarx->Instance->NDTR;	/*�ܳ���-ʣ�೤�� = ���ճ���*/
-//		LOGI("..... parse_buf->pWritePtr:%d recv_buf->pWritePtr:%d huart1.RxXferSize:%d huart1.hdmarx->Instance->NDTR:%d recv_len:%d parse_buf->pReadPtr:%d recv_buf->pReadPtr:%d",
-//								parse_buf->pWritePtr, recv_buf->pWritePtr, huart1.RxXferSize, huart1.hdmarx->Instance->NDTR, recv_len, parse_buf->pReadPtr, recv_buf->pReadPtr);
-		recv_len = get_data_from_rx_buf(recv_buf, parse_buf->rx_buf + parse_buf->pWritePtr, parse_buf->rx_size - parse_buf->pWritePtr);
-		if(recv_len == 0)
-		{
-			//return;
-		}
-		else
-		{
-			parse_buf->pWritePtr += recv_len;
-	//		LOGI("..... parse_buf->pWritePtr:%d recv_buf->pWritePtr:%d huart1.RxXferSize:%d huart1.hdmarx->Instance->NDTR:%d recv_len:%d parse_buf->pReadPtr:%d recv_buf->pReadPtr:%d",
-	//								parse_buf->pWritePtr, recv_buf->pWritePtr, huart1.RxXferSize, huart1.hdmarx->Instance->NDTR, recv_len, parse_buf->pReadPtr, recv_buf->pReadPtr);
+		osDelay(100 * 1000);
+// 		recv_buf->pWritePtr = huart2.RxXferSize - huart2.hdmarx->Instance->NDTR;	/*�ܳ���-ʣ�೤�� = ���ճ���*/
+// //		LOGI("..... parse_buf->pWritePtr:%d recv_buf->pWritePtr:%d huart1.RxXferSize:%d huart1.hdmarx->Instance->NDTR:%d recv_len:%d parse_buf->pReadPtr:%d recv_buf->pReadPtr:%d",
+// //								parse_buf->pWritePtr, recv_buf->pWritePtr, huart1.RxXferSize, huart1.hdmarx->Instance->NDTR, recv_len, parse_buf->pReadPtr, recv_buf->pReadPtr);
+// 		recv_len = get_data_from_rx_buf(recv_buf, parse_buf->rx_buf + parse_buf->pWritePtr, parse_buf->rx_size - parse_buf->pWritePtr);
+// 		if(recv_len == 0)
+// 		{
+// 			//return;
+// 		}
+// 		else
+// 		{
+// 			parse_buf->pWritePtr += recv_len;
+// 	//		LOGI("..... parse_buf->pWritePtr:%d recv_buf->pWritePtr:%d huart1.RxXferSize:%d huart1.hdmarx->Instance->NDTR:%d recv_len:%d parse_buf->pReadPtr:%d recv_buf->pReadPtr:%d",
+// 	//								parse_buf->pWritePtr, recv_buf->pWritePtr, huart1.RxXferSize, huart1.hdmarx->Instance->NDTR, recv_len, parse_buf->pReadPtr, recv_buf->pReadPtr);
 
-	//		LOGI("..... %d %d", parse_buf->pWritePtr, recv_buf->pWritePtr);
-			parse_speed_cmd(parse_buf);
-	        //�����������ٶ�
-			LOGI("odometry_right %f odometry_left %f", ros_speed_data.right_motor_data, ros_speed_data.left_motor_data);
-			//odometry_right = ros_speed_data.right_motor_data;
-			//odometry_left = ros_speed_data.left_motor_data;
-		}
+// 	//		LOGI("..... %d %d", parse_buf->pWritePtr, recv_buf->pWritePtr);
+// 			parse_speed_cmd(parse_buf);
+// 	        //�����������ٶ�
+// 			LOGI("odometry_right %f odometry_left %f", ros_speed_data.right_motor_data, ros_speed_data.left_motor_data);
+// 			//odometry_right = ros_speed_data.right_motor_data;
+// 			//odometry_left = ros_speed_data.left_motor_data;
+// 		}
 		
 
 	}
