@@ -5,6 +5,8 @@
 #include "snp_node_internal.h"
 #include "snp_buffer_link.h"
 
+#include "libevent_tcp_link.h"
+
 #include <stdio.h>
 #include <stdarg.h>
 
@@ -47,6 +49,36 @@ int32_t test_snp_link_write(void *handle, struct SNP_BUFFER *buffer)
 	);
 
 	return len;
+}
+
+
+static void snp_dev_tcp_server_link_test(uint16_t port)
+{
+	struct SNP *snp_relay_server = snp_create("relay_server", SDT_RELAY_SERVER, 1);
+
+	void *tcp_handle = libevent_base_create();
+
+	libevent_tcp_server_link_create(tcp_handle, snp_relay_server, port);
+
+	libevent_tcp_link_exec(tcp_handle, snp_relay_server);
+}
+
+
+/**
+ * @brief tcp客户端连接测试
+ */
+static void snp_dev_tcp_client_link_test(uint16_t port)
+{
+	time_t timer;
+	timer = time(NULL);
+
+	struct SNP *snp_relay_server = snp_create("relay_server", SDT_RELAY_SERVER, timer % 10000);
+
+	void *tcp_handle = libevent_base_create();
+
+	libevent_tcp_client_link_create(tcp_handle, snp_relay_server, "127.0.0.1", port);
+
+	libevent_tcp_link_exec(tcp_handle, snp_relay_server);
 }
 
 
@@ -139,44 +171,33 @@ static void snp_buffer_link_test(int32_t cnt)
 }
 
 
-/**
- * @brief 协议栈构造测试
- * @param cnt 执行循环次数
- */
-static void snp_construct_test(int32_t cnt)
-{
-	struct SNP *snp_relay_server_handle = snp_create("relay_server", SDT_RELAY_SERVER, 1);
-
-	struct SNP_NODE *bau_monitor = snp_node_create(NULL, "bau_monitor", SDK_BAU_MONITOR, 10);
-	struct SNP_NODE *log_server = snp_node_create(NULL, "log_server", SDT_LOG_SERVER, 11);
-	struct SNP_NODE *alarm_server = snp_node_create(NULL, "alarm_server", SDT_ALARM_SERVER, 12);
-	struct SNP_NODE *timestamp_server = snp_node_create(NULL, "timestamp_server", SDT_TIMESTAMP_SERVER, 13);
-
-	snp_create_physical_node(snp_relay_server_handle, test_snp_link_read, test_snp_link_write, bau_monitor);
-	snp_create_physical_node(snp_relay_server_handle, test_snp_link_read, test_snp_link_write, log_server);
-	snp_create_physical_node(snp_relay_server_handle, test_snp_link_read, test_snp_link_write, alarm_server);
-	snp_create_physical_node(snp_relay_server_handle, test_snp_link_read, test_snp_link_write, timestamp_server);
-
-	snp_print_all(snp_relay_server_handle);
-
-	int32_t cycle_cnt = 0;
-	do
-	{
-		// sleep(1);
-		printf("\r\nsnp wake up cnt: %d\r\n", ++cycle_cnt);
-		snp_exec(snp_relay_server_handle, 1 * 1000);
-	} while (--cnt);
-}
-
-
 int main(int argc, char **argv)
 {
-	snp_set_log_level(SLT_DEBUG);
+	snp_set_log_level(SLT_NOTICE);
 
-	snp_dev_network_sync_test(7);
-	// snp_buffer_link_test(1000);
+	if (argc < 2)
+	{
+		snp_dev_network_sync_test(7);
+		return 0;
+	}
 
-	// snp_construct_test(2);
+	char *test_name = argv[1];
+
+	if (0 == strcmp(test_name, "shell_tcp_client"))
+	{
+		snp_shell_tcp_client_create("shell_client", SDT_SHELL_SERVER, "127.0.0.1", 9999);
+	}
+	else if (0 == strcmp(test_name, "tcp_server"))
+	{
+		snp_dev_tcp_server_link_test(9999);
+	}
+	else if (0 == strcmp(test_name, "tcp_client"))
+	{
+		snp_dev_tcp_client_link_test(9999);
+	}
+	else
+	{
+	}
 
 	return 0;
 }
