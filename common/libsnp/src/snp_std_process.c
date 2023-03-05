@@ -58,6 +58,10 @@ int32_t snp_dev_network_sync(struct SNP_NODE *node)
 	struct SNP_LINK *_var_link = NULL;
 	LIST_FOREACH(_var_link, &node->links, LINK)
 	{
+		if ((_var_link->dst_node->id <= 0) ||  (SDT_UNKNOWN_DEV == _var_link->dst_node->type))
+		{
+			continue;
+		}
 		msg->links[i].node_type = _var_link->dst_node->type;
 		msg->links[i].node_id = _var_link->dst_node->id;
 		strncpy(msg->links[i].node_name, _var_link->dst_node->name, sizeof(msg->links[i].node_name) - 1);
@@ -85,7 +89,7 @@ int32_t snp_dev_network_sync(struct SNP_NODE *node)
 			continue;
 		}
 
-		snp_msgs_pack(_var_link->write_buffer, &frame, (uint8_t *)msg, sizeof(struct SSM_DEV_LINK_MSG) * msg->link_num);
+		snp_msgs_pack(_var_link->write_buffer, &frame, (uint8_t *)msg, sizeof(struct SSM_DEV_NETWORK_BROADCAST_MSG) + sizeof(struct SSM_DEV_LINK_MSG) * msg->link_num);
 		_var_link->link_write(_var_link->rw_handle, _var_link->write_buffer);
 	}
 }
@@ -114,8 +118,6 @@ static int32_t snp_node_dev_discovery_req_msg_proc(void *cb_handle, struct SNP_L
 
 	snp_msgs_pack(link->write_buffer, &frame, (uint8_t *)&res_msg, sizeof(res_msg));
 
-	link->link_write(link->rw_handle, link->write_buffer);
-
 	return 0;
 }
 
@@ -141,6 +143,8 @@ static int32_t snp_node_dev_discovery_res_msg_proc(void *cb_handle, struct SNP_L
 	SNP_DEBUG("new node(%p) info update: type %d, id %d, name %s\r\n",
 		_dst_node, _dst_node->type, _dst_node->id, _dst_node->name
 	);
+
+
 	return 0;
 }
 
@@ -155,9 +159,82 @@ static int32_t snp_node_dev_discovery_res_msg_proc(void *cb_handle, struct SNP_L
 static int32_t snp_node_dev_network_broadcast_msg_proc(void *cb_handle, struct SNP_LINK *link, struct SNP_FRAME *msg)
 {
 	struct SSM_DEV_NETWORK_BROADCAST_MSG *_msg = (struct SSM_DEV_NETWORK_BROADCAST_MSG *)msg->payload;
-	SNP_DEBUG("snp dev network info update from node (name %s, type %d, id %d), this node link num is %d\r\n", 
+	SNP_NOTICE("snp dev network info update from node (name %s, type %d, id %d), this node link num is %d\r\n", 
 		_msg->name, _msg->type, _msg->id, _msg->link_num
 	);
+
+	/**< 先找一下发起设备网络同步的设备，是否是已知设备 */
+	struct SNP_NODE *dst_main_node = snp_node_get_by_id(link->src_node->snp->nodes, _msg->id);
+	if (NULL == dst_main_node)
+	{
+		SNP_NOTICE("device network sync msg main node(id:%d, type: %d, name: %s) not exist\r\n", 
+			_msg->id, _msg->type, _msg->name
+		);
+		dst_main_node = snp_node_create(link->src_node->snp, link->src_node->snp->nodes, _msg->name, _msg->type, _msg->id);
+	}
+
+	int i = 0;
+	for (i = 0; i < _msg->link_num; i++)
+	{
+		struct SSM_DEV_LINK_MSG *_link_msg = _msg->links + i;
+
+		if ((_link_msg->node_id <= 0) || (SDT_UNKNOWN_DEV == _link_msg->node_type))
+		{
+			continue;
+		}
+
+		struct SNP_NODE *_link_node = snp_node_get_by_id(link->src_node->snp->nodes, _link_msg->node_id);
+
+		if (NULL == _link_node)
+		{
+			SNP_NOTICE("device network sync msg sub node(id: %d, type: %d, name: %s) not exist\r\n",
+				_link_msg->node_id, _link_msg->link_type, _link_msg->node_name
+			);
+
+			_link_node = snp_node_create(link->src_node->snp, link->src_node->snp->nodes, _link_msg->node_name, _link_msg->link_type, _link_msg->node_id);
+		}
+
+		snp_link_create(dst_main_node, _link_node, SLT_VIRTUAL_LINK);
+	}
+
+	SNP_NOTICE("################### snp device network update ###################\r\n");
+	snp_print_all(link->src_node->snp);
+	SNP_NOTICE("#################################################################\r\n\r\n");
+}
+
+
+/**
+ * @brief 接收设备shell指令
+ * @param cb_handle 接收响应注册使用的应用句柄
+ * @param link 接收到消息的连接对象
+ * @param msg 接收到的消息体
+ * @return 0 成功 其它 失败
+ */
+static int32_t snp_node_dev_shell_req_msg_proc(void *cb_handle, struct SNP_LINK *link, struct SNP_FRAME *msg)
+{
+	struct SSM_SHELL_REQ_MSG *_msg = (struct SSM_SHELL_REQ_MSG *)msg->payload;
+
+	SNP_NOTICE("get new shell cmd from node %d, cmd len: %d, strlen: %d, cmd str: %s\r\n", 
+		link->dst_node->id, _msg->req_len, strlen(_msg->req_str), _msg->req_str
+	);
+
+	struct SNP_FRAME frame = {
+		.src_node_id = link->src_node->id,
+		.dst_node_id = msg->src_node_id,
+		.frame_type = SSM_SHELL_RES,
+		.frame_seq = SNP_NODE_GET_NEW_SEQ(link->src_node)
+	};
+
+	char res_str[256] = {0};
+	struct SSM_SHELL_RES_MSG *res_msg = (struct SSM_SHELL_RES_MSG *)res_str;
+
+	snprintf(res_msg->res_str, sizeof(res_str) - sizeof(struct SSM_SHELL_RES_MSG) - 1,
+		"%s/%d >> %s\r\n", link->src_node->name, link->src_node->id, _msg->req_str
+	);
+
+	res_msg->res_len = strlen(res_msg->res_str) + 1;
+
+	snp_msgs_pack(link->write_buffer, &frame, (uint8_t *)res_msg, sizeof(struct SSM_SHELL_RES_MSG) + res_msg->res_len);
 }
 
 
@@ -177,4 +254,6 @@ int32_t snp_std_process_setup(struct SNP_NODE *node)
 	snp_msgs_add_pub_cb(node->to, SSM_DISCOVERY_REQ, snp_node_dev_discovery_req_msg_proc, node);
 	snp_msgs_add_pub_cb(node->to, SSM_DISCOVERY_RES, snp_node_dev_discovery_res_msg_proc, node);
 	snp_msgs_add_pub_cb(node->to, SSM_DEV_NETWORK_BROADCAST, snp_node_dev_network_broadcast_msg_proc, node);
+
+	snp_msgs_add_pub_cb(node->to, SSM_SHELL_REQ, snp_node_dev_shell_req_msg_proc, node);
 }

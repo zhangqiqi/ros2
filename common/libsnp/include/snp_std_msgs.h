@@ -23,8 +23,11 @@ enum SNP_STD_MSGS_TYPE {
 	SSM_DISCOVERY_REQ,      /**< 设备发现请求 */
 	SSM_DISCOVERY_RES,      /**< 设备发现请求响应 */
 	SSM_DEV_NETWORK_BROADCAST,      /**< 节点连接信息广播 */
+	SSM_DEV_NETWORK_REBUILD,      /**< 设备网络重建请求 */
 
-	SSM_LOG_MSG,      /**< 标准日志消息 */
+	SSM_LOG_PRINT,      /**< 标准日志消息 */
+	SSM_SHELL_REQ,      /**< 标准shell指令请求 */
+	SSM_SHELL_RES,      /**< 标准shell指令响应 */
 
 	SSM_APP_MSG_FIELD_BEGIN = 1024,      /**< 应用层消息域起始枚举 应用层协议号从此开始 */
 };
@@ -70,6 +73,33 @@ struct SSM_DEV_NETWORK_BROADCAST_MSG {
 	int32_t id;      /**< 本节点的标识符 */
 	int32_t link_num;      /**< 本节点的直接连接个数 */
 	struct SSM_DEV_LINK_MSG links[];      /**< 连接描述数组，个数和 link_num 一致 */
+};
+
+
+/**
+ * @brief 日志打印消息结构
+ */
+struct SSM_LOG_PRINT_MSG {
+	int32_t log_str_len;      /**< 日志消息长度 */
+	char log_str[];      /**< 日志消息字符串 */
+};
+
+
+/**
+ * @brief shell指令请求字符串
+ */
+struct SSM_SHELL_REQ_MSG {
+	int32_t req_len;      /**< 请求消息长度 */
+	char req_str[];      /**< 请求消息字符串 */
+};
+
+
+/**
+ * @brief shell指令响应字符串
+ */
+struct SSM_SHELL_RES_MSG {
+	int32_t res_len;      /**< 响应消息长度 */
+	char res_str[];      /**< 响应消息字符串 */
 };
 
 

@@ -1,6 +1,8 @@
 #ifndef __LIBSNP_INCLUDE_SNP_DEFS_H__
 #define __LIBSNP_INCLUDE_SNP_DEFS_H__
 
+#define _POSIX_THREAD_SAFE_FUNCTIONS
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stddef.h>
@@ -34,6 +36,7 @@ typedef int32_t SNP_RET_TYPE;
 #define SNP_RET_NO_MEM (-2)      /**< 内存不足 分配失败 */
 #define SNP_RET_MSG_SEQ_ERR (-3)      /**< 消息序号错误 */
 #define SNP_RET_DEV_NOT_DISCOVERED (-4)      /**< 设备还未被发现 */
+#define SNP_RET_DIR_NOT_EXIST (-5)      /**< 消息路径不存在 */
 
 
 /**
@@ -54,9 +57,20 @@ enum SNP_DEV_TYPE {
 	SDT_RELAY_SERVER,      /**< 消息中继服务器 */
 	SDT_TIMESTAMP_SERVER,      /**< 时间戳服务器 */
 	SDT_LOG_SERVER,      /**< 日志服务器 */
+	SDT_SHELL_SERVER,      /**< shell服务器 */
 
 	SDT_ALARM_SERVER,      /**< 告警服务器 */
 	SDK_BAU_MONITOR,      /**< BAU主控制板 */
+};
+
+
+/**
+ * @brief 节点信息描述结构
+ */
+struct SNP_NODE_INFO {
+	char name[SNP_NODE_NAME_SIZE];      /**< 节点设备名 */
+	int32_t type;      /**< 节点设备类型 */
+	int32_t id;      /**< 节点标识符 */
 };
 
 

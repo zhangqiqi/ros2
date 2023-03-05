@@ -13,15 +13,17 @@ struct SNP;
 
 struct SNP *snp_create(char *name, int32_t type, int32_t id);
 
-struct SNP_NODE *snp_create_physical_node(struct SNP *handle, SNP_LINK_READ read, SNP_LINK_WRITE write, void *rw_handle);
+struct SNP_LINK *snp_create_physical_node(struct SNP *handle, SNP_LINK_READ read, SNP_LINK_WRITE write, void *rw_handle);
 
-struct SNP_NODE *snp_create_software_node(struct SNP *handle, SNP_LINK_READ read, SNP_LINK_WRITE write, void *rw_handle);
+struct SNP_LINK *snp_create_software_node(struct SNP *handle, SNP_LINK_READ read, SNP_LINK_WRITE write, void *rw_handle);
 
-struct SNP_NODE *snp_create_virtual_node(struct SNP *handle, SNP_LINK_READ read, SNP_LINK_WRITE write, void *rw_handle);
+struct SNP_LINK *snp_create_virtual_node(struct SNP *handle, SNP_LINK_READ read, SNP_LINK_WRITE write, void *rw_handle);
 
 SNP_RET_TYPE snp_exec(struct SNP *handle, int32_t elapsed_ms);
 
 struct SNP_NODE *snp_get_local_node(struct SNP *handle);
+
+int32_t snp_get_nodes_info(struct SNP *handle, struct SNP_NODE_INFO *nodes_info, int32_t cnt);
 
 int32_t snp_send_msg_by_node(struct SNP *handle, struct SNP_NODE *dst_node, int32_t msg_type, void *msg, int32_t size);
 
@@ -33,6 +35,8 @@ int32_t snp_broadcast_msg(struct SNP *handle, int32_t msg_type, void *msg, int32
 
 /**< 协议栈通用配置接口 */
 SNP_RET_TYPE snp_set_log_if(SNP_LOG_IF log_if);
+
+void snp_set_log_forward_enable(struct SNP *handle, bool en);
 
 void snp_set_log_level(enum SNP_LOG_TYPE level);
 

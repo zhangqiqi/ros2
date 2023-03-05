@@ -14,7 +14,6 @@ int32_t snp_dev_network_sync(struct SNP_NODE *node);
 
 int32_t snp_std_process_setup(struct SNP_NODE *node);
 
-
 #ifdef __cplusplus
 }
 #endif

@@ -22,6 +22,20 @@ struct SNP_LINK *snp_link_create(struct SNP_NODE *src, struct SNP_NODE *dst, enu
 		return _new_link;
 	}
 
+	/**< 先判断这两个节点是否已经有连接 */
+	LIST_FOREACH(_new_link, &src->links, LINK)
+	{
+		if (dst == _new_link->dst_node)
+		{
+			break;
+		}
+	}
+
+	if (NULL != _new_link)
+	{
+		return _new_link;
+	}
+
 	_new_link = (struct SNP_LINK *)snp_malloc(sizeof(struct SNP_LINK));
 	if (NULL != _new_link)
 	{
@@ -76,8 +90,8 @@ int32_t snp_link_setup_rw_cb(struct SNP_LINK *link, SNP_LINK_READ read, SNP_LINK
 		{
 			return SNP_RET_NO_MEM;
 		}
-		link->link_read = read; 
 	}
+	link->link_read = read; 
 
 	if (NULL != write)
 	{
@@ -91,8 +105,8 @@ int32_t snp_link_setup_rw_cb(struct SNP_LINK *link, SNP_LINK_READ read, SNP_LINK
 		{
 			return SNP_RET_NO_MEM;
 		}
-		link->link_write = write;
 	}
+	link->link_write = write;
 
 	link->rw_handle = handle;
 
@@ -164,7 +178,7 @@ int32_t snp_link_send_single_msg(struct SNP_LINK *link, int32_t msg_type, void *
 		.src_node_id = link->src_node->id,
 		.dst_node_id = SNP_SINGLE_ID,
 		.frame_type = msg_type,
-		.frame_seq = link->src_node->seq++
+		.frame_seq = SNP_NODE_GET_NEW_SEQ(link->src_node)
 	};
 
 	if (snp_msgs_pack(link->write_buffer, &frame, msg, size) > 0)
@@ -205,7 +219,7 @@ int32_t snp_link_send_direct_msg(struct SNP_LINK *link, int32_t msg_type, void *
 		.src_node_id = link->src_node->id,
 		.dst_node_id = link->dst_node->id,
 		.frame_type = msg_type,
-		.frame_seq = link->src_node->seq++
+		.frame_seq = SNP_NODE_GET_NEW_SEQ(link->src_node)
 	};
 
 	if (snp_msgs_pack(link->write_buffer, &frame, msg, size) > 0)
@@ -401,7 +415,7 @@ static SNP_RET_TYPE snp_link_msg_proc(struct SNP_LINK *link, struct SNP_FRAME *f
 	struct SNP_NODE *src_node = link->src_node;
 	struct SNP_NODE *dst_node = link->dst_node;
 
-	SNP_DEBUG("recv new msg, node src: %d, node dst: %d, frame type: %d, frame seq: %d\r\n", 
+	SNP_NOTICE("recv new msg, node src: %d, node dst: %d, frame type: %d, frame seq: %d\r\n", 
 		frame->src_node_id, frame->dst_node_id, frame->frame_type, frame->frame_seq
 	);
 
@@ -462,6 +476,10 @@ static int32_t snp_link_msg_read(struct SNP_LINK *link, int32_t max_msg_num)
 
 	while (proc_num < max_msg_num)
 	{
+		if (NULL == link->link_read)
+		{
+			break;
+		}
 		link->link_read(link->rw_handle, link->read_buffer);
 
 		struct SNP_FRAME *_new_frame = NULL;

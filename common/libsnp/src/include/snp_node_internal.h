@@ -48,6 +48,8 @@ struct SNP_NODE
 {
 	SNP_LOCKER_CREATE();
 
+	struct SNP *snp;      /**< 节点所属的协议栈对象 */
+
 	char name[SNP_NODE_NAME_SIZE];      /**< 节点设备名 */
 	int32_t type;      /**< 节点设备类型 */
 	int32_t id;      /**< 节点标识符 */
@@ -63,6 +65,18 @@ struct SNP_NODE
 
 
 TAILQ_HEAD(SNP_NODE_LIST, SNP_NODE);
+
+
+/**
+ * @brief 协议栈管理结构
+ */
+struct SNP {
+	SNP_LOCKER_CREATE();
+
+	uint32_t snp_tick;      /**< 协议栈的运行滴答，每次协议栈运行时更新，精度需要应用层保证 */
+	uint32_t snp_network_sync_tick;      /**< 协议栈组网信息同步滴答，倒计时方式 精度需要应用层保证 */
+	struct SNP_NODE_LIST *nodes;
+};
 
 
 #ifdef __cplusplus

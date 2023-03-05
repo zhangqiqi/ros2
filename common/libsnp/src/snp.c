@@ -4,11 +4,10 @@
 #include "snp_defs_p.h"
 #include "snp_std_process.h"
 
-// #include <memory.h>
-// #include <malloc.h>
-
 #include <stdio.h>
 #include <stdarg.h>
+#include <sys/time.h>
+#include <time.h>
 
 static enum SNP_LOG_TYPE snp_default_log_level = SLT_NOTICE;
 static void snp_default_log_if(enum SNP_LOG_TYPE type, char *fmt, ...);
@@ -17,17 +16,6 @@ SNP_LOG_IF snp_log_print = snp_default_log_if;      /**< 协议栈日志输出�
 
 SNP_MALLOC snp_malloc = malloc;      /**< 动态内存分配接口重载指针 */
 SNP_FREE snp_free = free;      /**< 动态内存释放接口重载指针 */
-
-/**
- * @brief 协议栈管理结构
- */
-struct SNP {
-	SNP_LOCKER_CREATE();
-
-	uint32_t snp_tick;      /**< 协议栈的运行滴答，每次协议栈运行时更新，精度需要应用层保证 */
-	uint32_t snp_network_sync_tick;      /**< 协议栈组网信息同步滴答，倒计时方式 精度需要应用层保证 */
-	struct SNP_NODE_LIST *nodes;
-};
 
 
 /**
@@ -38,10 +26,10 @@ struct SNP {
  */
 SNP_RET_TYPE snp_set_log_if(SNP_LOG_IF log_if)
 {
-	// if (NULL == log_if)
-	// {
-	// 	return SNP_RET_NULLPTR_ERR;
-	// }
+	if (NULL == log_if)
+	{
+		return SNP_RET_NULLPTR_ERR;
+	}
 
 	snp_log_print = log_if;
 
@@ -66,19 +54,41 @@ static void snp_default_log_if(enum SNP_LOG_TYPE type, char *fmt, ...)
 	};
 
 	static uint16_t cnt = 0;
-	char prefix[128] = {0};
+	char prefix[256] = {0};
 
 	if (type < snp_default_log_level)
 	{
 		return;
 	}
 
-	snprintf(prefix, sizeof(prefix) - 1, "[%5d][%s]%s", cnt++, type_str[type], fmt);
+	struct timeval tv = {0};
+	gettimeofday(&tv, NULL);
+
+	time_t timer;
+	timer = time(NULL);
+	struct tm tm = {0};
+	localtime_r(&timer, &tm);
+
+	snprintf(prefix, sizeof(prefix) - 1, "[%04d-%02d-%02d %02d:%02d:%02d.%6ld][%5d][%s]%s", 
+		(1900 + tm.tm_year), (1 + tm.tm_mon), tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec, tv.tv_usec,
+		cnt++, type_str[type], fmt
+	);
 
 	va_list args;
 	va_start(args, fmt);
 	vprintf(prefix, args);
 	va_end(args);
+}
+
+
+/**
+ * @brief 设置是否启用日志转发服务，启用日志转发服务，会将日志信息，自动转发给日志服务器
+ * @param handle 日志转发服务使用的日志服务器所属协议栈
+ * @param en true 使能 false 去使能
+ */
+void snp_set_log_forward_enable(struct SNP *handle, bool en)
+{
+
 }
 
 
@@ -195,7 +205,7 @@ struct SNP *snp_create(char *name, int32_t type, int32_t id)
 		return NULL;
 	}
 
-	struct SNP_NODE *_main_node = snp_node_create(_new_snp->nodes, name, type, id);
+	struct SNP_NODE *_main_node = snp_node_create(_new_snp, _new_snp->nodes, name, type, id);
 	if (NULL == _main_node)
 	{
 		free(_new_snp->nodes);
@@ -218,7 +228,7 @@ struct SNP *snp_create(char *name, int32_t type, int32_t id)
 static struct SNP_LINK *snp_create_root_linked_node(struct SNP *handle, enum SNP_LINK_TYPE type)
 {
 	struct SNP_LINK *link = NULL;
-	struct SNP_NODE *unknown_node = snp_node_create(handle->nodes, "unknown_dev", SDT_UNKNOWN_DEV, -1);
+	struct SNP_NODE *unknown_node = snp_node_create(handle, handle->nodes, "unknown_dev", SDT_UNKNOWN_DEV, -1);
 
 	do
 	{
@@ -249,14 +259,12 @@ static struct SNP_LINK *snp_create_root_linked_node(struct SNP *handle, enum SNP
  * @param rw_handle 读写接口操作句柄
  * @return 创建完成的新节点对象指针
  */
-struct SNP_NODE *snp_create_physical_node(struct SNP *handle, SNP_LINK_READ read, SNP_LINK_WRITE write, void *rw_handle)
+struct SNP_LINK *snp_create_physical_node(struct SNP *handle, SNP_LINK_READ read, SNP_LINK_WRITE write, void *rw_handle)
 {
 	if (NULL == handle)
 	{
 		return NULL;
 	}
-
-	struct SNP_NODE *_new_node = NULL;
 
 	SNP_LOCK(handle);
 
@@ -264,12 +272,11 @@ struct SNP_NODE *snp_create_physical_node(struct SNP *handle, SNP_LINK_READ read
 	if (NULL != link)
 	{
 		snp_link_setup_rw_cb(link, read, write, rw_handle);
-		_new_node = link->dst_node;
 	}
 
 	SNP_UNLOCK(handle);
 
-	return _new_node;
+	return link;
 }
 
 
@@ -281,14 +288,12 @@ struct SNP_NODE *snp_create_physical_node(struct SNP *handle, SNP_LINK_READ read
  * @param rw_handle 读写接口操作句柄
  * @return 创建完成的新节点对象指针
  */
-struct SNP_NODE *snp_create_software_node(struct SNP *handle, SNP_LINK_READ read, SNP_LINK_WRITE write, void *rw_handle)
+struct SNP_LINK *snp_create_software_node(struct SNP *handle, SNP_LINK_READ read, SNP_LINK_WRITE write, void *rw_handle)
 {
 	if (NULL == handle)
 	{
 		return NULL;
 	}
-
-	struct SNP_NODE *_new_node = NULL;
 
 	SNP_LOCK(handle);
 
@@ -296,12 +301,11 @@ struct SNP_NODE *snp_create_software_node(struct SNP *handle, SNP_LINK_READ read
 	if (NULL != link)
 	{
 		snp_link_setup_rw_cb(link, read, write, rw_handle);
-		_new_node = link->dst_node;
 	}
 
 	SNP_UNLOCK(handle);
 
-	return _new_node;
+	return link;
 }
 
 
@@ -313,14 +317,12 @@ struct SNP_NODE *snp_create_software_node(struct SNP *handle, SNP_LINK_READ read
  * @param rw_handle 读写接口操作句柄
  * @return 创建完成的新节点对象指针
  */
-struct SNP_NODE *snp_create_virtual_node(struct SNP *handle, SNP_LINK_READ read, SNP_LINK_WRITE write, void *rw_handle)
+struct SNP_LINK *snp_create_virtual_node(struct SNP *handle, SNP_LINK_READ read, SNP_LINK_WRITE write, void *rw_handle)
 {
 	if (NULL == handle)
 	{
 		return NULL;
 	}
-
-	struct SNP_NODE *_new_node = NULL;
 
 	SNP_LOCK(handle);
 
@@ -328,12 +330,11 @@ struct SNP_NODE *snp_create_virtual_node(struct SNP *handle, SNP_LINK_READ read,
 	if (NULL != link)
 	{
 		snp_link_setup_rw_cb(link, read, write, rw_handle);
-		_new_node = link->dst_node;
 	}
 
 	SNP_UNLOCK(handle);
 
-	return _new_node;
+	return link;
 }
 
 
@@ -344,7 +345,7 @@ struct SNP_NODE *snp_create_virtual_node(struct SNP *handle, SNP_LINK_READ read,
  * @param msg_type 消息类型
  * @param msg 消息体
  * @param size 消息体字节数
- * @return 发送成功的字节数
+ * @return SNP_RET_OK 成功 其它 失败
  */
 int32_t snp_send_msg_by_node(struct SNP *handle, struct SNP_NODE *dst_node, int32_t msg_type, void *msg, int32_t size)
 {
@@ -382,13 +383,42 @@ int32_t snp_broadcast_msg(struct SNP *handle, int32_t msg_type, void *msg, int32
 
 
 /**
+ * @brief 获取系统中的全部节点信息
+ * @param handle 协议栈类型
+ * @param nodes_info 节点信息写入数组
+ * @param cnt 期望获取的最多节点个数
+ * @return 实际获取的节点信息个数
+ */
+int32_t snp_get_nodes_info(struct SNP *handle, struct SNP_NODE_INFO *nodes_info, int32_t cnt)
+{
+	struct SNP_NODE *_var_node = NULL;
+
+	int32_t ret_cnt = 0;
+	TAILQ_FOREACH(_var_node, handle->nodes, NODE)
+	{
+		if (ret_cnt < cnt)
+		{
+			strncpy(nodes_info[ret_cnt].name, _var_node->name, sizeof(nodes_info[ret_cnt].name) - 1);
+			nodes_info[ret_cnt].id = _var_node->id;
+			nodes_info[ret_cnt].type = _var_node->type;
+			ret_cnt++;
+			continue;
+		}
+		break;
+	}
+
+	return ret_cnt;
+}
+
+
+/**
  * @brief 向协议栈的指定节点发送消息
  * @param handle 协议栈对象
  * @param name 目标节点名
  * @param msg_type 消息类型
  * @param msg 消息体
  * @param size 消息体字节数
- * @return 发送成功的字节数
+ * @return SNP_RET_OK 成功 其它 失败
  */
 int32_t snp_send_msg_by_name(struct SNP *handle, char *name, int32_t msg_type, void *msg, int32_t size)
 {
@@ -405,13 +435,17 @@ int32_t snp_send_msg_by_name(struct SNP *handle, char *name, int32_t msg_type, v
  * @param msg_type 消息类型
  * @param msg 消息体
  * @param size 消息体字节数
- * @return 发送成功的字节数
+ * @return SNP_RET_OK 成功 其它 失败
  */
 int32_t snp_send_msg_by_id(struct SNP *handle, int32_t id, int32_t msg_type, void *msg, int32_t size)
 {
-	int32_t ret = 0;
-
-	return ret;
+	struct SNP_LINK *_link = snp_link_get_by_id(snp_node_get_root(handle->nodes), id);
+	if (NULL == _link)
+	{
+		SNP_DEBUG("send msg(%d) to id(%d) failed, dir not exist\r\n", msg_type, id);
+		return SNP_RET_DIR_NOT_EXIST;
+	}
+	return snp_link_send_direct_msg(_link, msg_type, msg, size);
 }
 
 
