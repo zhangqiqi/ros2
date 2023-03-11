@@ -3,6 +3,7 @@
 #include "snp_msgs.h"
 #include "snp_std_msgs.h"
 #include "snp_node_internal.h"
+#include "snp_shell.h"
 
 
 /**
@@ -231,10 +232,21 @@ static int32_t snp_node_dev_shell_req_msg_proc(void *cb_handle, struct SNP_LINK 
 	snprintf(res_msg->res_str, sizeof(res_str) - sizeof(struct SSM_SHELL_RES_MSG) - 1,
 		"%s/%d >> %s\r\n", link->src_node->name, link->src_node->id, _msg->req_str
 	);
-
 	res_msg->res_len = strlen(res_msg->res_str) + 1;
-
 	snp_msgs_pack(link->write_buffer, &frame, (uint8_t *)res_msg, sizeof(struct SSM_SHELL_RES_MSG) + res_msg->res_len);
+	link->link_write(link->rw_handle, link->write_buffer);
+
+	memset(res_str, 0, sizeof(res_str));
+	frame.frame_seq = SNP_NODE_GET_NEW_SEQ(link->src_node);
+	res_msg->res_len = snp_shell_exec(_msg->req_str, res_msg->res_str, sizeof(res_str) - sizeof(struct SSM_SHELL_RES_MSG) - 1);
+	if (res_msg->res_len > 0)
+	{
+		res_msg->res_len++;
+		snp_msgs_pack(link->write_buffer, &frame, (uint8_t *)res_msg, sizeof(struct SSM_SHELL_RES_MSG) + res_msg->res_len);
+		link->link_write(link->rw_handle, link->write_buffer);
+	}
+
+	return 0;
 }
 
 

@@ -6,8 +6,12 @@
 
 #include <stdio.h>
 #include <stdarg.h>
+
+#ifdef USE_HAL_DRIVER
+#else
 #include <sys/time.h>
 #include <time.h>
+#endif
 
 static enum SNP_LOG_TYPE snp_default_log_level = SLT_NOTICE;
 static void snp_default_log_if(enum SNP_LOG_TYPE type, char *fmt, ...);
@@ -61,6 +65,11 @@ static void snp_default_log_if(enum SNP_LOG_TYPE type, char *fmt, ...)
 		return;
 	}
 
+#ifdef USE_HAL_DRIVER
+	snprintf(prefix, sizeof(prefix) - 1, "[%5d][%s]%s", 
+		cnt++, type_str[type], fmt
+	);
+#else
 	struct timeval tv = {0};
 	gettimeofday(&tv, NULL);
 
@@ -73,10 +82,13 @@ static void snp_default_log_if(enum SNP_LOG_TYPE type, char *fmt, ...)
 		(1900 + tm.tm_year), (1 + tm.tm_mon), tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec, tv.tv_usec,
 		cnt++, type_str[type], fmt
 	);
+#endif
+
+	char print_str[256] = {0};
 
 	va_list args;
 	va_start(args, fmt);
-	vprintf(prefix, args);
+	vsnprintf(print_str, sizeof(print_str) - 1, prefix, args);
 	va_end(args);
 }
 

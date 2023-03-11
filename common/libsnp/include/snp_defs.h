@@ -23,7 +23,7 @@ struct SNP_BUFFER;
 struct SNP_FRAME;
 struct SNP_MSGS_PUB_LIST;
 
-#define SNP_DEFAULT_BUFFER_SIZE (512)      /**< 默认创建协议栈每个缓存区的大小 */
+#define SNP_DEFAULT_BUFFER_SIZE (1024)      /**< 默认创建协议栈每个缓存区的大小 */
 #define SNP_LINK_PROC_MSG_MAX_NUM (10)      /**< 连接单次处理消息的最大条数 */
 #define SNP_NETWORK_SYNC_TICK_CNT (5000)     /**< 协议栈网络同步计数 单位ms */
 #define SNP_SINGLE_NODE_LINK_NUM (16)      /**< 单个节点的最大连接个数 */

@@ -52,6 +52,17 @@ uint32_t snp_msgs_unpack(struct SNP_BUFFER *buffer, struct SNP_FRAME **frame)
 			continue;
 		}
 
+		if ((sizeof(struct SNP_FRAME) + _frame->frame_len) > SNP_DEFAULT_BUFFER_SIZE)
+		{
+			/**< 帧数据长度错误，无法接收 */
+			SNP_DEBUG("snp frame len error, frame len(%d + %d) > max len(%d)\r\n", 
+				SNP_MSG_MAGIC, _frame->magic, 
+				sizeof(struct SNP_FRAME), _frame->frame_len, SNP_DEFAULT_BUFFER_SIZE
+			);
+			snp_buffer_drain(buffer, 1);
+			continue;
+		}
+
 		read_size = snp_buffer_copyout_ptr(buffer, (uint8_t **)&_frame, sizeof(struct SNP_FRAME) + _frame->frame_len);
 
 		if (read_size < (sizeof(_frame) + _frame->frame_len))

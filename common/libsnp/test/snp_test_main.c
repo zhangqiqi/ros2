@@ -4,6 +4,7 @@
 #include "snp_msgs.h"
 #include "snp_node_internal.h"
 #include "snp_buffer_link.h"
+#include "snp_shell.h"
 
 #include "libevent_tcp_link.h"
 
@@ -58,6 +59,8 @@ static void snp_dev_tcp_server_link_test(uint16_t port)
 
 	void *tcp_handle = libevent_base_create();
 
+	// libevent_tcp_client_link_create(tcp_handle, snp_relay_server, "10.114.80.121", 60000);
+
 	libevent_tcp_server_link_create(tcp_handle, snp_relay_server, port);
 
 	libevent_tcp_link_exec(tcp_handle, snp_relay_server);
@@ -76,7 +79,7 @@ static void snp_dev_tcp_client_link_test(uint16_t port)
 
 	void *tcp_handle = libevent_base_create();
 
-	libevent_tcp_client_link_create(tcp_handle, snp_relay_server, "127.0.0.1", port);
+	libevent_tcp_client_link_create(tcp_handle, snp_relay_server, "10.1.65.194", port);
 
 	libevent_tcp_link_exec(tcp_handle, snp_relay_server);
 }
@@ -171,6 +174,24 @@ static void snp_buffer_link_test(int32_t cnt)
 }
 
 
+int32_t test_shell_cmd_proc(char **cmd_list, int32_t num, char *res_str, int32_t res_size)
+{
+	memset(res_str, 0, res_size);
+
+	snprintf(res_str, res_size, "%d", 9999);
+
+	return strlen(res_str);
+}
+
+
+static int32_t bau_shell_read_motor_speed(char **cmd_list, int32_t num, char *res_str, int32_t res_size)
+{
+	snprintf(res_str, res_size - 1, "996.icu\r\n");
+
+	return strlen(res_str) + 1;
+}
+
+
 int main(int argc, char **argv)
 {
 	snp_set_log_level(SLT_NOTICE);
@@ -185,10 +206,22 @@ int main(int argc, char **argv)
 
 	if (0 == strcmp(test_name, "shell_tcp_client"))
 	{
-		snp_shell_tcp_client_create("shell_client", SDT_SHELL_SERVER, "127.0.0.1", 9999);
+		snp_shell_tcp_client_create("shell_client", SDT_SHELL_SERVER, "10.1.65.194", 9999);
 	}
 	else if (0 == strcmp(test_name, "tcp_server"))
 	{
+		snp_shell_init();
+		char *test_shell_cmd[] = {
+			"read", "server_port"
+		};
+		snp_shell_setup(test_shell_cmd, 2, test_shell_cmd_proc);
+
+		static const char *read_left_motor_speed[] = {"read", "left", "motor", "speed"};
+		snp_shell_setup(read_left_motor_speed, 4, bau_shell_read_motor_speed);
+
+		static const char *read_right_motor_speed[] = {"read", "right", "motor", "speed"};
+		snp_shell_setup(read_right_motor_speed, 4, bau_shell_read_motor_speed);
+
 		snp_dev_tcp_server_link_test(9999);
 	}
 	else if (0 == strcmp(test_name, "tcp_client"))
