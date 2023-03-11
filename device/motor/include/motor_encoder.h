@@ -10,8 +10,7 @@ extern "C" {
 
 struct MOTOR_ENCODER;
 
-
-int32_t motor_encoder_update(struct MOTOR_ENCODER *encoder);
+float motor_encoder_update(struct MOTOR_ENCODER *encoder);
 
 #ifdef __cplusplus
 }

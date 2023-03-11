@@ -5,15 +5,12 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <memory.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #define MOROT_ENCODER_CNT_NUM (3)      /**< 电机编码器值历史记录个数s */
-
-typedef int32_t (*MOTOR_READ_ENCODER)(void *handle);
 
 #ifdef __cplusplus
 }
