@@ -10,6 +10,7 @@
 #include "qttcplink.h"
 #include "snpshellwidget.h"
 #include "nodeselector.h"
+#include "qtserialportlink.h"
 
 #include <QTimer>
 #include <QTabWidget>
@@ -17,12 +18,13 @@
 #include <QWidget>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), snp_handle(nullptr), interval(10)
+    : QMainWindow(parent), snp_handle(nullptr), interval(100)
 {
     snp_set_log_level(SLT_NOTICE);
 
     snp_handle = snp_create("relay_server", SDT_RELAY_SERVER, 999);
-    QtTcpLink *new_tcp_link = new QtTcpLink(snp_handle, "127.0.0.1", 9999, this);
+    QtTcpLink *new_tcp_link = new QtTcpLink(snp_handle, "10.1.65.194", 9999, this);
+//    QtSerialportLink *new_serialport_link = new QtSerialportLink(snp_handle, "com9", 115200, this);
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(snp_exec_timer()));

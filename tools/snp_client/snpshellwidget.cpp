@@ -22,6 +22,7 @@ static int32_t snp_shell_client_recv_shell_res_msg(void *cb_handle, struct SNP_L
     SnpShellWidget *snp_shell = (SnpShellWidget *)cb_handle;
     struct SSM_SHELL_RES_MSG *_msg = (struct SSM_SHELL_RES_MSG *)msg->payload;
 
+    qDebug() << "shell msg res str size: " << _msg->res_len << ", str: " << _msg->res_str;
     snp_shell->text_widget_append_str(_msg->res_str);
     return 0;
 }
@@ -83,7 +84,7 @@ void SnpShellWidget::cmd_input()
     }
     else
     {
-        qDebug() << "send cmd : " << SSM_SHELL_REQ << " to node id " << cur_select_node_id;
+        qDebug() << "send cmd : " << SSM_SHELL_REQ << " to node id " << cur_select_node_id << ", shell msg len: " << _shell_msg->req_len;
 
         snp_send_msg_by_id((struct SNP *)snp, cur_select_node_id, SSM_SHELL_REQ, _shell_msg, sizeof(struct SSM_SHELL_REQ_MSG) + _shell_msg->req_len);
     }

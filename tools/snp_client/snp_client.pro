@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets network serialport
 
 TARGET = snp_client
 TEMPLATE = app
@@ -38,9 +38,11 @@ SOURCES += \
     ../libsnp/src/snp_node.c \
     ../libsnp/src/snp_std_process.c \
     ../libsnp/src/snp_timer.c \
+    ../libsnp/src/snp_shell.c \
     qttcplink.cpp \
     snpshellwidget.cpp \
-    nodeselector.cpp
+    nodeselector.cpp \
+    qtserialportlink.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -55,4 +57,5 @@ HEADERS += \
     ../libsnp/include/snp_timer.h \
     qttcplink.h \
     snpshellwidget.h \
-    nodeselector.h
+    nodeselector.h \
+    qtserialportlink.h
