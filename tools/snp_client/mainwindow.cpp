@@ -20,11 +20,13 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), snp_handle(nullptr), interval(100)
 {
+    snp_init();
+
     snp_set_log_level(SLT_NOTICE);
 
     snp_handle = snp_create("relay_server", SDT_RELAY_SERVER, 999);
-    QtTcpLink *new_tcp_link = new QtTcpLink(snp_handle, "10.1.65.194", 9999, this);
-//    QtSerialportLink *new_serialport_link = new QtSerialportLink(snp_handle, "com9", 115200, this);
+//    QtTcpLink *new_tcp_link = new QtTcpLink(snp_handle, "10.1.65.194", 9999, this);
+    QtSerialportLink *new_serialport_link = new QtSerialportLink(snp_handle, "com9", 115200, this);
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(snp_exec_timer()));

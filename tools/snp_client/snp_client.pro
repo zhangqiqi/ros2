@@ -23,22 +23,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-INCLUDEPATH += ../libsnp/include/ \
-               ../libsnp/src/include
+INCLUDEPATH += ../../common/libsnp/include/ \
+	       ../../common/libsnp/src/include
 
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    ../libsnp/src/snp.c \
-    ../libsnp/src/snp_buffer.c \
-    ../libsnp/src/snp_buffer_link.c \
-    ../libsnp/src/snp_internal.c \
-    ../libsnp/src/snp_link.c \
-    ../libsnp/src/snp_msgs.c \
-    ../libsnp/src/snp_node.c \
-    ../libsnp/src/snp_std_process.c \
-    ../libsnp/src/snp_timer.c \
-    ../libsnp/src/snp_shell.c \
+    ../../common/libsnp/src/snp.c \
+    ../../common/libsnp/src/snp_buffer.c \
+    ../../common/libsnp/src/snp_buffer_link.c \
+    ../../common/libsnp/src/snp_internal.c \
+    ../../common/libsnp/src/snp_link.c \
+    ../../common/libsnp/src/snp_msgs.c \
+    ../../common/libsnp/src/snp_node.c \
+    ../../common/libsnp/src/snp_std_process.c \
+    ../../common/libsnp/src/snp_timer.c \
+    ../../common/libsnp/src/snp_shell.c \
     qttcplink.cpp \
     snpshellwidget.cpp \
     nodeselector.cpp \
@@ -46,15 +46,15 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    ../libsnp/include/snp.h \
-    ../libsnp/include/snp_buffer.h \
-    ../libsnp/include/snp_buffer_link.h \
-    ../libsnp/include/snp_defs.h \
-    ../libsnp/include/snp_link.h \
-    ../libsnp/include/snp_msgs.h \
-    ../libsnp/include/snp_node.h \
-    ../libsnp/include/snp_std_msgs.h \
-    ../libsnp/include/snp_timer.h \
+    ../../common/libsnp/include/snp.h \
+    ../../common/libsnp/include/snp_buffer.h \
+    ../../common/libsnp/include/snp_buffer_link.h \
+    ../../common/libsnp/include/snp_defs.h \
+    ../../common/libsnp/include/snp_link.h \
+    ../../common/libsnp/include/snp_msgs.h \
+    ../../common/libsnp/include/snp_node.h \
+    ../../common/libsnp/include/snp_std_msgs.h \
+    ../../common/libsnp/include/snp_timer.h \
     qttcplink.h \
     snpshellwidget.h \
     nodeselector.h \

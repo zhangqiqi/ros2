@@ -84,7 +84,7 @@ void SnpShellWidget::cmd_input()
     }
     else
     {
-        qDebug() << "send cmd : " << SSM_SHELL_REQ << " to node id " << cur_select_node_id << ", shell msg len: " << _shell_msg->req_len;
+        qDebug() << "send cmd : " << SSM_SHELL_REQ << " " << _shell_msg->req_str << " to node id " << cur_select_node_id << ", shell msg len: " << _shell_msg->req_len;
 
         snp_send_msg_by_id((struct SNP *)snp, cur_select_node_id, SSM_SHELL_REQ, _shell_msg, sizeof(struct SSM_SHELL_REQ_MSG) + _shell_msg->req_len);
     }
