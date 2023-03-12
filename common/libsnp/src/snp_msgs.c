@@ -1,23 +1,29 @@
 #include "snp_msgs.h"
 #include "snp_defs_p.h"
 #include "snp_buffer.h"
+#include "snp_node_internal.h"
+#include "snp_internal.h"
 
 #define SNP_MSG_MAGIC (0x5AA55AA5)      /**< 默认栈帧标识符 */
 
-
 /**
- * @brief snp消息发布管理结构体
+ * @brief snp消息负载完整性校验
+ * 
+ * @param data 待校验的数据
+ * @param len 待校验的数据长度
+ * @return int32_t 计算得到的校验值
  */
-struct SNP_MSGS_PUB {
-	int32_t type;      /**< 发布消息类型 */
+static int32_t snp_msgs_check(uint8_t *data, int32_t len)
+{
+	int i = 0;
+	int32_t ret = 0;
+	for (i = 0; i < len; i++)
+	{
+		ret += data[i];
+	}
 
-	void *cb_handle;      /**< 监听发布消息的回调句柄 */
-	SNP_MSG_CB cb;      /**< 消息发布回调 */
-
-	TAILQ_ENTRY(SNP_MSGS_PUB) MSGS;
-};
-
-TAILQ_HEAD(SNP_MSGS_PUB_LIST, SNP_MSGS_PUB);
+	return ret;
+}
 
 
 /**
@@ -65,11 +71,18 @@ uint32_t snp_msgs_unpack(struct SNP_BUFFER *buffer, struct SNP_FRAME **frame)
 
 		read_size = snp_buffer_copyout_ptr(buffer, (uint8_t **)&_frame, sizeof(struct SNP_FRAME) + _frame->frame_len);
 
-		if (read_size < (sizeof(_frame) + _frame->frame_len))
+		if (read_size < (sizeof(struct SNP_FRAME) + _frame->frame_len))
 		{
 			/**< 完整的snp包还未接收完整 */
-			SNP_DEBUG("package read size %d < request size %d, waitfor...\r\n", read_size, sizeof(_frame) + _frame->frame_len);
+			SNP_DEBUG("package read size %d < request size %d, waitfor...\r\n", read_size, sizeof(struct SNP_FRAME) + _frame->frame_len);
 			break;
+		}
+
+		if (snp_msgs_check(_frame->payload, _frame->frame_len) != _frame->crc32)
+		{
+			SNP_DEBUG("package check failed, dst check num: 0x%x, cal check num: 0x%x\r\n", _frame->crc32, snp_msgs_check(_frame->payload, _frame->frame_len));
+			snp_buffer_drain(buffer, 1);
+			continue;
 		}
 		
 		drain_size = read_size;
@@ -100,7 +113,7 @@ uint32_t snp_msgs_pack(struct SNP_BUFFER *buffer, struct SNP_FRAME *frame, uint8
 
 	frame->magic = SNP_MSG_MAGIC;
 	frame->frame_len = len;
-	frame->crc32 = 0;      /**< 测试阶段先不用 */
+	frame->crc32 = snp_msgs_check(msg, len);
 
 	write_size = snp_buffer_write(buffer, (uint8_t *)frame, sizeof(struct SNP_FRAME));
 	write_size += snp_buffer_write(buffer, msg, len);
@@ -142,7 +155,7 @@ SNP_RET_TYPE snp_msgs_add_pub_cb(struct SNP_MSGS_PUB_LIST *pub_list, int32_t typ
 		return SNP_RET_NULLPTR_ERR;
 	}
 
-	struct SNP_MSGS_PUB *_new_msg_pub = (struct SNP_MSGS_PUB *)snp_malloc(sizeof(struct SNP_MSGS_PUB));
+	struct SNP_MSGS_PUB *_new_msg_pub = snp_internal_get_new_msgs_pub();
 	if (NULL == _new_msg_pub)
 	{
 		return SNP_RET_NO_MEM;

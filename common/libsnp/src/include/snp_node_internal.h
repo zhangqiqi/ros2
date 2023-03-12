@@ -6,7 +6,7 @@
 #include "snp_node.h"
 #include "snp_link.h"
 
-#include "queue.h"
+#include "snp_queue.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -77,6 +77,21 @@ struct SNP {
 	uint32_t snp_network_sync_tick;      /**< 协议栈组网信息同步滴答，倒计时方式 精度需要应用层保证 */
 	struct SNP_NODE_LIST *nodes;
 };
+
+
+/**
+ * @brief snp消息发布管理结构体
+ */
+struct SNP_MSGS_PUB {
+	int32_t type;      /**< 发布消息类型 */
+
+	void *cb_handle;      /**< 监听发布消息的回调句柄 */
+	SNP_MSG_CB cb;      /**< 消息发布回调 */
+
+	TAILQ_ENTRY(SNP_MSGS_PUB) MSGS;
+};
+
+TAILQ_HEAD(SNP_MSGS_PUB_LIST, SNP_MSGS_PUB);
 
 
 #ifdef __cplusplus

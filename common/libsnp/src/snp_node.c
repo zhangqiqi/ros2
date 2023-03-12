@@ -4,6 +4,7 @@
 #include "snp_node_internal.h"
 #include "snp_std_process.h"
 #include "snp_buffer.h"
+#include "snp_internal.h"
 
 
 
@@ -18,7 +19,7 @@
  */
 struct SNP_NODE *snp_node_create(struct SNP *snp, struct SNP_NODE_LIST *node_list, char *name, int32_t type, int32_t id)
 {
-	struct SNP_NODE *_snp_node = (struct SNP_NODE *)snp_malloc(sizeof(struct SNP_NODE));
+	struct SNP_NODE *_snp_node = snp_internal_get_new_node();
 
 	if (NULL != _snp_node)
 	{

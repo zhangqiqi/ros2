@@ -2,7 +2,7 @@
 #define __LIBSNP_SRC_INCLUDE_SNP_DEFS_P_H__
 
 #include "snp_defs.h"
-#include "queue.h"
+#include "snp_queue.h"
 
 #ifdef __cplusplus
 extern "C" {

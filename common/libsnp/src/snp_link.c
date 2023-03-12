@@ -3,6 +3,7 @@
 #include "snp_buffer.h"
 #include "snp_node_internal.h"
 #include "snp_std_process.h"
+#include "snp_internal.h"
 
 
 
@@ -36,7 +37,7 @@ struct SNP_LINK *snp_link_create(struct SNP_NODE *src, struct SNP_NODE *dst, enu
 		return _new_link;
 	}
 
-	_new_link = (struct SNP_LINK *)snp_malloc(sizeof(struct SNP_LINK));
+	_new_link = snp_internal_get_new_link();
 	if (NULL != _new_link)
 	{
 		memset(_new_link, 0, sizeof(struct SNP_LINK));

@@ -11,6 +11,8 @@ extern "C" {
 
 struct SNP;
 
+void snp_init(void);
+
 struct SNP *snp_create(char *name, int32_t type, int32_t id);
 
 struct SNP_LINK *snp_create_physical_node(struct SNP *handle, SNP_LINK_READ read, SNP_LINK_WRITE write, void *rw_handle);

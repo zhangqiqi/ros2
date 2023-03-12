@@ -3,6 +3,7 @@
 #include "snp_defs.h"
 #include "snp_defs_p.h"
 #include "snp_std_process.h"
+#include "snp_internal.h"
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -485,4 +486,13 @@ void snp_print_all(struct SNP *handle)
 	SNP_LOCK(handle);
 	snp_nodes_print_all(handle->nodes);
 	SNP_UNLOCK(handle);
+}
+
+
+/**
+ * @brief snp协议栈初始化，主要是初始化协议栈的各类资源
+ */
+void snp_init(void)
+{
+	snp_internal_init();
 }

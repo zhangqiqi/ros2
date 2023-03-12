@@ -12,6 +12,8 @@ extern "C" {
 #define SNP_BROADCAST_ID (-1)      /**< 广播消息，标识需要接收到的节点，将该消息发送给该节点的所有可用连接 */
 #define SNP_SINGLE_ID (0)      /**< 单连接消息，标识直接连接的两个节点的消息交互 */
 
+#pragma pack(1)
+
 /**
  * @brief 协议栈帧结构
  */
@@ -25,6 +27,8 @@ struct SNP_FRAME {
 	int32_t crc32;      /**< 负载数据完整性校验 */
 	uint8_t payload[];      /**< 负载数据域 */
 };
+
+#pragma pack()
 
 struct SNP_MSGS_PUB_LIST;
 
