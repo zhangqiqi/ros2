@@ -5,7 +5,7 @@
 
 void node_tx_task(void const * argument)
 {
-	HAL_StatusTypeDef ret = HAL_OK;
+//	HAL_StatusTypeDef ret = HAL_OK;
 	BaseType_t result;
 	unsigned char odometry_data[50]={0};   //���͸����ڵ���̼���������
 	MSG_ROS_HEAD head;
@@ -14,7 +14,7 @@ void node_tx_task(void const * argument)
 	memset(&head, 0, sizeof(head));
 	memset(&ros_odom_type, 0, sizeof(ros_odom_type));
 	memset(&crc, 0, sizeof(crc));
-	uint16_t len = 0;
+//	uint16_t len = 0;
 	head.cmd = ROS_CMD_TYPE_ODOM;
 	head.len = sizeof(ros_odom_type);
 	head.magic =  ROS_MAGIC;
@@ -29,7 +29,7 @@ void node_tx_task(void const * argument)
 			memcpy(odometry_data, &head, sizeof(head));
 			memcpy(odometry_data + sizeof(head), &ros_odom_type, sizeof(ros_odom_type));
 			memcpy(odometry_data + sizeof(head) + sizeof(ros_odom_type), &crc.crc_data, sizeof(crc.crc_data));
-			len = sizeof(head) + sizeof(ros_odom_type) + sizeof(crc.crc_data);
+//			len = sizeof(head) + sizeof(ros_odom_type) + sizeof(crc.crc_data);
 			/*******uart send********/
 			osSemaphoreWait(semnode_tx_cpt, osWaitForever);
 			// ret = HAL_UART_Transmit_DMA(&huart2, (uint8_t *)odometry_data, len);

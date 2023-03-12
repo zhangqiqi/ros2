@@ -1,12 +1,5 @@
 #include "libsnp_app.h"
 
-#include "snp.h"
-#include "snp_node.h"
-#include "snp_buffer.h"
-#include "snp_msgs.h"
-#include "snp_node_internal.h"
-#include "snp_shell.h"
-
 #include "defs.h"
 #include "main.h"
 #include "stm32f4xx_hal.h"
@@ -14,6 +7,13 @@
 
 #include <stdio.h>
 #include <stdarg.h>
+
+#include "snp.h"
+#include "snp_node.h"
+#include "snp_buffer.h"
+#include "snp_msgs.h"
+#include "snp_node_internal.h"
+#include "snp_shell.h"
 
 
 struct DMA_BUFFER_CTRL {
@@ -117,6 +117,10 @@ void libsnp_task_thread_exec(void const *argument)
  */
 void libsnp_app_init(void)
 {
-	osThreadDef(libsnp_task_thread, libsnp_task_thread_exec, osPriorityNormal, 0, 2048);
+	snp_init();
+
+	osThreadDef(libsnp_task_thread, libsnp_task_thread_exec, osPriorityNormal, 0, 4096);
 	osThreadCreate(osThread(libsnp_task_thread), NULL);
+
+	// libsnp_task_thread_exec(NULL);
 }

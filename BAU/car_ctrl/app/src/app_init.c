@@ -126,9 +126,9 @@ void odometry_task(void const * argument)
 	float pulse = 0;//���A PID���ں��PWMֵ����
 	float pulse1 = 0;//���B PID���ں��PWMֵ����
 	int right_speed, left_speed;
-	static int right_dir = 0, left_dir = 0;      /**< �����ַ��� */
+//	static int right_dir = 0, left_dir = 0;      /**< �����ַ��� */
 	int32_t left_pwm_out = 0, right_pwm_out = 0;
-	int32_t i = 0, j = 0;
+	int32_t i = 0;
 	uint32_t time_cnt = 0;
 	float k2=22.0368358	;	   //�ٶ�ת������,ת/���� mm/s *60* 44 = n/min   һת 44���� 853.266392 19.392418 0.440736 9.696209006074964  969.6207771515426 10ms
 								//V mm/s = V * 60 * m/min    ת���� ���� = V * 60 * ת�ٱ� * 
@@ -296,10 +296,10 @@ void odometry_task(void const * argument)
 
 void node_recv_task(void const * argument)
 {
-	uint32_t cnt = 0, flag = 0;
+//	uint32_t cnt = 0, flag = 0;
 	RX_BUF_TYPE *recv_buf;
 	RX_BUF_TYPE	*parse_buf;
-	uint16_t recv_len = 0;
+//	uint16_t recv_len = 0;
 	recv_buf = &recv_buf_ctrl;
 	parse_buf = &parse_buf_ctrl;
 
@@ -314,7 +314,7 @@ void node_recv_task(void const * argument)
 	recv_buf->rx_size = 128;
 	memset(&ros_speed_data, 0, sizeof(ros_speed_data));
 	memset(rx_buf, 1, sizeof(rx_buf));
-	uint32_t t = 0;
+//	uint32_t t = 0;
 	// HAL_UART_Receive_DMA(&huart2, recv_buf->rx_buf, recv_buf->rx_size);
 	osSemaphoreWait(init_complete, osWaitForever);		/*�ȴ������ʼ�����*/	
 	while(1)
@@ -347,6 +347,7 @@ void node_recv_task(void const * argument)
 	}
 }
 
+
 void system_task(void const * argument)
 {
 	int32_t i = 0;
@@ -358,15 +359,15 @@ void system_task(void const * argument)
 	
 	libsnp_app_init();
 	
-	osThreadDef(odom, odometry_task, osPriorityAboveNormal, 0, 1024);
-	system_task_id = osThreadCreate(osThread(odom), NULL);	
+	// osThreadDef(odom, odometry_task, osPriorityAboveNormal, 0, 1024);
+	// system_task_id = osThreadCreate(osThread(odom), NULL);	
 
-	osThreadDef(node, node_recv_task, osPriorityNormal, 0, 1024);
-	node_recv_task_id = osThreadCreate(osThread(node), NULL);
+	// osThreadDef(node, node_recv_task, osPriorityNormal, 0, 1024);
+	// node_recv_task_id = osThreadCreate(osThread(node), NULL);
 
-	osThreadDef(node_tx, node_tx_task, osPriorityNormal, 0, 1024);
+	// osThreadDef(node_tx, node_tx_task, osPriorityNormal, 0, 1024);
 
-	node_tx_task_id = osThreadCreate(osThread(node_tx), NULL);
+	// node_tx_task_id = osThreadCreate(osThread(node_tx), NULL);
 
 	HAL_TIM_Base_Start_IT(&htim6);
 	
