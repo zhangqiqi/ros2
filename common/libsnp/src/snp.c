@@ -361,9 +361,7 @@ struct SNP_LINK *snp_create_virtual_node(struct SNP *handle, SNP_LINK_READ read,
  */
 int32_t snp_send_msg_by_node(struct SNP *handle, struct SNP_NODE *dst_node, int32_t msg_type, void *msg, int32_t size)
 {
-	int32_t ret = 0;
 	struct SNP_NODE *local_node = snp_get_local_node(handle);
-
 	struct SNP_LINK *_dst_link = snp_link_get_by_node(local_node, dst_node);
 	
 	return snp_link_write(_dst_link, msg_type, msg, size);

@@ -4,6 +4,7 @@
 #include "snp_std_msgs.h"
 #include "snp_node_internal.h"
 #include "snp_shell.h"
+#include "snp.h"
 
 
 /**
@@ -93,6 +94,8 @@ int32_t snp_dev_network_sync(struct SNP_NODE *node)
 		snp_msgs_pack(_var_link->write_buffer, &frame, (uint8_t *)msg, sizeof(struct SSM_DEV_NETWORK_BROADCAST_MSG) + sizeof(struct SSM_DEV_LINK_MSG) * msg->link_num);
 		_var_link->link_write(_var_link->rw_handle, _var_link->write_buffer);
 	}
+
+	return 0;
 }
 
 
@@ -201,6 +204,8 @@ static int32_t snp_node_dev_network_broadcast_msg_proc(void *cb_handle, struct S
 	SNP_NOTICE("################### snp device network update ###################\r\n");
 	snp_print_all(link->src_node->snp);
 	SNP_NOTICE("#################################################################\r\n\r\n");
+
+	return 0;
 }
 
 
@@ -226,25 +231,27 @@ static int32_t snp_node_dev_shell_req_msg_proc(void *cb_handle, struct SNP_LINK 
 		.frame_seq = SNP_NODE_GET_NEW_SEQ(link->src_node)
 	};
 
-	char res_str[256] = {0};
-	struct SSM_SHELL_RES_MSG *res_msg = (struct SSM_SHELL_RES_MSG *)res_str;
+	struct SSM_SHELL_RES_MSG res_msg = {0};
 
-	snprintf(res_msg->res_str, sizeof(res_str) - sizeof(struct SSM_SHELL_RES_MSG) - 1,
-		"%s/%d >> %s\r\n", link->src_node->name, link->src_node->id, _msg->req_str
-	);
-	res_msg->res_len = strlen(res_msg->res_str) + 1;
-	snp_msgs_pack(link->write_buffer, &frame, (uint8_t *)res_msg, sizeof(struct SSM_SHELL_RES_MSG) + res_msg->res_len);
+	res_msg.res_len= _msg->req_len;
+	memcpy(res_msg.res_str, _msg->req_str, _msg->req_len);
+
+	// snprintf(res_msg.res_str, sizeof(res_msg.res_str) - 1,
+	// 	"%s/%d >> %s\r\n", link->src_node->name, link->src_node->id, _msg->req_str
+	// );
+	// res_msg.res_len = strlen(res_msg.res_str) + 1;
+	snp_msgs_pack(link->write_buffer, &frame, (uint8_t *)&res_msg, sizeof(res_msg));
 	link->link_write(link->rw_handle, link->write_buffer);
 
-	memset(res_str, 0, sizeof(res_str));
-	frame.frame_seq = SNP_NODE_GET_NEW_SEQ(link->src_node);
-	res_msg->res_len = snp_shell_exec(_msg->req_str, res_msg->res_str, sizeof(res_str) - sizeof(struct SSM_SHELL_RES_MSG) - 1);
-	if (res_msg->res_len > 0)
-	{
-		res_msg->res_len++;
-		snp_msgs_pack(link->write_buffer, &frame, (uint8_t *)res_msg, sizeof(struct SSM_SHELL_RES_MSG) + res_msg->res_len);
-		link->link_write(link->rw_handle, link->write_buffer);
-	}
+	// memset(res_str, 0, sizeof(res_str));
+	// frame.frame_seq = SNP_NODE_GET_NEW_SEQ(link->src_node);
+	// res_msg->res_len = snp_shell_exec(_msg->req_str, res_msg->res_str, sizeof(res_str) - sizeof(struct SSM_SHELL_RES_MSG) - 1);
+	// if (res_msg->res_len > 0)
+	// {
+	// 	res_msg->res_len++;
+	// 	snp_msgs_pack(link->write_buffer, &frame, (uint8_t *)res_msg, sizeof(struct SSM_SHELL_RES_MSG) + res_msg->res_len);
+	// 	link->link_write(link->rw_handle, link->write_buffer);
+	// }
 
 	return 0;
 }
@@ -268,4 +275,6 @@ int32_t snp_std_process_setup(struct SNP_NODE *node)
 	snp_msgs_add_pub_cb(node->to, SSM_DEV_NETWORK_BROADCAST, snp_node_dev_network_broadcast_msg_proc, node);
 
 	snp_msgs_add_pub_cb(node->to, SSM_SHELL_REQ, snp_node_dev_shell_req_msg_proc, node);
+
+	return SNP_RET_OK;
 }

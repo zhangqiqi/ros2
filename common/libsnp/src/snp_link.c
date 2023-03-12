@@ -411,9 +411,7 @@ static SNP_RET_TYPE snp_link_broadcast_msg_forward(struct SNP_LINK *link, struct
 static SNP_RET_TYPE snp_link_msg_proc(struct SNP_LINK *link, struct SNP_FRAME *frame)
 {
 	SNP_RET_TYPE ret = 0;
-
 	struct SNP_NODE *src_node = link->src_node;
-	struct SNP_NODE *dst_node = link->dst_node;
 
 	SNP_NOTICE("recv new msg, node src: %d, node dst: %d, frame type: %d, frame seq: %d\r\n", 
 		frame->src_node_id, frame->dst_node_id, frame->frame_type, frame->frame_seq

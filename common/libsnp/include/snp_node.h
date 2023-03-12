@@ -14,7 +14,7 @@ extern "C" {
 struct SNP_NODE;
 struct SNP_NODE_LIST;
 
-struct SNP_NODE_LIST *snp_node_list_create();
+struct SNP_NODE_LIST *snp_node_list_create(void);
 
 struct SNP_NODE *snp_node_create(struct SNP *snp, struct SNP_NODE_LIST *node_list, char *name, int32_t type, int32_t id);
 

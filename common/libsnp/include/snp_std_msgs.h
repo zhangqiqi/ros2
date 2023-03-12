@@ -99,7 +99,7 @@ struct SSM_SHELL_REQ_MSG {
  */
 struct SSM_SHELL_RES_MSG {
 	int32_t res_len;      /**< 响应消息长度 */
-	char res_str[];      /**< 响应消息字符串 */
+	char res_str[128];      /**< 响应消息字符串 */
 };
 
 
