@@ -2,7 +2,7 @@
 #define __DEVICE_MOTOR_INCLUDE_MOTOR_H__
 
 #include "motor_defs.h"
-#include "PID.h"
+#include "motor_pid.h"
 
 #ifdef __cplusplus
 extern "C" {

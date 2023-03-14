@@ -1,5 +1,5 @@
-#ifndef PID_CONTROLLER_H
-#define PID_CONTROLLER_H
+#ifndef __MOTOR_PID_CONTROLLER_H__
+#define __MOTOR_PID_CONTROLLER_H__
 
 typedef struct {
 
@@ -36,4 +36,4 @@ typedef struct {
 void  PIDController_Init(PIDController *pid);
 float PIDController_Update(PIDController *pid, float setpoint, float measurement);
 
-#endif
+#endif // __MOTOR_PID_CONTROLLER_H__
