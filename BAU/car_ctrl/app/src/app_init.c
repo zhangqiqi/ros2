@@ -92,17 +92,13 @@ static uint32_t get_motor_encoder_cnt(TIM_HandleTypeDef *htim)
 	uint32_t encoder_cnt = 0;
 	int32_t dir = 0;
 	
-		/**< ��ȡ������ֵ����ռ����� */
-	/**< ��ȡ���������� */
 	dir = __HAL_TIM_IS_TIM_COUNTING_DOWN(htim);
 	if ((1 == dir) && (__HAL_TIM_GET_COUNTER(htim) != 0))
 	{
-		/**< ��ȡ���������ֵ */
 		encoder_cnt = htim->Init.Period - __HAL_TIM_GET_COUNTER(htim);
 	}
 	else
 	{
-		/**< ��ȡ���������ֵ */
 		encoder_cnt = __HAL_TIM_GET_COUNTER(htim);
 	}
 	__HAL_TIM_SET_COUNTER(htim, 0);
@@ -243,13 +239,13 @@ void odometry_task(void const * argument)
 			htim4.Instance->CCR1 = 0;
 			htim4.Instance->CCR2 = 840;
 #else		
-		if (right_speed > 0)    /*����*/
+		if (right_speed > 0)
 		{
 			htim4.Instance->CCR3 = 0;
 			htim4.Instance->CCR4 = right_pwm_out;	
 
 		}
-		else if (right_speed < 0) /*����*/
+		else if (right_speed < 0)
 		{
 			htim4.Instance->CCR3 = right_pwm_out;
 			htim4.Instance->CCR4 = 0;
@@ -357,6 +353,7 @@ void system_task(void const * argument)
 	sem_init();
 	queue_init();
 	
+	libmotor_app_init();
 	libsnp_app_init();
 	
 	// osThreadDef(odom, odometry_task, osPriorityAboveNormal, 0, 1024);
