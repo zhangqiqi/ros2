@@ -9,7 +9,7 @@
 extern "C" {
 #endif
 
-#define SNP_RESOURCE_PRE_MALLOC
+// #define SNP_RESOURCE_PRE_MALLOC
 
 #ifdef SNP_RESOURCE_PRE_MALLOC
 	#define SNP_LINK_PRE_MALLOC_NUM (10)      /**< 预分配连接资源个数 */

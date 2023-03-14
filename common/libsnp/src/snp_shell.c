@@ -24,6 +24,8 @@ SIMPLEQ_HEAD(SNP_SHELL_LIST, SNP_SHELL_CMD);
 struct SNP_SHELL_CMD {
 	char cmd[16];      /**< 单指令字符串 */
 	enum SNP_SHELL_CMD_TYPE type;      /**< 单指令类型 */
+
+	void *cb_handle;      /**< 指令处理回调操作句柄 */
 	SNP_SHELL_PROC_CB proc_cb;      /**< 指令处理回调 */
 
 	struct SNP_SHELL_LIST sub_cmds;      /**< 下级指令列表 */
@@ -108,9 +110,10 @@ static int32_t __snp_shell_cmd_split(char *cmd, char **cmd_list, int32_t num)
  * @param descriptor 指令描述信息
  * @param num 指令描述信息个数
  * @param proc_cb 指令处理回调函数
+ * @param cb_handle 
  * @return 0 安装成功 其它 失败
  */
-int32_t snp_shell_setup(char **descriptor, int32_t num, SNP_SHELL_PROC_CB proc_cb)
+int32_t snp_shell_setup(char **descriptor, int32_t num, SNP_SHELL_PROC_CB proc_cb, void *cb_handle)
 {
 	struct SNP_SHELL_LIST *_var_cmd_list = snp_shell;
 	struct SNP_SHELL_CMD *_var_cmd;
@@ -159,6 +162,7 @@ int32_t snp_shell_setup(char **descriptor, int32_t num, SNP_SHELL_PROC_CB proc_c
 	}
 
 	_var_cmd->proc_cb = proc_cb;
+	_var_cmd->cb_handle = cb_handle;
 
 	return 0;
 }
@@ -215,12 +219,12 @@ int32_t snp_shell_exec(char *cmd_str, char *res_str, int32_t res_size)
 
 	if (NULL != _var_cmd)
 	{
-		return _var_cmd->proc_cb(cmd_list, num, res_str, res_size);
+		return _var_cmd->proc_cb(cmd_list, num, res_str, res_size, _var_cmd->cb_handle);
 	}
 
 	if (NULL != _var_placeholder_cmd)
 	{
-		return _var_placeholder_cmd->proc_cb(cmd_list, num, res_str, res_size);
+		return _var_placeholder_cmd->proc_cb(cmd_list, num, res_str, res_size, _var_placeholder_cmd->cb_handle);
 	}
 
 	return 0;

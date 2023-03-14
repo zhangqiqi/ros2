@@ -139,7 +139,7 @@ struct SNP_LINK *snp_internal_get_new_link(void)
 		LIST_REMOVE(__new_link, LINK);
 	}
 #else
-	struct SNP_LINK *_new_link = (struct SNP_LINK *)snp_malloc(sizeof(struct SNP_LINK));
+	struct SNP_LINK *__new_link = (struct SNP_LINK *)snp_malloc(sizeof(struct SNP_LINK));
 #endif
 
 	return __new_link;
