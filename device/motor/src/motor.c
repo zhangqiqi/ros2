@@ -6,11 +6,11 @@
 /**
  * @brief 设置电机的编码器值读取接口
  * @param motor 目标电机对象
- * @param encoder_handle 编码器读取句柄
+ * @param counter_handle 编码器读取句柄
  * @param read_if 编码器读取接口
  * @return int32_t 0 设置成功 其它 设置失败
  */
-int32_t motor_set_encoder_read_if(struct MOTOR *motor, void *encoder_handle, MOTOR_READ_ENCODER read_if)
+int32_t motor_set_counter_read_if(struct MOTOR *motor, void *counter_handle, MOTOR_READ_COUNTER read_if)
 {
 	int32_t ret = 0;
 
@@ -19,8 +19,8 @@ int32_t motor_set_encoder_read_if(struct MOTOR *motor, void *encoder_handle, MOT
 		return -1;
 	}
 
-	motor->encoder.encoder_handle = encoder_handle;
-	motor->encoder.encoder_read = read_if;
+	motor->counter.counter_handle = counter_handle;
+	motor->counter.counter_read = read_if;
 
 	return ret;
 }
@@ -59,13 +59,35 @@ void motor_set_target(struct MOTOR *motor, float target)
 
 
 /**
+ * @brief 获取目标电机的当前采样值
+ * @param motor 目标电机对象
+ * @return 得到的当前采样值
+ */
+float motor_get_cur_value(struct MOTOR *motor)
+{
+	return motor_counter_get_last_value(&motor->counter);
+}
+
+
+/**
+ * @brief 获取目标电机的设定值
+ * @param motor 目标电机
+ * @return 得到的目标电机设定值
+ */
+float motor_get_target(struct MOTOR *motor)
+{
+	return motor->target;
+}
+
+
+/**
  * @brief 执行指定电机的控制过程
  * @param motor 待执行的电机对象
  */
 static void __motor_exec(struct MOTOR *motor)
 {
 	/**< 更新编码器采样值 */
-	float cur_cnt = motor_encoder_update(&motor->encoder);
+	float cur_cnt = motor_counter_update(&motor->counter);
 	
 	PIDController_Update(&motor->pid, motor->target, cur_cnt);
 	MOTOR_DEBUG("target cnt: %f, cur cnt %f, out cnt: %f\r\n", motor->target, cur_cnt, motor->pid.out);

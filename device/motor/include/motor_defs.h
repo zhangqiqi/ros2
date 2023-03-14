@@ -10,7 +10,7 @@
 extern "C" {
 #endif
 
-#define MOROT_ENCODER_CNT_NUM (3)      /**< 电机编码器值历史记录个数s */
+#define MOROT_COUNTER_CNT_NUM (3)      /**< 电机编码器值历史记录个数s */
 
 #ifdef __cplusplus
 }

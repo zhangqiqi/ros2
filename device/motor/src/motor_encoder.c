@@ -7,17 +7,28 @@
  * @param encoder 目标编码器对象
  * @return int32_t 编码器本次采样增量值
  */
-float motor_encoder_update(struct MOTOR_ENCODER *encoder)
+float motor_counter_update(struct MOTOR_COUNTER *counter)
 {
-	if (NULL == encoder->encoder_read)
+	if (NULL == counter->counter_read)
 	{
 		return 0;
 	}
 
-	float _new_cnt = encoder->encoder_read(encoder->encoder_handle);
+	float _new_cnt = counter->counter_read(counter->counter_handle);
 
-	memmove(encoder->encoder_cnt, encoder->encoder_cnt + 1, MOROT_ENCODER_CNT_NUM - 1);
-	encoder->encoder_cnt[MOROT_ENCODER_CNT_NUM - 1] = _new_cnt;
+	memmove(counter->counter_arr, counter->counter_arr + 1, MOROT_COUNTER_CNT_NUM - 1);
+	counter->counter_arr[MOROT_COUNTER_CNT_NUM - 1] = _new_cnt;
 
 	return _new_cnt;
+}
+
+
+/**
+ * @brief 获取计数器的最新值
+ * @param encoder 目标计数器对象
+ * @return 获取到的计数器的最新值
+ */
+float motor_counter_get_last_value(struct MOTOR_COUNTER *counter)
+{
+	return counter->counter_arr[MOROT_COUNTER_CNT_NUM - 1];
 }

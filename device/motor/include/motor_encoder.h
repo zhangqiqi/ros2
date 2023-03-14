@@ -8,9 +8,11 @@ extern "C" {
 #endif
 
 
-struct MOTOR_ENCODER;
+struct MOTOR_COUNTER;
 
-float motor_encoder_update(struct MOTOR_ENCODER *encoder);
+float motor_counter_get_last_value(struct MOTOR_COUNTER *counter);
+
+float motor_counter_update(struct MOTOR_COUNTER *counter);
 
 #ifdef __cplusplus
 }

@@ -44,14 +44,14 @@ do\
 /**
  * @brief 电机编码器管理结构
  */
-struct MOTOR_ENCODER {
+struct MOTOR_COUNTER {
 	int32_t max_cnt;      /**< 编码器计数最大值 */
 
-	void *encoder_handle;      /**< 编码器读取对象指针 */
-	MOTOR_READ_ENCODER encoder_read;      /**< 编码器值读取接口 */
+	void *counter_handle;      /**< 编码器读取对象指针 */
+	MOTOR_READ_COUNTER counter_read;      /**< 编码器值读取接口 */
 
 	int32_t direction;      /**< 编码器采样方向 -1 反向 0 停止 1 正向 */
-	float encoder_cnt[MOROT_ENCODER_CNT_NUM];      /**< 电机编码器计数数组 */
+	float counter_arr[MOROT_COUNTER_CNT_NUM];      /**< 电机编码器计数数组 */
 };
 
 
@@ -59,7 +59,7 @@ struct MOTOR_ENCODER {
  * @brief 电机描述结构体
  */
 struct MOTOR {
-	struct MOTOR_ENCODER encoder;      /**< 编码器对象 */
+	struct MOTOR_COUNTER counter;      /**< 编码器对象 */
 	PIDController pid;
 
 	float target;      /**< 电机当前的目标输出值 */

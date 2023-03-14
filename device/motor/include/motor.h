@@ -18,6 +18,10 @@ struct MOTOR *motor_create(struct MOTOR_MANAGER *handle, int32_t interval_us, PI
 
 void motor_set_target(struct MOTOR *motor, float target);
 
+float motor_get_target(struct MOTOR *motor);
+
+float motor_get_cur_value(struct MOTOR *motor);
+
 int32_t motor_exec(struct MOTOR_MANAGER *handle, int32_t elapsed_us);
 
 
@@ -38,9 +42,9 @@ int32_t motor_set_ctrl_out_if(struct MOTOR *motor, void *ctrl_out_handle, MOTOR_
  * @param handle 读编码器操作句柄
  * @return 本次读取到的编码器值
  */
-typedef float (*MOTOR_READ_ENCODER)(void *handle);
+typedef float (*MOTOR_READ_COUNTER)(void *handle);
 
-int32_t motor_set_encoder_read_if(struct MOTOR *motor, void *encoder_handle, MOTOR_READ_ENCODER read_if);
+int32_t motor_set_counter_read_if(struct MOTOR *motor, void *counter_handle, MOTOR_READ_COUNTER read_if);
 
 
 #ifdef __cplusplus
