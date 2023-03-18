@@ -4,7 +4,7 @@
 #include "motor.h"
 #include "motor_defs.h"
 #include "queue.h"
-#include "PID.h"
+#include "motor_pid.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,13 +13,13 @@
 extern "C" {
 #endif
 
-// #define MOTOR_DEBUG(fmt, ...) printf(fmt, ##__VA_ARGS__)
-// #define MOTOR_NOTICE(fmt, ...) printf(fmt, ##__VA_ARGS__)
-// #define MOTOR_ERROR(fmt, ...) printf(fmt, ##__VA_ARGS__)
+#define MOTOR_DEBUG(fmt, ...) printf(fmt, ##__VA_ARGS__)
+#define MOTOR_NOTICE(fmt, ...) printf(fmt, ##__VA_ARGS__)
+#define MOTOR_ERROR(fmt, ...) printf(fmt, ##__VA_ARGS__)
 
-#define MOTOR_DEBUG(fmt, ...)
-#define MOTOR_NOTICE(fmt, ...)
-#define MOTOR_ERROR(fmt, ...)
+// #define MOTOR_DEBUG(fmt, ...)
+// #define MOTOR_NOTICE(fmt, ...)
+// #define MOTOR_ERROR(fmt, ...)
 
 /**
  * @brief pid默认参数
@@ -28,7 +28,7 @@ extern "C" {
 #define PID_SET_DEFAULT_PARAMS(pid) \
 do\
 {\
-	(pid)->Kp = 2;\
+	(pid)->Kp = 0.9;\
 	(pid)->Ki = 0;\
 	(pid)->Kd = 0;\
 	(pid)->tau = 0.02;\
@@ -40,35 +40,29 @@ do\
 } while (false)
 
 
-
-/**
- * @brief 电机编码器管理结构
- */
-struct MOTOR_COUNTER {
-	int32_t max_cnt;      /**< 编码器计数最大值 */
-
-	void *counter_handle;      /**< 编码器读取对象指针 */
-	MOTOR_READ_COUNTER counter_read;      /**< 编码器值读取接口 */
-
-	int32_t direction;      /**< 编码器采样方向 -1 反向 0 停止 1 正向 */
-	float counter_arr[MOROT_COUNTER_CNT_NUM];      /**< 电机编码器计数数组 */
-};
+typedef void (*MOTOR_EXEC)(struct MOTOR *motor);
 
 
 /**
  * @brief 电机描述结构体
  */
 struct MOTOR {
-	struct MOTOR_COUNTER counter;      /**< 编码器对象 */
+	struct COUNTER *counter;      /**<电机编码计数器 */
 	PIDController pid;
 
-	float target;      /**< 电机当前的目标输出值 */
+	int32_t target;      /**< 电机当前的目标输出值 */
+	int32_t cur_value;      /**< 电机当前采样值 */
 
 	int32_t interval_us;      /**< 电机对象的控制间隔 单位us */
 	int32_t elapsed_us;      /**< 距离上次本电机被执行的时间间隔 us */
 
+	MOTOR_EXEC exec;      /**< 电机的控制过程 */
+
 	void *ctrl_out_handle;      /**< 电机控制输出接口操作句柄 */
 	MOTOR_CTRL_OUT ctrl_out;      /**< 电机控制输出接口 */
+
+	void *counter_update_handle;      /**< 电机计数器值更新操作句柄 */
+	MOTOR_READ_COUNTER counter_update;      /**< 电机计数器值更新操作接口 */
 
 	SIMPLEQ_ENTRY(MOTOR) MOTOR;
 };

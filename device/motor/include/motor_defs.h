@@ -5,12 +5,13 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <memory.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define MOROT_COUNTER_CNT_NUM (3)      /**< 电机编码器值历史记录个数s */
+#define MOROT_COUNTER_CNT_NUM (20)      /**< 计数器采样数据记录个数 */
 
 #ifdef __cplusplus
 }

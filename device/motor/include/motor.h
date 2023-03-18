@@ -3,29 +3,25 @@
 
 #include "motor_defs.h"
 #include "motor_pid.h"
+#include "counter.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 struct MOTOR;
-
+struct MOTOR_COUNTER;
 struct MOTOR_MANAGER;
 
-struct MOTOR_MANAGER *motor_init(void);
 
-struct MOTOR *motor_create(struct MOTOR_MANAGER *handle, int32_t interval_us, PIDController *pid);
+/**
+ * @brief 电机运行控制类型
+ */
+enum MOTOR_CTRL_TYPE {
+	MCT_SPEED_RING_CTRL,      /**< 速度环控制 */
+	MCT_POSITION_RING_CTRL,      /**< 位置环控制 */
+};
 
-void motor_set_target(struct MOTOR *motor, float target);
-
-float motor_get_target(struct MOTOR *motor);
-
-float motor_get_cur_value(struct MOTOR *motor);
-
-int32_t motor_exec(struct MOTOR_MANAGER *handle, int32_t elapsed_us);
-
-
-/**< 电机控制相关接口 */
 
 /**
  * @brief 电机控制输出接口
@@ -33,18 +29,39 @@ int32_t motor_exec(struct MOTOR_MANAGER *handle, int32_t elapsed_us);
  * @param target 输出控制目标
  * @return 0 成功 其它 失败
  */
-typedef int32_t (*MOTOR_CTRL_OUT)(void *ctrl_out_handle, float target);
+typedef int32_t (*MOTOR_CTRL_OUT)(struct MOTOR *motor, void *ctrl_out_handle, float target);
 
-int32_t motor_set_ctrl_out_if(struct MOTOR *motor, void *ctrl_out_handle, MOTOR_CTRL_OUT ctrl_out_if);
 
 /**
  * @brief 编码器值读取接口
  * @param handle 读编码器操作句柄
- * @return 本次读取到的编码器值
+ * @return 0 更新成功 其它 失败
  */
-typedef float (*MOTOR_READ_COUNTER)(void *handle);
+typedef int32_t  (*MOTOR_READ_COUNTER)(struct COUNTER *counter, void *handle);
 
-int32_t motor_set_counter_read_if(struct MOTOR *motor, void *counter_handle, MOTOR_READ_COUNTER read_if);
+
+/**< 电机对象构造相关接口 */
+struct MOTOR_MANAGER *motor_init(void);
+
+struct MOTOR *motor_create(struct MOTOR_MANAGER *handle, int32_t interval_us, PIDController *pid, enum MOTOR_CTRL_TYPE type);
+
+int32_t motor_set_counter(struct MOTOR *motor, struct COUNTER *counter);
+
+int32_t motor_set_ctrl_out_if(struct MOTOR *motor, void *ctrl_out_handle, MOTOR_CTRL_OUT ctrl_out_if);
+
+int32_t motor_set_counter_update_if(struct MOTOR *motor, void *counter_handle, MOTOR_READ_COUNTER update_if);
+
+
+/**< 电机控制相关接口 */
+void motor_set_target(struct MOTOR *motor, float target);
+
+int32_t motor_get_target(struct MOTOR *motor);
+
+float motor_get_target_ratio(struct MOTOR *motor);
+
+void motor_state_clear(struct MOTOR *motor);
+
+int32_t motor_exec(struct MOTOR_MANAGER *handle, int32_t elapsed_us);
 
 
 #ifdef __cplusplus
