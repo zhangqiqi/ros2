@@ -152,7 +152,6 @@ static void __motor_invalid_exec(struct MOTOR *motor)
  */
 int32_t motor_exec(struct MOTOR_MANAGER *handle, int32_t elapsed_us)
 {
-	int32_t _next_interval = 1000 * 1000;      /**< 默认最大的间隔时间是 1s */
 	struct MOTOR *_var_motor = NULL;
 
 	SIMPLEQ_FOREACH(_var_motor, &handle->motors, MOTOR)
@@ -169,6 +168,8 @@ int32_t motor_exec(struct MOTOR_MANAGER *handle, int32_t elapsed_us)
 			}
 		}
 	}
+
+	return 0;
 }
 
 
@@ -286,4 +287,15 @@ int32_t motor_set_counter(struct MOTOR *motor, struct COUNTER *counter)
 float motor_get_target_ratio(struct MOTOR *motor)
 {
 	return (float)motor->cur_value / motor->target;
+}
+
+
+/**
+ * @brief 获取目标电机的当前值
+ * @param motor 目标电机
+ * @return int32_t 得到的当前值
+ */
+int32_t motor_get_cur_value(struct MOTOR *motor)
+{
+	return motor->cur_value;
 }

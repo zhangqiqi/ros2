@@ -57,6 +57,8 @@ void motor_set_target(struct MOTOR *motor, float target);
 
 int32_t motor_get_target(struct MOTOR *motor);
 
+int32_t motor_get_cur_value(struct MOTOR *motor);
+
 float motor_get_target_ratio(struct MOTOR *motor);
 
 void motor_state_clear(struct MOTOR *motor);

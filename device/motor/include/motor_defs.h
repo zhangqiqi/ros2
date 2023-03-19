@@ -5,7 +5,8 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <memory.h>
+// #include <memory.h>
+#include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -19,3 +20,4 @@ extern "C" {
 
 
 #endif // __DEVICE_MOTOR_INCLUDE_MOTOR_DEFS_H__
+

@@ -13,13 +13,13 @@
 extern "C" {
 #endif
 
-#define MOTOR_DEBUG(fmt, ...) printf(fmt, ##__VA_ARGS__)
-#define MOTOR_NOTICE(fmt, ...) printf(fmt, ##__VA_ARGS__)
-#define MOTOR_ERROR(fmt, ...) printf(fmt, ##__VA_ARGS__)
+// #define MOTOR_DEBUG(fmt, ...) printf(fmt, ##__VA_ARGS__)
+// #define MOTOR_NOTICE(fmt, ...) printf(fmt, ##__VA_ARGS__)
+// #define MOTOR_ERROR(fmt, ...) printf(fmt, ##__VA_ARGS__)
 
-// #define MOTOR_DEBUG(fmt, ...)
-// #define MOTOR_NOTICE(fmt, ...)
-// #define MOTOR_ERROR(fmt, ...)
+#define MOTOR_DEBUG(fmt, ...)
+#define MOTOR_NOTICE(fmt, ...)
+#define MOTOR_ERROR(fmt, ...)
 
 /**
  * @brief pid默认参数
