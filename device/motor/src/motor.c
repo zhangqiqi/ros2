@@ -72,7 +72,7 @@ int32_t motor_get_target(struct MOTOR *motor)
  */
 void motor_state_clear(struct MOTOR *motor)
 {
-
+	motor->cur_value = 0;
 }
 
 
@@ -131,6 +131,7 @@ static void __motor_position_ring_exec(struct MOTOR *motor)
 	{
 		motor->ctrl_out(motor, motor->ctrl_out_handle, motor->pid.out);
 	}
+
 }
 
 

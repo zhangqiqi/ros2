@@ -17,6 +17,8 @@
 
 #include "motor.h"
 
+extern struct MOTOR *left_position_ctrl;
+extern struct MOTOR *right_position_ctrl;
 extern struct MOTOR *left_motor;
 extern struct MOTOR *right_motor;
 
@@ -84,10 +86,45 @@ static int32_t bau_shell_get_motor_speed(char **cmd_list, int32_t num, char *res
 
 static int32_t bau_shell_set_motor_speed(char **cmd_list, int32_t num, char *res_str, int32_t res_size, void *cb_handle)
 {
-	char *target_str = cmd_list[3];
-	float target_speed = atoi(target_str);
+	char *target_str = cmd_list[4];
+	float target = atoi(target_str);
 
-	motor_set_target(cb_handle, target_speed);
+	motor_set_target(cb_handle, target);
+
+	return 0;
+}
+
+
+static int32_t bau_shell_get_motor_position(char **cmd_list, int32_t num, char *res_str, int32_t res_size, void *cb_handle)
+{
+	snprintf(res_str, res_size - 1, "target: %d, cur value: %d\r\n", motor_get_target(cb_handle), motor_get_cur_value(cb_handle));
+
+	return strlen(res_str) + 1;
+}
+
+
+static int32_t bau_shell_set_motor_position(char **cmd_list, int32_t num, char *res_str, int32_t res_size, void *cb_handle)
+{
+	char *target_str = cmd_list[4];
+	float target = atoi(target_str);
+
+	motor_state_clear(cb_handle);
+	motor_set_target(cb_handle, target);
+
+	return 0;
+}
+
+
+static int32_t bau_shell_set_both_motor_position(char **cmd_list, int32_t num, char *res_str, int32_t res_size, void *cb_handle)
+{
+	char *target_str = cmd_list[4];
+	float target = atoi(target_str);
+
+	motor_state_clear(left_position_ctrl);
+	motor_set_target(left_position_ctrl, target);
+
+	motor_state_clear(right_position_ctrl);
+	motor_set_target(right_position_ctrl, -target);
 
 	return 0;
 }
@@ -110,14 +147,29 @@ void libsnp_task_thread_exec(void const *argument)
 	static char *read_left_motor_speed[] = {"get", "left", "motor", "speed"};
 	snp_shell_setup(read_left_motor_speed, 4, bau_shell_get_motor_speed, left_motor);
 
+	static char *read_left_motor_position[] = {"get", "left", "motor", "position"};
+	snp_shell_setup(read_left_motor_position, 4, bau_shell_get_motor_position, left_position_ctrl);
+
 	static char *read_right_motor_speed[] = {"get", "right", "motor", "speed"};
 	snp_shell_setup(read_right_motor_speed, 4, bau_shell_get_motor_speed, right_motor);
 
-	static char *set_left_motor_speed[] = {"set", "left", "motor", SNP_SHELL_PLACEHOLDER};
-	snp_shell_setup(set_left_motor_speed, 4, bau_shell_set_motor_speed, left_motor);
+	static char *read_right_motor_position[] = {"get", "right", "motor", "position"};
+	snp_shell_setup(read_right_motor_position, 4, bau_shell_get_motor_position, right_position_ctrl);
 
-	static char *set_right_motor_speed[] = {"set", "right", "motor", SNP_SHELL_PLACEHOLDER};
-	snp_shell_setup(set_right_motor_speed, 4, bau_shell_set_motor_speed, right_motor);
+	static char *set_left_motor_speed[] = {"set", "left", "motor", "speed", SNP_SHELL_PLACEHOLDER};
+	snp_shell_setup(set_left_motor_speed, 5, bau_shell_set_motor_speed, left_motor);
+
+	static char *set_left_motor_position[] = {"set", "left", "motor", "position", SNP_SHELL_PLACEHOLDER};
+	snp_shell_setup(set_left_motor_position, 5, bau_shell_set_motor_position, left_position_ctrl);
+
+	static char *set_right_motor_speed[] = {"set", "right", "motor", "speed", SNP_SHELL_PLACEHOLDER};
+	snp_shell_setup(set_right_motor_speed, 5, bau_shell_set_motor_speed, right_motor);
+
+	static char *set_right_motor_position[] = {"set", "right", "motor", "position", SNP_SHELL_PLACEHOLDER};
+	snp_shell_setup(set_right_motor_position, 5, bau_shell_set_motor_position, right_position_ctrl);
+
+	static char *set_both_motor_position[] = {"set", "both", "motor", "position", SNP_SHELL_PLACEHOLDER};
+	snp_shell_setup(set_both_motor_position, 5, bau_shell_set_both_motor_position, NULL);
 
 	struct SNP *snp_bau_handle = snp_create("bau_monitor", SDK_BAU_MONITOR, SDK_BAU_MONITOR);
 	struct SNP_LINK *link = snp_create_physical_node(snp_bau_handle, bau_snp_link_read, bau_snp_link_write, &huart2);

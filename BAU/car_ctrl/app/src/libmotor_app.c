@@ -18,6 +18,8 @@
 struct MOTOR *left_motor;
 struct MOTOR *right_motor;
 
+struct MOTOR *left_position_ctrl;
+struct MOTOR *right_position_ctrl;
 static struct MOTOR_MANAGER *motor_manager;
 
 
@@ -30,17 +32,17 @@ int32_t bau_motor_left_ctrl_out(struct MOTOR *motor, void *ctrl_out_handle, floa
 	TIM_HandleTypeDef *htim = (TIM_HandleTypeDef *)ctrl_out_handle;
 
 	int32_t __abs_target = target + motor_get_cur_value(motor);
+	/**< 目标脉冲数转换为对应的pwm值 */
+	__abs_target = __abs_target * 100 * 8400 / 8250;
 
 	if (__abs_target > 0)
 	{
-		int32_t out = htim->Instance->CCR2 + target;
 		htim->Instance->CCR1 = 0;
-		htim->Instance->CCR2 = out > 0 ? out : 0;
+		htim->Instance->CCR2 = __abs_target;
 	}
 	else if (__abs_target < 0)
 	{
-		int32_t out = htim->Instance->CCR1 - target;
-		htim->Instance->CCR1 = out > 0 ? out : 0;
+		htim->Instance->CCR1 = -__abs_target;
 		htim->Instance->CCR2 = 0;
 	}
 	else
@@ -63,17 +65,18 @@ int32_t bau_motor_right_ctrl_out(struct MOTOR *motor, void *ctrl_out_handle, flo
 	TIM_HandleTypeDef *htim = (TIM_HandleTypeDef *)ctrl_out_handle;
 
 	int32_t __abs_target = motor_get_cur_value(motor) + target;
+	/**< 目标脉冲数转换为对应的pwm值 */
+	__abs_target = __abs_target * 100 * 8400 / 8250;
+
 	if (__abs_target > 0)
 	{
-		int32_t out = htim->Instance->CCR4 + target;
-		htim->Instance->CCR3 = 0;
-		htim->Instance->CCR4 = out > 0 ? out : 0;	
+		htim->Instance->CCR3 = __abs_target;
+		htim->Instance->CCR4 = 0;
 	}
 	else if (__abs_target < 0)
 	{
-		int32_t out = htim->Instance->CCR3 - target;
-		htim->Instance->CCR3 = out > 0 ? out : 0;
-		htim->Instance->CCR4 = 0;
+		htim->Instance->CCR3 = 0;
+		htim->Instance->CCR4 = -__abs_target;	
 	}
 	else
 	{
@@ -103,6 +106,16 @@ int32_t bau_motor_encoder_read(struct COUNTER *counter, void *handle)
 }
 
 
+int32_t bau_motor_position_ctrl_out(struct MOTOR *motor, void *ctrl_out_handle, float target)
+{
+	struct MOTOR *dst_speed_motor = (struct MOTOR *)ctrl_out_handle;
+
+	motor_set_target(dst_speed_motor, target);
+
+	return 0;
+}
+
+
 void libmotor_task_thread_exec(void const *argument)
 {
 #ifdef BAU_SIMULATION
@@ -123,6 +136,20 @@ void libmotor_task_thread_exec(void const *argument)
 	motor_set_counter(right_motor, right_counter);
 	motor_set_ctrl_out_if(right_motor, &htim4, bau_motor_right_ctrl_out);
 	motor_set_counter_update_if(right_motor, &htim3, bau_motor_encoder_read);
+
+	struct COUNTER *left_position_counter = counter_create(2, 32767, -32768);
+	motor_set_counter(left_position_ctrl, left_position_counter);
+	motor_set_ctrl_out_if(left_position_ctrl, left_motor, bau_motor_position_ctrl_out);
+	motor_set_counter_update_if(left_position_ctrl, &htim2, bau_motor_encoder_read);
+
+	struct COUNTER *right_position_counter = counter_create(2, 32767, -32768);
+	motor_set_counter(right_position_ctrl, right_position_counter);
+	motor_set_ctrl_out_if(right_position_ctrl, right_motor, bau_motor_position_ctrl_out);
+	motor_set_counter_update_if(right_position_ctrl, &htim3, bau_motor_encoder_read);
+
+	motor_state_clear(left_position_ctrl);
+	motor_state_clear(right_position_ctrl);
+
 #endif
 
 	do
@@ -137,8 +164,33 @@ void libmotor_app_init(void)
 {
 	motor_manager = motor_init();
 
-	left_motor = motor_create(motor_manager, 10 * 1000, NULL, MCT_SPEED_RING_CTRL);
-	right_motor = motor_create(motor_manager, 10 * 1000, NULL, MCT_SPEED_RING_CTRL);
+	PIDController position_ring_params = {
+		.Kp = 0.9,
+		.Ki = 0,
+		.Kd = 0,
+		.tau = 0.02,
+		.limMin = -30.0,
+		.limMax = 30.0,
+		.limMinInt = -5.0,
+		.limMaxInt = 5.0,
+	};
+
+	PIDController speed_ring_params = {
+		.Kp = 0.9,
+		.Ki = 0,
+		.Kd = 0,
+		.tau = 0.02,
+		.limMin = -15.0,
+		.limMax = 15.0,
+		.limMinInt = -5.0,
+		.limMaxInt = 5.0,
+	};
+
+	left_position_ctrl = motor_create(motor_manager, 10 * 1000, &position_ring_params, MCT_POSITION_RING_CTRL);
+	right_position_ctrl = motor_create(motor_manager, 10 * 1000, &position_ring_params, MCT_POSITION_RING_CTRL);
+
+	left_motor = motor_create(motor_manager, 10 * 1000, &speed_ring_params, MCT_SPEED_RING_CTRL);
+	right_motor = motor_create(motor_manager, 10 * 1000, &speed_ring_params, MCT_SPEED_RING_CTRL);
 
 	osThreadDef(libmotor_task_thread, libmotor_task_thread_exec, osPriorityNormal, 0, 1024);
 	osThreadCreate(osThread(libmotor_task_thread), NULL);
