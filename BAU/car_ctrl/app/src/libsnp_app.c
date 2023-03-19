@@ -76,7 +76,7 @@ static int32_t bau_snp_link_write(void *handle, struct SNP_BUFFER *buffer)
 
 static int32_t bau_shell_get_motor_speed(char **cmd_list, int32_t num, char *res_str, int32_t res_size, void *cb_handle)
 {
-	snprintf(res_str, res_size - 1, "target: %f, cur value: %f\r\n", motor_get_target(cb_handle), motor_get_cur_value(cb_handle));
+	snprintf(res_str, res_size - 1, "target: %d, cur value: %d\r\n", motor_get_target(cb_handle), motor_get_cur_value(cb_handle));
 
 	return strlen(res_str) + 1;
 }
@@ -85,7 +85,7 @@ static int32_t bau_shell_get_motor_speed(char **cmd_list, int32_t num, char *res
 static int32_t bau_shell_set_motor_speed(char **cmd_list, int32_t num, char *res_str, int32_t res_size, void *cb_handle)
 {
 	char *target_str = cmd_list[3];
-	float target_speed = atof(target_str);
+	float target_speed = atoi(target_str);
 
 	motor_set_target(cb_handle, target_speed);
 
