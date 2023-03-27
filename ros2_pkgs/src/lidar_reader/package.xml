@@ -3,14 +3,14 @@
 <package format="3">
   <name>lidar_reader</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="zhangqi@todo.todo">zhangqi</maintainer>
-  <license>TODO: License declaration</license>
+  <description>read lidar data, pack and publish it</description>
+  <maintainer email="790081738@qq.com">zhangqi</maintainer>
+  <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>rclcpp</depend>
-
+  <depend>std_msgs</depend>
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 

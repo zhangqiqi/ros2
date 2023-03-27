@@ -8,6 +8,17 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
+
+add_executable(lidar_reader src/lidar_reader.cpp)
+ament_target_dependencies(
+	lidar_reader
+	rclcpp
+	std_msgs
+	#	sensor_msgs
+)
+install(TARGETS lidar_reader
+  DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
