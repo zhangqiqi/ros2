@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(lidar_reader)
+project(bau_ctrl)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -10,16 +10,18 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
-include_directories(include/)
-
-add_executable(lidar_reader src/lidar_reader.cpp src/lidar_dev.cc)
+add_executable(bau_ctrl src/bau_ctrl.cpp)
+target_include_directories(bau_ctrl PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+target_compile_features(bau_ctrl PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 ament_target_dependencies(
-	lidar_reader
-	rclcpp
-	std_msgs
-	#	sensor_msgs
+  bau_ctrl
+  "rclcpp"
+  "std_msgs"
 )
-install(TARGETS lidar_reader
+
+install(TARGETS bau_ctrl
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
