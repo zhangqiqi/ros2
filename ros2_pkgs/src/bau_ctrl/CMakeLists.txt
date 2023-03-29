@@ -9,8 +9,14 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
-add_executable(bau_ctrl src/bau_ctrl.cpp)
+include_directories(include/)
+
+aux_source_directory(./src/ SRC_LIST)
+
+add_executable(bau_ctrl  ${SRC_LIST}) 
+
 target_include_directories(bau_ctrl PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
@@ -19,6 +25,7 @@ ament_target_dependencies(
   bau_ctrl
   "rclcpp"
   "std_msgs"
+  "geometry_msgs"
 )
 
 install(TARGETS bau_ctrl

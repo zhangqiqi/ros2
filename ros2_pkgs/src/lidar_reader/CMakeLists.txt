@@ -12,7 +12,9 @@ find_package(std_msgs REQUIRED)
 
 include_directories(include/)
 
-add_executable(lidar_reader src/lidar_reader.cpp src/lidar_dev.cc)
+aux_source_directory(./src/ SRC_LIST)
+
+add_executable(lidar_reader ${SRC_LIST})
 ament_target_dependencies(
 	lidar_reader
 	rclcpp
