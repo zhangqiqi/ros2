@@ -11,11 +11,16 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
+include_directories(${COMMON_LIB_PATH}/include/)
 include_directories(include/)
+
+link_directories(${COMMON_LIB_PATH}/lib/)
 
 aux_source_directory(./src/ SRC_LIST)
 
 add_executable(bau_ctrl  ${SRC_LIST}) 
+
+target_link_libraries(bau_ctrl ssnp)
 
 target_include_directories(bau_ctrl PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

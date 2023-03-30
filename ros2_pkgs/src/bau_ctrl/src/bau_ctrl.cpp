@@ -38,7 +38,7 @@ public:
 		callback_group_reentrant = this->create_callback_group(rclcpp::CallbackGroupType::Reentrant);
 		
 		timer_ = this->create_wall_timer(
-			500ms, std::bind(&BauCtrl::bau_exec_timer, this), callback_group_reentrant);	
+			50ms, std::bind(&BauCtrl::bau_exec_timer, this), callback_group_reentrant);	
 	}
 
 private:
