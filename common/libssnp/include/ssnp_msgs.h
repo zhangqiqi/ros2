@@ -6,6 +6,8 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include "ssnp_msgs_def.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

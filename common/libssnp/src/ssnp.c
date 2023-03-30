@@ -1,4 +1,20 @@
 #include "ssnp.h"
+#include "ssnp_defs_p.h"
+#include "ssnp_shell.h"
+#include "ssnp_defs_p.h"
+
+void *ssnp_log_handle;      /**< 日志输出操作句柄 */	
+SSNP_LOG_PRINT_CB ssnp_log_print = NULL;      /**< 日志输出接口 */
+
+
+/**
+ * @brief 协议栈日志输出管理对象
+ */
+struct SSNP_LOG_CTRL log_ctrl = {
+	.print_type = SLT_INFO,
+	.log_handle = NULL,
+	.log_print = NULL
+};
 
 
 /**
@@ -17,6 +33,18 @@ struct SSNP {
 };
 
 
+int32_t ssnp_log_print_setup(void *log_handle, SSNP_LOG_PRINT_CB log_cb)
+{
+	if (NULL == log_cb)
+	{
+		return -1;
+	}
+	
+	log_ctrl.log_handle = log_handle;
+	log_ctrl.log_print = log_cb;	
+	return 0;
+}
+
 
 struct SSNP *ssnp_create()
 {
@@ -25,9 +53,30 @@ struct SSNP *ssnp_create()
 	if (NULL != _new_ssnp)
 	{
 		memset(_new_ssnp, 0, sizeof(struct SSNP));
+		SSNP_INFO("create new ssnp (%p) success", _new_ssnp);
 	}
 
 	return _new_ssnp;
+}
+
+
+/**
+ * @brief 接收设备shell指令
+ * @param cb_handle 接收响应注册使用的应用句柄
+ * @param link 接收到消息的连接对象
+ * @param msg 接收到的消息体
+ * @return 0 成功 其它 失败
+ */
+static int32_t ssnp_shell_req_msg_proc(void *cb_handle, struct SSNP *ssnp, struct SSNP_FRAME *msg)
+{
+	struct SMT_SHELL_REQ_MSG *_msg = (struct SMT_SHELL_REQ_MSG *)msg->payload;
+
+	char res_str[256] = {0};
+	struct SMT_SHELL_RES_MSG *res_msg = (struct SMT_SHELL_RES_MSG *)res_str;
+
+	ssnp_shell_exec(_msg->req_str, res_msg->res_str, sizeof(res_str) - sizeof(struct SMT_SHELL_RES_MSG) - 1);
+
+	return 0;
 }
 
 
@@ -49,6 +98,9 @@ int32_t ssnp_recv_if_setup(struct SSNP *ssnp, void *recv_handle, SSNP_RECV_CB re
 	ssnp->recv_cb = recv_cb;
 	ssnp->recv_buf = ssnp_buffer_create(SSNP_RECV_BUFFER_SIZE);
 	ssnp->recv_msg_pub = ssnp_msgs_create_pub_list();
+
+	ssnp_msgs_add_pub_cb(ssnp->recv_msg_pub, SMT_SHELL_REQ, ssnp_shell_req_msg_proc, NULL);
+
 	return 0;
 }
 
@@ -70,6 +122,49 @@ int32_t ssnp_trans_if_setup(struct SSNP *ssnp, void *trans_handle, SSNP_TRANS_CB
 	ssnp->trans_handle = trans_handle;
 	ssnp->trans_cb = trans_cb;
 	ssnp->trans_buf = ssnp_buffer_create(SSNP_TRANS_BUFFER_SIZE);
+	return 0;
+}
+
+
+/**
+ * @brief 设置消息监听
+ * @param ssnp 目标协议栈栈对象
+ * @param type 目标消息类型
+ * @param msg_cb 监听回调
+ * @param cb_handle 监听回调用户句柄
+ * @return 0 设置成功 其它 设置失败
+ */
+int32_t ssnp_msgs_listener_setup(struct SSNP *ssnp, int32_t type, SSNP_MSG_CB msg_cb, void *cb_handle)
+{
+	if ((NULL == ssnp) || (NULL == cb_handle))
+	{
+		return -1;
+	}
+
+	return ssnp_msgs_add_pub_cb(ssnp->recv_msg_pub, type, msg_cb, cb_handle);
+}
+
+
+/**
+ * @brief 消息发送接口
+ * @param ssnp 协议栈对象
+ * @param type 消息类型
+ * @param msg 消息数据
+ * @param len 消息数据长度
+ * @return 0 成功 其它 失败
+ */
+int32_t ssnp_send_msg(struct SSNP *ssnp, int32_t type, uint8_t *msg, int32_t len)
+{
+	if (NULL == ssnp)
+	{
+		return -1;
+	}
+
+	struct SSNP_FRAME _frame = {
+		.frame_type = type,
+	};
+
+	ssnp_msgs_pack(ssnp->trans_buf, &_frame, msg, len);
 	return 0;
 }
 
@@ -148,6 +243,7 @@ static int32_t ssnp_proc_recv_data(struct SSNP *ssnp)
 	do
 	{
 		ret = ssnp_msgs_unpack(ssnp->recv_buf, &_frame);
+		SSNP_DEBUG("unpack data len: %d", ret);
 		if (NULL == _frame)
 		{
 			if (ret > 0)
@@ -180,14 +276,12 @@ static int32_t ssnp_proc_recv_data(struct SSNP *ssnp)
  */
 int32_t ssnp_exec(struct SSNP *ssnp)
 {
-	int32_t ret = 0;
-
 	if (NULL == ssnp)
 	{
 		return -1;
 	}
 
-	ssnp_recv_data(ssnp);
+   	ssnp_recv_data(ssnp);
 	ssnp_proc_recv_data(ssnp);
 	ssnp_trans_data(ssnp);
 	

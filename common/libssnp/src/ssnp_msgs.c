@@ -2,6 +2,7 @@
 #include "ssnp_buffer.h"
 #include "ssnp.h"
 #include "ssnp_queue.h"
+#include "ssnp_defs_p.h"
 
 #define SNP_MSG_MAGIC (0x5AA55AA5)      /**< 默认栈帧标识符 */
 
@@ -58,7 +59,7 @@ int32_t ssnp_msgs_unpack(struct SSNP_BUFFER *buffer, struct SSNP_FRAME **frame)
 		if ((NULL == _frame) || (read_size < sizeof(struct SSNP_FRAME)))
 		{
 			/**< 数据长度不够 */
-			SNP_DEBUG("%s %d: _frame is %p, buffer read size (%d), sizeof(struct SSNP_FRAME) (%d)\r\n",
+			SSNP_DEBUG("%s %d: _frame is %p, buffer read size (%d), sizeof(struct SSNP_FRAME) (%d)\r\n",
 				__func__, __LINE__, _frame, read_size, sizeof(struct SSNP_FRAME)
 			);
 			break;
@@ -67,7 +68,7 @@ int32_t ssnp_msgs_unpack(struct SSNP_BUFFER *buffer, struct SSNP_FRAME **frame)
 		if (SNP_MSG_MAGIC != _frame->magic)
 		{
 			/**< magic无法识别 移除一个无效字符 */
-			SNP_DEBUG("find snp frame head magic %x failed, cur magic is %x, remove unvalid char\r\n", SNP_MSG_MAGIC, _frame->magic);
+			SSNP_DEBUG("find snp frame head magic %x failed, cur magic is %x, remove unvalid char\r\n", SNP_MSG_MAGIC, _frame->magic);
 			ssnp_buffer_drain(buffer, 1);
 			continue;
 		}
@@ -75,7 +76,7 @@ int32_t ssnp_msgs_unpack(struct SSNP_BUFFER *buffer, struct SSNP_FRAME **frame)
 		if ((sizeof(struct SSNP_FRAME) + _frame->frame_len) > SSNP_RECV_BUFFER_SIZE)
 		{
 			/**< 帧数据长度错误，无法接收 */
-			SNP_DEBUG("snp frame len error, frame len(%d + %d) > max len(%d)\r\n", 
+			SSNP_ERROR("snp frame len error, frame len(%d + %d) > max len(%d)\r\n", 
 				SNP_MSG_MAGIC, _frame->magic, 
 				sizeof(struct SSNP_FRAME), _frame->frame_len, SSNP_RECV_BUFFER_SIZE
 			);
@@ -88,13 +89,13 @@ int32_t ssnp_msgs_unpack(struct SSNP_BUFFER *buffer, struct SSNP_FRAME **frame)
 		if (read_size < (sizeof(struct SSNP_FRAME) + _frame->frame_len))
 		{
 			/**< 完整的snp包还未接收完整 */
-			SNP_DEBUG("package read size %d < request size %d, waitfor...\r\n", read_size, sizeof(struct SSNP_FRAME) + _frame->frame_len);
+			SSNP_DEBUG("package read size %d < request size %d, waitfor...\r\n", read_size, sizeof(struct SSNP_FRAME) + _frame->frame_len);
 			break;
 		}
 
 		if (ssnp_msgs_check(_frame->payload, _frame->frame_len) != _frame->crc32)
 		{
-			SNP_DEBUG("package check failed, dst check num: 0x%x, cal check num: 0x%x\r\n", _frame->crc32, ssnp_msgs_check(_frame->payload, _frame->frame_len));
+			SSNP_ERROR("package check failed, dst check num: 0x%x, cal check num: 0x%x\r\n", _frame->crc32, ssnp_msgs_check(_frame->payload, _frame->frame_len));
 			ssnp_buffer_drain(buffer, 1);
 			continue;
 		}
@@ -116,7 +117,7 @@ int32_t ssnp_msgs_unpack(struct SSNP_BUFFER *buffer, struct SSNP_FRAME **frame)
  * @param[in] len 协议栈负载长度
  * @return 本次写入到缓存区中的有效数据长度
  */
-int32_t snp_msgs_pack(struct SSNP_BUFFER *buffer, struct SSNP_FRAME *frame, uint8_t *msg, int32_t len)
+int32_t ssnp_msgs_pack(struct SSNP_BUFFER *buffer, struct SSNP_FRAME *frame, uint8_t *msg, int32_t len)
 {
 	int32_t write_size = 0;
 
@@ -141,7 +142,7 @@ int32_t snp_msgs_pack(struct SSNP_BUFFER *buffer, struct SSNP_FRAME *frame, uint
  * @brief 创建消息发布队列
  * @return 创建完成的发布队列 NULL 创建失败
  */
-struct SSNP_MSGS_PUB_LIST *snp_msgs_create_pub_list(void)
+struct SSNP_MSGS_PUB_LIST *ssnp_msgs_create_pub_list(void)
 {
 	struct SSNP_MSGS_PUB_LIST *_ret_pub_list = (struct SSNP_MSGS_PUB_LIST *)malloc(sizeof(struct SSNP_MSGS_PUB_LIST));
 
@@ -162,7 +163,7 @@ struct SSNP_MSGS_PUB_LIST *snp_msgs_create_pub_list(void)
  * @param[in] cb_handle 监听回调函数的应用句柄
  * @return SNP_RET_OK 成功 其它 失败
  */
-int32_t snp_msgs_add_pub_cb(struct SSNP_MSGS_PUB_LIST *pub_list, int32_t type, SSNP_MSG_CB msg_cb, void *cb_handle)
+int32_t ssnp_msgs_add_pub_cb(struct SSNP_MSGS_PUB_LIST *pub_list, int32_t type, SSNP_MSG_CB msg_cb, void *cb_handle)
 {
 	if (NULL == pub_list)
 	{
@@ -191,7 +192,7 @@ int32_t snp_msgs_add_pub_cb(struct SSNP_MSGS_PUB_LIST *pub_list, int32_t type, S
  * @param[in] msg 消息包对象
  * @return 0 成功 其它 失败
  */
-int32_t snp_msgs_pub(struct SSNP_MSGS_PUB_LIST *pub_list, struct SSNP *ssnp, struct SSNP_FRAME *msg)
+int32_t ssnp_msgs_pub(struct SSNP_MSGS_PUB_LIST *pub_list, struct SSNP *ssnp, struct SSNP_FRAME *msg)
 {
 	if ((NULL == pub_list) || (NULL == ssnp) || (NULL == msg))
 	{
