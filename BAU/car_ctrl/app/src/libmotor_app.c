@@ -30,19 +30,16 @@ int32_t bau_motor_left_ctrl_out(struct MOTOR *motor, void *ctrl_out_handle, floa
 	*encoder_cnt += target * 0.777;
 #else
 	TIM_HandleTypeDef *htim = (TIM_HandleTypeDef *)ctrl_out_handle;
+	int32_t abs_target = motor_get_target(motor);
 
-	int32_t __abs_target = target + motor_get_cur_value(motor);
-	/**< 目标脉冲数转换为对应的pwm值 */
-	__abs_target = __abs_target * 100 * 8400 / 8250;
-
-	if (__abs_target > 0)
+	if (abs_target > 0)
 	{
 		htim->Instance->CCR1 = 0;
-		htim->Instance->CCR2 = __abs_target;
+		htim->Instance->CCR2 = htim->Instance->CCR2 + target;
 	}
-	else if (__abs_target < 0)
+	else if (abs_target < 0)
 	{
-		htim->Instance->CCR1 = -__abs_target;
+		htim->Instance->CCR1 = htim->Instance->CCR1 - target;
 		htim->Instance->CCR2 = 0;
 	}
 	else
@@ -63,20 +60,17 @@ int32_t bau_motor_right_ctrl_out(struct MOTOR *motor, void *ctrl_out_handle, flo
 	*encoder_cnt += target * 0.777;
 #else
 	TIM_HandleTypeDef *htim = (TIM_HandleTypeDef *)ctrl_out_handle;
+	int32_t abs_target = motor_get_target(motor);
 
-	int32_t __abs_target = motor_get_cur_value(motor) + target;
-	/**< 目标脉冲数转换为对应的pwm值 */
-	__abs_target = __abs_target * 100 * 8400 / 8250;
-
-	if (__abs_target > 0)
+	if (abs_target > 0)
 	{
-		htim->Instance->CCR3 = __abs_target;
+		htim->Instance->CCR3 = htim->Instance->CCR3 + target;
 		htim->Instance->CCR4 = 0;
 	}
-	else if (__abs_target < 0)
+	else if (abs_target < 0)
 	{
 		htim->Instance->CCR3 = 0;
-		htim->Instance->CCR4 = -__abs_target;	
+		htim->Instance->CCR4 = htim->Instance->CCR4 - target;
 	}
 	else
 	{

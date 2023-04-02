@@ -141,7 +141,7 @@ int32_t ssnp_wheel_motor_ctrl_msg_proc(void *cb_handle, struct SSNP *ssnp, struc
 	struct SMT_WHEEL_MOTOR_CTRL_MSG *_msg = (struct SMT_WHEEL_MOTOR_CTRL_MSG *)msg->payload;
 
 	motor_set_target(left_motor, _msg->left_motor_count);
-	motor_set_target(right_motor, _msg->right_motor_count);
+	motor_set_target(right_motor, -_msg->right_motor_count);
 
 	return 0;
 }
@@ -152,12 +152,12 @@ void libssnp_task_thread_exec(void const *argument)
 	ssnp_shell_init();
 
 	struct SSNP *ssnp = ssnp_create();
-	ssnp_recv_if_setup(ssnp, &huart1, bau_ssnp_read);
-	ssnp_trans_if_setup(ssnp, &huart1, bau_ssnp_write);
+	ssnp_recv_if_setup(ssnp, &huart2, bau_ssnp_read);
+	ssnp_trans_if_setup(ssnp, &huart2, bau_ssnp_write);
 
 	ssnp_msgs_listener_setup(ssnp, SMT_WHEEL_MOTRO_CTRL, ssnp_wheel_motor_ctrl_msg_proc, NULL);
 
-	HAL_UART_Receive_DMA(&huart1, snp_rw_buffer.dma_buffer, sizeof(snp_rw_buffer.dma_buffer));
+	HAL_UART_Receive_DMA(&huart2, snp_rw_buffer.dma_buffer, sizeof(snp_rw_buffer.dma_buffer));
 
 	do
 	{
