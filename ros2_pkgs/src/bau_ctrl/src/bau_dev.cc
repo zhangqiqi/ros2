@@ -50,7 +50,14 @@ int32_t ssnp_trans_cb(void *write_handle, struct SSNP_BUFFER *trans_buf)
 	int32_t len = ssnp_buffer_copyout_ptr(trans_buf, &buffer, 1024);
 	if (len > 0 && NULL != buffer)
 	{
-		write(dev->fd, buffer, len);
+		int32_t ret = write(dev->fd, buffer, len);
+		RCLCPP_INFO(dev->node.get_logger(), "bau send raw data, len: %d", ret);
+		if (ret < 0)
+		{
+			RCLCPP_INFO(dev->node.get_logger(), "bau send failed, err: %s", strerror(errno));
+		}
+
+		ssnp_buffer_drain(trans_buf, len);
 	}
 
 	return 0;
@@ -191,4 +198,18 @@ void BauDev::exec()
 	}
 }
 
+
+int32_t BauDev::set_speed(float linear, float angular)
+{
+	int32_t max_count_s = 8250;
+	int32_t freq = 100;
+
+	struct SMT_WHEEL_MOTOR_CTRL_MSG msg = {
+		.freq = freq,
+		.left_motor_count = linear / 100,
+		.right_motor_count = linear / 100
+	};
+	
+	return ssnp_send_msg(ssnp, SMT_WHEEL_MOTOR_CTRL, (uint8_t *)&msg, sizeof(msg));	
+}
 

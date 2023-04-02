@@ -44,7 +44,12 @@ public:
 private:
 	void subscription_twist_cb(const geometry_msgs::msg::Twist &cmd) const
 	{
-		RCLCPP_INFO(get_logger(), "get new twist cmd_vel");	
+		RCLCPP_INFO(get_logger(), "get new twist cmd_vel, linear: {x: %f y: %f z: %f}, angular: {x: %f y: %f z: %f}",
+			cmd.linear.x, cmd.linear.y, cmd.linear.z, cmd.angular.x, cmd.angular.y, cmd.angular.z
+		);	
+		
+		bau_dev->set_speed(cmd.linear.x, cmd.angular.z);
+
 		(void)cmd;
 	}
 	void bau_exec_timer()

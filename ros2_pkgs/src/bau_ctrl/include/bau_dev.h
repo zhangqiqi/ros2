@@ -29,7 +29,9 @@ public:
 	BauDev(rclcpp::Node &parent, std::string port, int speed);
 	int32_t bau_open();
 	void bau_close();
-	
+
+	int32_t set_speed(float linear, float angular);
+
 	void exec();
 private:
 	int32_t bau_setopt();
