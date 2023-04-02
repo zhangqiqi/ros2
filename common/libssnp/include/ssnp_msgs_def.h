@@ -43,7 +43,7 @@ struct SMT_SHELL_RES_MSG {
 /**
  * @brief bau轮子电机控制消息
  */
-struct SMT_WHEEL_MOTRO_CTRL_MSG {
+struct SMT_WHEEL_MOTOR_CTRL_MSG {
 	int32_t freq;      /**< 电机控制和编码器采样频率 */
 	int32_t left_motor_count;      /**< 左轮电机编码器值 */
 	int32_t right_motor_count;      /**< 右轮电机编码器值 */
