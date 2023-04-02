@@ -17,7 +17,7 @@ enum SSNP_MSG_TYPE {
 	SMT_SHELL_REQ,      /**< shell请求 */
 	SMT_SHELL_RES,      /**< shell响应 */
 
-	SMT_WHEEL_MOTRO_CTRL,      /**< 轮子电机控制 */
+	SMT_WHEEL_MOTOR_CTRL,      /**< 轮子电机控制 */
 	SMT_WHEEL_MOTOR_DATA_PUSH,      /**< 轮子电机数据推送 */
 };
 

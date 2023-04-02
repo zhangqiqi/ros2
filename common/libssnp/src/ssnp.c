@@ -136,7 +136,7 @@ int32_t ssnp_trans_if_setup(struct SSNP *ssnp, void *trans_handle, SSNP_TRANS_CB
  */
 int32_t ssnp_msgs_listener_setup(struct SSNP *ssnp, int32_t type, SSNP_MSG_CB msg_cb, void *cb_handle)
 {
-	if ((NULL == ssnp) || (NULL == cb_handle))
+	if ((NULL == ssnp) || (NULL == msg_cb))
 	{
 		return -1;
 	}
