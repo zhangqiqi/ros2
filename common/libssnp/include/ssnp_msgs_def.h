@@ -16,6 +16,9 @@ enum SSNP_MSG_TYPE {
 	
 	SMT_SHELL_REQ,      /**< shell请求 */
 	SMT_SHELL_RES,      /**< shell响应 */
+
+	SMT_WHEEL_MOTRO_CTRL,      /**< 轮子电机控制 */
+	SMT_WHEEL_MOTOR_DATA_PUSH,      /**< 轮子电机数据推送 */
 };
 
 
@@ -35,6 +38,35 @@ struct SMT_SHELL_RES_MSG {
 	int32_t res_len;      /**< 响应消息长度 */
 	char res_str[];      /**< 响应消息字符串 */
 };
+
+
+/**
+ * @brief bau轮子电机控制消息
+ */
+struct SMT_WHEEL_MOTRO_CTRL_MSG {
+	int32_t freq;      /**< 电机控制和编码器采样频率 */
+	int32_t left_motor_count;      /**< 左轮电机编码器值 */
+	int32_t right_motor_count;      /**< 右轮电机编码器值 */
+};
+
+
+/**
+ * @brief 轮子电机数据
+ */
+struct WHEEL_MOTOR_DATA {
+	int32_t freq;      /**< 电机实际控制和编码器采样频率 */
+	int32_t target_count;      /**< 目标编码器值 */
+	int32_t sample_count;      /**< 采样编码器值 */
+};
+
+/**
+ * @brief bau轮子电机控制数据推送
+ */
+struct SMT_WHEEL_MOTOR_DATA_PUSH_MSG {
+	struct WHEEL_MOTOR_DATA left_motor_data;
+	struct WHEEL_MOTOR_DATA right_motor_data;
+};
+
 
 #ifdef __cplusplus
 }
