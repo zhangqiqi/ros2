@@ -1,7 +1,7 @@
 #ifndef __BAU_CAR_CTRL_APP_INC_LIBSNP_APP_H__
 #define __BAU_CAR_CTRL_APP_INC_LIBSNP_APP_H__
 
-#include "snp_defs.h"
+#include <stdlib.h>
 
 
 #ifdef __cplusplus

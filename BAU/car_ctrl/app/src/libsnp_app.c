@@ -8,12 +8,11 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#include "snp.h"
-#include "snp_node.h"
-#include "snp_buffer.h"
-#include "snp_msgs.h"
-#include "snp_node_internal.h"
-#include "snp_shell.h"
+#include "ssnp.h"
+#include "ssnp_buffer.h"
+#include "ssnp_shell.h"
+#include "ssnp_msgs.h"
+#include "ssnp_msgs_def.h"
 
 #include "motor.h"
 
@@ -25,12 +24,12 @@ extern struct MOTOR *right_motor;
 struct DMA_BUFFER_CTRL {
 	int32_t read_idx;
 
-	uint8_t dma_buffer[SNP_DEFAULT_BUFFER_SIZE * 2];
+	uint8_t dma_buffer[SSNP_RECV_BUFFER_SIZE * 2];
 };
 
 static struct DMA_BUFFER_CTRL snp_rw_buffer = {0};
 
-static int32_t bau_snp_link_read(void *handle, struct SNP_BUFFER *buffer)
+static int32_t bau_ssnp_read(void *handle, struct SSNP_BUFFER *buffer)
 {
 	UART_HandleTypeDef *huart = (UART_HandleTypeDef *)handle;
 
@@ -44,7 +43,7 @@ static int32_t bau_snp_link_read(void *handle, struct SNP_BUFFER *buffer)
 	}
 	else if (cur_read_cnt > 0)
 	{
-		if (snp_buffer_write(buffer, snp_rw_buffer.dma_buffer, cur_read_cnt) <= 0)
+		if (ssnp_buffer_write(buffer, snp_rw_buffer.dma_buffer, cur_read_cnt) <= 0)
 		{
 			osDelay(1000);
 		}
@@ -60,17 +59,17 @@ static int32_t bau_snp_link_read(void *handle, struct SNP_BUFFER *buffer)
 }
 
 
-static int32_t bau_snp_link_write(void *handle, struct SNP_BUFFER *buffer)
+static int32_t bau_ssnp_write(void *handle, struct SSNP_BUFFER *buffer)
 {
 	UART_HandleTypeDef *huart = (UART_HandleTypeDef *)handle;
 
 	uint8_t *data = NULL;
 
-	int32_t size = snp_buffer_copyout_ptr(buffer, &data, 1024);
+	int32_t size = ssnp_buffer_copyout_ptr(buffer, &data, 1024);
 
 	HAL_UART_Transmit(huart, data, size, 100);
 
-	snp_buffer_drain(buffer, size);
+	ssnp_buffer_drain(buffer, size);
 
 	return 0;
 }
@@ -130,59 +129,22 @@ static int32_t bau_shell_set_both_motor_position(char **cmd_list, int32_t num, c
 }
 
 
-/**
- * @brief bau日志信息重定向
- */
-static void bau_log_print_if(enum SNP_LOG_TYPE type, char *fmt, ...)
+void libssnp_task_thread_exec(void const *argument)
 {
+	ssnp_shell_init();
 
-}
-
-
-void libsnp_task_thread_exec(void const *argument)
-{
-	snp_shell_init();
-	snp_set_log_if(bau_log_print_if);
-
-	static char *read_left_motor_speed[] = {"get", "left", "motor", "speed"};
-	snp_shell_setup(read_left_motor_speed, 4, bau_shell_get_motor_speed, left_motor);
-
-	static char *read_left_motor_position[] = {"get", "left", "motor", "position"};
-	snp_shell_setup(read_left_motor_position, 4, bau_shell_get_motor_position, left_position_ctrl);
-
-	static char *read_right_motor_speed[] = {"get", "right", "motor", "speed"};
-	snp_shell_setup(read_right_motor_speed, 4, bau_shell_get_motor_speed, right_motor);
-
-	static char *read_right_motor_position[] = {"get", "right", "motor", "position"};
-	snp_shell_setup(read_right_motor_position, 4, bau_shell_get_motor_position, right_position_ctrl);
-
-	static char *set_left_motor_speed[] = {"set", "left", "motor", "speed", SNP_SHELL_PLACEHOLDER};
-	snp_shell_setup(set_left_motor_speed, 5, bau_shell_set_motor_speed, left_motor);
-
-	static char *set_left_motor_position[] = {"set", "left", "motor", "position", SNP_SHELL_PLACEHOLDER};
-	snp_shell_setup(set_left_motor_position, 5, bau_shell_set_motor_position, left_position_ctrl);
-
-	static char *set_right_motor_speed[] = {"set", "right", "motor", "speed", SNP_SHELL_PLACEHOLDER};
-	snp_shell_setup(set_right_motor_speed, 5, bau_shell_set_motor_speed, right_motor);
-
-	static char *set_right_motor_position[] = {"set", "right", "motor", "position", SNP_SHELL_PLACEHOLDER};
-	snp_shell_setup(set_right_motor_position, 5, bau_shell_set_motor_position, right_position_ctrl);
-
-	static char *set_both_motor_position[] = {"set", "both", "motor", "position", SNP_SHELL_PLACEHOLDER};
-	snp_shell_setup(set_both_motor_position, 5, bau_shell_set_both_motor_position, NULL);
-
-	struct SNP *snp_bau_handle = snp_create("bau_monitor", SDK_BAU_MONITOR, SDK_BAU_MONITOR);
-	struct SNP_LINK *link = snp_create_physical_node(snp_bau_handle, bau_snp_link_read, bau_snp_link_write, &huart2);
+	struct SSNP *ssnp = ssnp_create();
+	ssnp_recv_if_setup(ssnp, &huart1, bau_ssnp_read);
+	ssnp_trans_if_setup(ssnp, &huart1, bau_ssnp_write);
 
 	HAL_UART_Receive_DMA(&huart1, snp_rw_buffer.dma_buffer, sizeof(snp_rw_buffer.dma_buffer));
 
 	do
 	{
 		osDelay(10);
-		snp_exec(snp_bau_handle, 10);
+		ssnp_exec(ssnp);
 	} while (true);
 }
-
 
 
 /**
@@ -190,10 +152,6 @@ void libsnp_task_thread_exec(void const *argument)
  */
 void libsnp_app_init(void)
 {
-	snp_init();
-
-	osThreadDef(libsnp_task_thread, libsnp_task_thread_exec, osPriorityNormal, 0, 4096);
-	osThreadCreate(osThread(libsnp_task_thread), NULL);
-
-	// libsnp_task_thread_exec(NULL);
+	osThreadDef(libssnp_task_thread, libssnp_task_thread_exec, osPriorityNormal, 0, 4096);
+	osThreadCreate(osThread(libssnp_task_thread), NULL);
 }
