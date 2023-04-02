@@ -137,18 +137,18 @@ void libmotor_task_thread_exec(void const *argument)
 	motor_set_ctrl_out_if(right_motor, &htim4, bau_motor_right_ctrl_out);
 	motor_set_counter_update_if(right_motor, &htim3, bau_motor_encoder_read);
 
-	struct COUNTER *left_position_counter = counter_create(2, 32767, -32768);
-	motor_set_counter(left_position_ctrl, left_position_counter);
-	motor_set_ctrl_out_if(left_position_ctrl, left_motor, bau_motor_position_ctrl_out);
-	motor_set_counter_update_if(left_position_ctrl, &htim2, bau_motor_encoder_read);
+	// struct COUNTER *left_position_counter = counter_create(2, 32767, -32768);
+	// motor_set_counter(left_position_ctrl, left_position_counter);
+	// motor_set_ctrl_out_if(left_position_ctrl, left_motor, bau_motor_position_ctrl_out);
+	// motor_set_counter_update_if(left_position_ctrl, &htim2, bau_motor_encoder_read);
 
-	struct COUNTER *right_position_counter = counter_create(2, 32767, -32768);
-	motor_set_counter(right_position_ctrl, right_position_counter);
-	motor_set_ctrl_out_if(right_position_ctrl, right_motor, bau_motor_position_ctrl_out);
-	motor_set_counter_update_if(right_position_ctrl, &htim3, bau_motor_encoder_read);
+	// struct COUNTER *right_position_counter = counter_create(2, 32767, -32768);
+	// motor_set_counter(right_position_ctrl, right_position_counter);
+	// motor_set_ctrl_out_if(right_position_ctrl, right_motor, bau_motor_position_ctrl_out);
+	// motor_set_counter_update_if(right_position_ctrl, &htim3, bau_motor_encoder_read);
 
-	motor_state_clear(left_position_ctrl);
-	motor_state_clear(right_position_ctrl);
+	// motor_state_clear(left_position_ctrl);
+	// motor_state_clear(right_position_ctrl);
 
 #endif
 
@@ -186,8 +186,8 @@ void libmotor_app_init(void)
 		.limMaxInt = 5.0,
 	};
 
-	left_position_ctrl = motor_create(motor_manager, 10 * 1000, &position_ring_params, MCT_POSITION_RING_CTRL);
-	right_position_ctrl = motor_create(motor_manager, 10 * 1000, &position_ring_params, MCT_POSITION_RING_CTRL);
+	// left_position_ctrl = motor_create(motor_manager, 10 * 1000, &position_ring_params, MCT_POSITION_RING_CTRL);
+	// right_position_ctrl = motor_create(motor_manager, 10 * 1000, &position_ring_params, MCT_POSITION_RING_CTRL);
 
 	left_motor = motor_create(motor_manager, 10 * 1000, &speed_ring_params, MCT_SPEED_RING_CTRL);
 	right_motor = motor_create(motor_manager, 10 * 1000, &speed_ring_params, MCT_SPEED_RING_CTRL);

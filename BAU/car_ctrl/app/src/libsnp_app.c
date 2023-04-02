@@ -129,6 +129,24 @@ static int32_t bau_shell_set_both_motor_position(char **cmd_list, int32_t num, c
 }
 
 
+/**
+ * @brief 轮子电机控制消息
+ * @param cb_handle 消息回调引用句柄
+ * @param ssnp 消息来源协议栈
+ * @param msg 消息体
+ * @return int32_t 
+ */
+int32_t ssnp_wheel_motor_ctrl_msg_proc(void *cb_handle, struct SSNP *ssnp, struct SSNP_FRAME *msg)
+{
+	struct SMT_WHEEL_MOTOR_CTRL_MSG *_msg = (struct SMT_WHEEL_MOTOR_CTRL_MSG *)msg->payload;
+
+	motor_set_target(left_motor, _msg->left_motor_count);
+	motor_set_target(right_motor, _msg->right_motor_count);
+
+	return 0;
+}
+
+
 void libssnp_task_thread_exec(void const *argument)
 {
 	ssnp_shell_init();
@@ -136,6 +154,8 @@ void libssnp_task_thread_exec(void const *argument)
 	struct SSNP *ssnp = ssnp_create();
 	ssnp_recv_if_setup(ssnp, &huart1, bau_ssnp_read);
 	ssnp_trans_if_setup(ssnp, &huart1, bau_ssnp_write);
+
+	ssnp_msgs_listener_setup(ssnp, SMT_WHEEL_MOTRO_CTRL, ssnp_wheel_motor_ctrl_msg_proc, NULL);
 
 	HAL_UART_Receive_DMA(&huart1, snp_rw_buffer.dma_buffer, sizeof(snp_rw_buffer.dma_buffer));
 
