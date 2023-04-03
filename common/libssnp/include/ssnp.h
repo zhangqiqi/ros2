@@ -17,6 +17,13 @@ extern "C" {
 #define SSNP_RECV_BUFFER_SIZE (1024)      /**< 接收数据缓存区大小 */
 #define SSNP_TRANS_BUFFER_SIZE (1024)      /**< 发送数据缓存区大小 */
 
+enum SSNP_LOG_TYPE {
+	SLT_DEBUG,
+	SLT_INFO,
+	SLT_ERROR
+};
+
+
 struct SSNP;
 
 /**
@@ -47,6 +54,8 @@ typedef void (*SSNP_LOG_PRINT_CB)(void *log_handle, char *fmt, ...);
 struct SSNP *ssnp_create(void);
 
 int32_t ssnp_log_print_setup(void *log_handle, SSNP_LOG_PRINT_CB log_cb);
+
+void ssnp_set_log_level(enum SSNP_LOG_TYPE type);
 
 int32_t ssnp_recv_if_setup(struct SSNP *ssnp, void *recv_handle, SSNP_RECV_CB recv_cb);
 

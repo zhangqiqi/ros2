@@ -52,14 +52,6 @@ do\
 } while (false)
 
 
-
-
-enum SSNP_LOG_TYPE {
-	SLT_DEBUG,
-	SLT_INFO,
-	SLT_ERROR
-};
-
 struct SSNP_LOG_CTRL {
 	enum SSNP_LOG_TYPE print_type;      /**< 当前输出日志等级 */
 
