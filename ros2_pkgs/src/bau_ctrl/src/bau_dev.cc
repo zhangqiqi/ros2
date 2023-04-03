@@ -76,6 +76,20 @@ int32_t ssnp_proc_shell_res_msg(void *cb_handle, struct SSNP *ssnp, struct SSNP_
 }
 
 
+int32_t ssnp_proc_wheel_motor_data(void *cb_handle, struct SSNP *ssnp, struct SSNP_FRAME *msg)
+{
+	BauDev *dev = static_cast<BauDev *>(cb_handle);
+	struct SMT_WHEEL_MOTOR_DATA_PUSH_MSG *_sub_msg = (struct SMT_WHEEL_MOTOR_DATA_PUSH_MSG *)msg->payload;
+	
+	RCLCPP_INFO(dev->node.get_logger(), "left: freq %d, target %d, sample %d; right: freq %d, target %d, sample %d",
+		_sub_msg->left_motor_data.freq, _sub_msg->left_motor_data.target_count, _sub_msg->left_motor_data.sample_count,
+		_sub_msg->right_motor_data.freq, _sub_msg->right_motor_data.target_count, _sub_msg->right_motor_data.sample_count		
+	);
+
+	return 0;
+}
+
+
 void ssnp_log_print_if(void *log_handle, char *fmt, ...)
 {
 	BauDev *dev = static_cast<BauDev *>(log_handle);
@@ -99,6 +113,7 @@ BauDev::BauDev(rclcpp::Node &parent, std::string port, int speed)
 {
 	ssnp_shell_init();	
 	ssnp_log_print_setup(this, ssnp_log_print_if);
+	// ssnp_set_log_level(SLT_DEBUG);
 	ssnp = ssnp_create();
 	
 	ssnp_recv_if_setup(ssnp, this, ssnp_recv_cb);
@@ -107,6 +122,10 @@ BauDev::BauDev(rclcpp::Node &parent, std::string port, int speed)
 	if (0 != ssnp_msgs_listener_setup(ssnp, SMT_SHELL_RES, ssnp_proc_shell_res_msg, this))
 	{
 		RCLCPP_INFO(node.get_logger(), "shell res msg proc setup failed");
+	}
+	if (0 != ssnp_msgs_listener_setup(ssnp, SMT_WHEEL_MOTOR_DATA_PUSH, ssnp_proc_wheel_motor_data, this))
+	{
+		RCLCPP_INFO(node.get_logger(), "wheel motor data proc setup failed");
 	}
 
 	RCLCPP_INFO(node.get_logger(), "bau device construct success");
@@ -131,7 +150,7 @@ int32_t BauDev::bau_open()
 		RCLCPP_INFO(node.get_logger(), "fcntl bau dev failed, err: %s", strerror(errno));
 		return -2;
 	}
-	
+
 	return bau_setopt();
 }
 

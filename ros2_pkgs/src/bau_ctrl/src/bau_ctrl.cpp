@@ -4,8 +4,11 @@
 #include <rclcpp/callback_group.hpp>
 #include <rclcpp/executors/multi_threaded_executor.hpp>
 #include <rclcpp/logging.hpp>
+#include <rclcpp/parameter.hpp>
+#include <rclcpp/parameter_value.hpp>
 #include <rclcpp/subscription.hpp>
 #include <geometry_msgs/msg/twist.hpp>
+#include <string>
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
@@ -19,7 +22,11 @@ class BauCtrl : public rclcpp::Node
 public:
 	BauCtrl() : Node("bau_ctrl")
 	{
-		bau_dev = std::make_shared<BauDev>(*this, "/dev/ttyUSB0", 115200);
+		auto dev_name = this->declare_parameter("device_name", "/dev/ttyUSB0");
+		auto dev_baudrate = this->declare_parameter("device_baudrate", 115200);
+
+
+		bau_dev = std::make_shared<BauDev>(*this, dev_name, dev_baudrate);
 		if (nullptr == bau_dev)
 		{
 			RCLCPP_INFO(get_logger(), "create bau device failed");	
