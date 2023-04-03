@@ -146,9 +146,11 @@ void libmotor_task_thread_exec(void const *argument)
 
 #endif
 
+
 	do
 	{
 		osDelay(10);
+
 		motor_exec(motor_manager, 10 * 1000);
 	} while (true);
 }

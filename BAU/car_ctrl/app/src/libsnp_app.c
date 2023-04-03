@@ -155,13 +155,25 @@ void libssnp_task_thread_exec(void const *argument)
 	ssnp_recv_if_setup(ssnp, &huart2, bau_ssnp_read);
 	ssnp_trans_if_setup(ssnp, &huart2, bau_ssnp_write);
 
-	ssnp_msgs_listener_setup(ssnp, SMT_WHEEL_MOTRO_CTRL, ssnp_wheel_motor_ctrl_msg_proc, NULL);
+	ssnp_msgs_listener_setup(ssnp, SMT_WHEEL_MOTOR_CTRL, ssnp_wheel_motor_ctrl_msg_proc, NULL);
 
 	HAL_UART_Receive_DMA(&huart2, snp_rw_buffer.dma_buffer, sizeof(snp_rw_buffer.dma_buffer));
+
+	struct SMT_WHEEL_MOTOR_DATA_PUSH_MSG msg = {0};
 
 	do
 	{
 		osDelay(10);
+		msg.left_motor_data.freq = 100;
+		msg.left_motor_data.target_count = motor_get_target(left_motor);
+		msg.left_motor_data.sample_count = motor_get_cur_value(left_motor);
+
+		msg.right_motor_data.freq = 100;
+		msg.right_motor_data.target_count = motor_get_target(right_motor);
+		msg.right_motor_data.sample_count = motor_get_cur_value(right_motor);
+
+		ssnp_send_msg(ssnp, SMT_WHEEL_MOTOR_DATA_PUSH, (uint8_t *)&msg, sizeof(msg));
+
 		ssnp_exec(ssnp);
 	} while (true);
 }
