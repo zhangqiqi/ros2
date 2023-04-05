@@ -25,7 +25,7 @@ target_link_libraries(bau_ctrl ssnp)
 target_include_directories(bau_ctrl PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-target_compile_features(bau_ctrl PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+target_compile_features(bau_ctrl PUBLIC c_std_99 cxx_std_20)  # Require C99 and C++17
 ament_target_dependencies(
   bau_ctrl
   "rclcpp"
@@ -35,6 +35,10 @@ ament_target_dependencies(
 
 install(TARGETS bau_ctrl
   DESTINATION lib/${PROJECT_NAME})
+
+install(DIRECTORY launch
+	DESTINATION share/${PROJECT_NAME}/
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

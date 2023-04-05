@@ -46,6 +46,12 @@ int32_t ssnp_log_print_setup(void *log_handle, SSNP_LOG_PRINT_CB log_cb)
 }
 
 
+void ssnp_set_log_level(enum SSNP_LOG_TYPE type)
+{
+	log_ctrl.print_type = type;
+}
+
+
 struct SSNP *ssnp_create()
 {
 	struct SSNP *_new_ssnp = (struct SSNP *)malloc(sizeof(struct SSNP));

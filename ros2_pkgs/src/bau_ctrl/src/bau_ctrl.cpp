@@ -4,8 +4,11 @@
 #include <rclcpp/callback_group.hpp>
 #include <rclcpp/executors/multi_threaded_executor.hpp>
 #include <rclcpp/logging.hpp>
+#include <rclcpp/parameter.hpp>
+#include <rclcpp/parameter_value.hpp>
 #include <rclcpp/subscription.hpp>
 #include <geometry_msgs/msg/twist.hpp>
+#include <string>
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
@@ -19,13 +22,29 @@ class BauCtrl : public rclcpp::Node
 public:
 	BauCtrl() : Node("bau_ctrl")
 	{
-		bau_dev = std::make_shared<BauDev>(*this, "/dev/ttyUSB0", 115200);
+		auto dev_name = this->declare_parameter("device_name", "/dev/ttyUSB0");
+		auto dev_baudrate = this->declare_parameter("device_baudrate", 115200);
+		auto wheel_motor_rpm = this->declare_parameter("wheel_motor_rpm", 150);
+		auto wheel_motor_ratio = this->declare_parameter("wheel_motor_ratio", 75);
+		auto wheel_encoder_scrl = this->declare_parameter("wheel_encoder_scrl", 8250);
+		auto wheel_radius = this->declare_parameter("wheel_radius", 32.5);
+		auto wheel_spacing = this->declare_parameter("wheel_spacing", 170);
+
+		bau_dev = std::make_shared<BauDev>(*this, dev_name, dev_baudrate);
 		if (nullptr == bau_dev)
 		{
 			RCLCPP_INFO(get_logger(), "create bau device failed");	
 		}
 		else
 		{
+			bau_dev->set_wheel_params(
+				wheel_motor_rpm, 
+				wheel_motor_ratio, 
+				wheel_encoder_scrl, 
+				wheel_radius,
+				wheel_spacing
+			);
+
 			auto ret_code = bau_dev->bau_open();
 			if (0 != ret_code)
 			{
@@ -44,7 +63,12 @@ public:
 private:
 	void subscription_twist_cb(const geometry_msgs::msg::Twist &cmd) const
 	{
-		RCLCPP_INFO(get_logger(), "get new twist cmd_vel");	
+		RCLCPP_INFO(get_logger(), "get new twist cmd_vel, linear: {x: %f y: %f z: %f}, angular: {x: %f y: %f z: %f}",
+			cmd.linear.x, cmd.linear.y, cmd.linear.z, cmd.angular.x, cmd.angular.y, cmd.angular.z
+		);	
+		
+		bau_dev->set_speed(cmd.linear.x, cmd.angular.z);
+
 		(void)cmd;
 	}
 	void bau_exec_timer()

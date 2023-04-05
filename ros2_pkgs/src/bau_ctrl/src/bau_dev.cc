@@ -10,6 +10,7 @@
 #include <fcntl.h>
 #include <strings.h>
 #include <termios.h>
+#include <numbers> 
 
 #include "ssnp/ssnp_buffer.h"
 #include "ssnp/ssnp_msgs.h"
@@ -50,7 +51,14 @@ int32_t ssnp_trans_cb(void *write_handle, struct SSNP_BUFFER *trans_buf)
 	int32_t len = ssnp_buffer_copyout_ptr(trans_buf, &buffer, 1024);
 	if (len > 0 && NULL != buffer)
 	{
-		write(dev->fd, buffer, len);
+		int32_t ret = write(dev->fd, buffer, len);
+		RCLCPP_INFO(dev->node.get_logger(), "bau send raw data, len: %d", ret);
+		if (ret < 0)
+		{
+			RCLCPP_INFO(dev->node.get_logger(), "bau send failed, err: %s", strerror(errno));
+		}
+
+		ssnp_buffer_drain(trans_buf, len);
 	}
 
 	return 0;
@@ -64,6 +72,20 @@ int32_t ssnp_proc_shell_res_msg(void *cb_handle, struct SSNP *ssnp, struct SSNP_
 	struct SMT_SHELL_RES_MSG *_sub_msg = (struct SMT_SHELL_RES_MSG *)msg->payload;
 
 	RCLCPP_INFO(dev->node.get_logger(), "ssnp shell>>%s", _sub_msg->res_str);
+
+	return 0;
+}
+
+
+int32_t ssnp_proc_wheel_motor_data(void *cb_handle, struct SSNP *ssnp, struct SSNP_FRAME *msg)
+{
+	BauDev *dev = static_cast<BauDev *>(cb_handle);
+	struct SMT_WHEEL_MOTOR_DATA_PUSH_MSG *_sub_msg = (struct SMT_WHEEL_MOTOR_DATA_PUSH_MSG *)msg->payload;
+	
+	RCLCPP_INFO(dev->node.get_logger(), "left: freq %d, target %d, sample %d; right: freq %d, target %d, sample %d",
+		_sub_msg->left_motor_data.freq, _sub_msg->left_motor_data.target_count, _sub_msg->left_motor_data.sample_count,
+		_sub_msg->right_motor_data.freq, _sub_msg->right_motor_data.target_count, _sub_msg->right_motor_data.sample_count		
+	);
 
 	return 0;
 }
@@ -87,11 +109,12 @@ void ssnp_log_print_if(void *log_handle, char *fmt, ...)
 #endif
 
 
-BauDev::BauDev(rclcpp::Node &parent, std::string port, int speed)
-		: node(parent), port(port), speed(speed) 
+BauDev::BauDev(rclcpp::Node &parent, std::string port, int baudrate)
+		: node(parent), port(port), baudrate(baudrate) 
 {
 	ssnp_shell_init();	
 	ssnp_log_print_setup(this, ssnp_log_print_if);
+	// ssnp_set_log_level(SLT_DEBUG);
 	ssnp = ssnp_create();
 	
 	ssnp_recv_if_setup(ssnp, this, ssnp_recv_cb);
@@ -101,8 +124,34 @@ BauDev::BauDev(rclcpp::Node &parent, std::string port, int speed)
 	{
 		RCLCPP_INFO(node.get_logger(), "shell res msg proc setup failed");
 	}
+	if (0 != ssnp_msgs_listener_setup(ssnp, SMT_WHEEL_MOTOR_DATA_PUSH, ssnp_proc_wheel_motor_data, this))
+	{
+		RCLCPP_INFO(node.get_logger(), "wheel motor data proc setup failed");
+	}
 
 	RCLCPP_INFO(node.get_logger(), "bau device construct success");
+}
+
+
+void BauDev::set_wheel_params(float rpm, float ratio, float scrl, float radius, float wheel_spacing)
+{
+	this->rpm = rpm;
+	this->ratio = ratio;
+	this->scrl = scrl;
+	this->radius = radius;
+	this->wheel_spacing = wheel_spacing;
+}
+
+
+int32_t BauDev::speed_to_encoder_count(float speed)
+{
+	return (speed / (2 * radius * std::numbers::pi)) * scrl;
+}
+
+
+float BauDev::encoder_count_to_speed(int32_t count)
+{
+	return (count / scrl) * 2 * radius * std::numbers::pi;
 }
 
 
@@ -124,7 +173,7 @@ int32_t BauDev::bau_open()
 		RCLCPP_INFO(node.get_logger(), "fcntl bau dev failed, err: %s", strerror(errno));
 		return -2;
 	}
-	
+
 	return bau_setopt();
 }
 
@@ -191,4 +240,32 @@ void BauDev::exec()
 	}
 }
 
+
+
+void BauDev::car_speed_to_wheel_speed(float linear, float angular, float &Vr, float &Vl)
+{
+	Vr = linear + angular * wheel_spacing / 2;	
+	Vl = linear - angular * wheel_spacing / 2; 
+}
+
+int32_t BauDev::set_speed(float linear, float angular)
+{
+	int32_t freq = 100;
+	float Vr, Vl;
+
+	car_speed_to_wheel_speed(linear, angular, Vr, Vl);
+
+	int32_t converted_left_count = speed_to_encoder_count(Vl);	
+	int32_t converted_right_count= speed_to_encoder_count(Vr);
+
+	RCLCPP_INFO(node.get_logger(), "dst speed linear(%f) angular(%f), convert to bau ctrl left (%d) right (%d)", linear, angular, converted_left_count, converted_right_count);
+
+	struct SMT_WHEEL_MOTOR_CTRL_MSG msg = {
+		.freq = freq,
+		.left_motor_count = converted_left_count / freq,
+		.right_motor_count = converted_right_count / freq,
+	};
+	
+	return ssnp_send_msg(ssnp, SMT_WHEEL_MOTOR_CTRL, (uint8_t *)&msg, sizeof(msg));	
+}
 
