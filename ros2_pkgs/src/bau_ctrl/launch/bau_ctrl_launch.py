@@ -23,6 +23,10 @@ def generate_launch_description():
     wheel_radius_arg = DeclareLaunchArgument(
         "wheel_radius", default_value=TextSubstitution(text='32.5')
     )
+    wheel_spacing_arg = DeclareLaunchArgument(
+        "wheel_spacing", default_value=TextSubstitution(text='170')
+    )
+
 
     return LaunchDescription([
             device_name_arg,
@@ -31,6 +35,7 @@ def generate_launch_description():
             wheel_motor_ratio_arg,
             wheel_encoder_scrl_arg,
             wheel_radius_arg,
+            wheel_spacing_arg,
             Node(
                 package='bau_ctrl',
                 executable='bau_ctrl',
@@ -41,7 +46,8 @@ def generate_launch_description():
                     'wheel_motor_rpm': LaunchConfiguration('wheel_motor_rpm'),
                     'wheel_motor_ratio': LaunchConfiguration('wheel_motor_ratio'),
                     'wheel_encoder_scrl': LaunchConfiguration('wheel_encoder_scrl'),
-                    'wheel_radius': LaunchConfiguration('wheel_radius')
+                    'wheel_radius': LaunchConfiguration('wheel_radius'),
+                    'wheel_spacing': LaunchConfiguration('wheel_spacing')
                 }]
             )
         ])

@@ -30,7 +30,7 @@ class BauDev
 public:
 	BauDev(rclcpp::Node &parent, std::string port, int baudrate);
 
-	void set_wheel_params(float rpm, float ratio, float scrl, float radius);
+	void set_wheel_params(float rpm, float ratio, float scrl, float radius, float wheel_spacing);
 	int32_t bau_open();
 	void bau_close();
 
@@ -39,6 +39,7 @@ public:
 	void exec();
 private:
 	int32_t bau_setopt();
+	void car_speed_to_wheel_speed(float linear, float angular, float &Vr, float &Vl);
 	int32_t speed_to_encoder_count(float speed);
 	float encoder_count_to_speed(int32_t count);
 
@@ -60,6 +61,7 @@ private:
 	float ratio;
 	float scrl;
 	float radius;
+	float wheel_spacing;
 };
 
 #endif

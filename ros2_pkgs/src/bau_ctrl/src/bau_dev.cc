@@ -133,12 +133,13 @@ BauDev::BauDev(rclcpp::Node &parent, std::string port, int baudrate)
 }
 
 
-void BauDev::set_wheel_params(float rpm, float ratio, float scrl, float radius)
+void BauDev::set_wheel_params(float rpm, float ratio, float scrl, float radius, float wheel_spacing)
 {
 	this->rpm = rpm;
 	this->ratio = ratio;
 	this->scrl = scrl;
 	this->radius = radius;
+	this->wheel_spacing = wheel_spacing;
 }
 
 
@@ -240,19 +241,29 @@ void BauDev::exec()
 }
 
 
+
+void BauDev::car_speed_to_wheel_speed(float linear, float angular, float &Vr, float &Vl)
+{
+	Vr = linear + angular * wheel_spacing / 2;	
+	Vl = linear - angular * wheel_spacing / 2; 
+}
+
 int32_t BauDev::set_speed(float linear, float angular)
 {
 	int32_t freq = 100;
-	int32_t converted_left_count = speed_to_encoder_count(linear);	
-	int32_t converted_right_count;
+	float Vr, Vl;
 
-	float converted_speed = encoder_count_to_speed(converted_left_count);
-	RCLCPP_INFO(node.get_logger(), "src linear value: %f, convert liner speed: %f to cnt %d", linear, converted_speed, converted_left_count); 
+	car_speed_to_wheel_speed(linear, angular, Vr, Vl);
+
+	int32_t converted_left_count = speed_to_encoder_count(Vl);	
+	int32_t converted_right_count= speed_to_encoder_count(Vr);
+
+	RCLCPP_INFO(node.get_logger(), "dst speed linear(%f) angular(%f), convert to bau ctrl left (%d) right (%d)", linear, angular, converted_left_count, converted_right_count);
 
 	struct SMT_WHEEL_MOTOR_CTRL_MSG msg = {
 		.freq = freq,
-		.left_motor_count = converted_left_count,
-		.right_motor_count = converted_right_count,
+		.left_motor_count = converted_left_count / freq,
+		.right_motor_count = converted_right_count / freq,
 	};
 	
 	return ssnp_send_msg(ssnp, SMT_WHEEL_MOTOR_CTRL, (uint8_t *)&msg, sizeof(msg));	

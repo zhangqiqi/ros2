@@ -28,6 +28,7 @@ public:
 		auto wheel_motor_ratio = this->declare_parameter("wheel_motor_ratio", 75);
 		auto wheel_encoder_scrl = this->declare_parameter("wheel_encoder_scrl", 8250);
 		auto wheel_radius = this->declare_parameter("wheel_radius", 32.5);
+		auto wheel_spacing = this->declare_parameter("wheel_spacing", 170);
 
 		bau_dev = std::make_shared<BauDev>(*this, dev_name, dev_baudrate);
 		if (nullptr == bau_dev)
@@ -40,7 +41,8 @@ public:
 				wheel_motor_rpm, 
 				wheel_motor_ratio, 
 				wheel_encoder_scrl, 
-				wheel_radius
+				wheel_radius,
+				wheel_spacing
 			);
 
 			auto ret_code = bau_dev->bau_open();
