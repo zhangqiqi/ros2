@@ -8,6 +8,8 @@
 extern "C" {
 #endif
 
+#pragma pack(1)
+
 /**
  * @brief 消息类型枚举
  */
@@ -67,6 +69,8 @@ struct SMT_WHEEL_MOTOR_DATA_PUSH_MSG {
 	struct WHEEL_MOTOR_DATA right_motor_data;
 };
 
+
+#pragma pack()
 
 #ifdef __cplusplus
 }
