@@ -28,7 +28,9 @@ void ssnp_log_print_if(void *log_handle, char *fmt, ...);
 class BauDev
 {
 public:
-	BauDev(rclcpp::Node &parent, std::string port, int speed);
+	BauDev(rclcpp::Node &parent, std::string port, int baudrate);
+
+	void set_wheel_params(float rpm, float ratio, float scrl, float radius);
 	int32_t bau_open();
 	void bau_close();
 
@@ -37,7 +39,9 @@ public:
 	void exec();
 private:
 	int32_t bau_setopt();
-	
+	int32_t speed_to_encoder_count(float speed);
+	float encoder_count_to_speed(int32_t count);
+
 	friend int32_t ssnp_recv_cb(void *read_handle, struct SSNP_BUFFER *recv_buf);
 	friend int32_t ssnp_trans_cb(void *write_handle, struct SSNP_BUFFER *trans_buf);
 	friend int32_t ssnp_proc_shell_res_msg(void *cb_handle, struct SSNP *ssnp, struct SSNP_FRAME *msg);
@@ -48,9 +52,14 @@ private:
 
 	rclcpp::Node &node;
 	std::string port;
-	int speed;
+	int baudrate;
 	
 	int fd;
+
+	float rpm;
+	float ratio;
+	float scrl;
+	float radius;
 };
 
 #endif

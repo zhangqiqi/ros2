@@ -10,6 +10,7 @@
 #include <fcntl.h>
 #include <strings.h>
 #include <termios.h>
+#include <numbers> 
 
 #include "ssnp/ssnp_buffer.h"
 #include "ssnp/ssnp_msgs.h"
@@ -108,8 +109,8 @@ void ssnp_log_print_if(void *log_handle, char *fmt, ...)
 #endif
 
 
-BauDev::BauDev(rclcpp::Node &parent, std::string port, int speed)
-		: node(parent), port(port), speed(speed) 
+BauDev::BauDev(rclcpp::Node &parent, std::string port, int baudrate)
+		: node(parent), port(port), baudrate(baudrate) 
 {
 	ssnp_shell_init();	
 	ssnp_log_print_setup(this, ssnp_log_print_if);
@@ -129,6 +130,27 @@ BauDev::BauDev(rclcpp::Node &parent, std::string port, int speed)
 	}
 
 	RCLCPP_INFO(node.get_logger(), "bau device construct success");
+}
+
+
+void BauDev::set_wheel_params(float rpm, float ratio, float scrl, float radius)
+{
+	this->rpm = rpm;
+	this->ratio = ratio;
+	this->scrl = scrl;
+	this->radius = radius;
+}
+
+
+int32_t BauDev::speed_to_encoder_count(float speed)
+{
+	return (speed / (2 * radius * std::numbers::pi)) * scrl;
+}
+
+
+float BauDev::encoder_count_to_speed(int32_t count)
+{
+	return (count / scrl) * 2 * radius * std::numbers::pi;
 }
 
 
@@ -220,13 +242,17 @@ void BauDev::exec()
 
 int32_t BauDev::set_speed(float linear, float angular)
 {
-	int32_t max_count_s = 8250;
 	int32_t freq = 100;
+	int32_t converted_left_count = speed_to_encoder_count(linear);	
+	int32_t converted_right_count;
+
+	float converted_speed = encoder_count_to_speed(converted_left_count);
+	RCLCPP_INFO(node.get_logger(), "src linear value: %f, convert liner speed: %f to cnt %d", linear, converted_speed, converted_left_count); 
 
 	struct SMT_WHEEL_MOTOR_CTRL_MSG msg = {
 		.freq = freq,
-		.left_motor_count = linear / 100,
-		.right_motor_count = linear / 100
+		.left_motor_count = converted_left_count,
+		.right_motor_count = converted_right_count,
 	};
 	
 	return ssnp_send_msg(ssnp, SMT_WHEEL_MOTOR_CTRL, (uint8_t *)&msg, sizeof(msg));	

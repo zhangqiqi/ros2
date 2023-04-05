@@ -24,7 +24,10 @@ public:
 	{
 		auto dev_name = this->declare_parameter("device_name", "/dev/ttyUSB0");
 		auto dev_baudrate = this->declare_parameter("device_baudrate", 115200);
-
+		auto wheel_motor_rpm = this->declare_parameter("wheel_motor_rpm", 150);
+		auto wheel_motor_ratio = this->declare_parameter("wheel_motor_ratio", 75);
+		auto wheel_encoder_scrl = this->declare_parameter("wheel_encoder_scrl", 8250);
+		auto wheel_radius = this->declare_parameter("wheel_radius", 32.5);
 
 		bau_dev = std::make_shared<BauDev>(*this, dev_name, dev_baudrate);
 		if (nullptr == bau_dev)
@@ -33,6 +36,13 @@ public:
 		}
 		else
 		{
+			bau_dev->set_wheel_params(
+				wheel_motor_rpm, 
+				wheel_motor_ratio, 
+				wheel_encoder_scrl, 
+				wheel_radius
+			);
+
 			auto ret_code = bau_dev->bau_open();
 			if (0 != ret_code)
 			{
