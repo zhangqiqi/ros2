@@ -20,7 +20,7 @@ aux_source_directory(./src/ SRC_LIST)
 
 add_executable(bau_ctrl  ${SRC_LIST}) 
 
-target_link_libraries(bau_ctrl ssnp)
+target_link_libraries(bau_ctrl ssnp common)
 
 target_include_directories(bau_ctrl PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -28,9 +28,9 @@ target_include_directories(bau_ctrl PUBLIC
 target_compile_features(bau_ctrl PUBLIC c_std_99 cxx_std_20)  # Require C99 and C++17
 ament_target_dependencies(
   bau_ctrl
-  "rclcpp"
-  "std_msgs"
-  "geometry_msgs"
+  rclcpp
+  std_msgs
+  geometry_msgs
 )
 
 install(TARGETS bau_ctrl

@@ -44,12 +44,6 @@ public:
 				wheel_radius,
 				wheel_spacing
 			);
-
-			auto ret_code = bau_dev->bau_open();
-			if (0 != ret_code)
-			{
-				RCLCPP_INFO(get_logger(), "open bau device failed");
-			}
 		}
 		subscription_twist = this->create_subscription<geometry_msgs::msg::Twist>("cmd_vel", 10, 
 			std::bind(&BauCtrl::subscription_twist_cb, this, std::placeholders::_1));
@@ -68,8 +62,6 @@ private:
 		);	
 		
 		bau_dev->set_speed(cmd.linear.x, cmd.angular.z);
-
-		(void)cmd;
 	}
 	void bau_exec_timer()
 	{

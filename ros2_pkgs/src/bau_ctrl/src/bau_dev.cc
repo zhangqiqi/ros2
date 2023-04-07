@@ -27,7 +27,7 @@ int32_t ssnp_recv_cb(void *read_handle, struct SSNP_BUFFER *recv_buf)
 	BauDev *dev = static_cast<BauDev *>(read_handle);	
 
 	uint8_t buffer[1024] = {0};
-	int32_t len = read(dev->fd, buffer, sizeof(buffer));
+	int32_t len = dev->dev_sp.read(buffer, sizeof(buffer));
 	if (len < 0)
 	{
 		RCLCPP_INFO(dev->node.get_logger(), "bau read failed, err: %s", strerror(errno));
@@ -51,7 +51,7 @@ int32_t ssnp_trans_cb(void *write_handle, struct SSNP_BUFFER *trans_buf)
 	int32_t len = ssnp_buffer_copyout_ptr(trans_buf, &buffer, 1024);
 	if (len > 0 && NULL != buffer)
 	{
-		int32_t ret = write(dev->fd, buffer, len);
+		int32_t ret = dev->dev_sp.write(buffer, len);
 		RCLCPP_INFO(dev->node.get_logger(), "bau send raw data, len: %d", ret);
 		if (ret < 0)
 		{
@@ -65,10 +65,9 @@ int32_t ssnp_trans_cb(void *write_handle, struct SSNP_BUFFER *trans_buf)
 }
 
 
-int32_t ssnp_proc_shell_res_msg(void *cb_handle, struct SSNP *ssnp, struct SSNP_FRAME *msg)
+int32_t ssnp_proc_shell_res_msg(void *cb_handle, [[maybe_unused]] struct SSNP *ssnp, struct SSNP_FRAME *msg)
 {
 	BauDev *dev = static_cast<BauDev *>(cb_handle);
-
 	struct SMT_SHELL_RES_MSG *_sub_msg = (struct SMT_SHELL_RES_MSG *)msg->payload;
 
 	RCLCPP_INFO(dev->node.get_logger(), "ssnp shell>>%s", _sub_msg->res_str);
@@ -77,7 +76,7 @@ int32_t ssnp_proc_shell_res_msg(void *cb_handle, struct SSNP *ssnp, struct SSNP_
 }
 
 
-int32_t ssnp_proc_wheel_motor_data(void *cb_handle, struct SSNP *ssnp, struct SSNP_FRAME *msg)
+int32_t ssnp_proc_wheel_motor_data(void *cb_handle, [[maybe_unused]] struct SSNP *ssnp, struct SSNP_FRAME *msg)
 {
 	BauDev *dev = static_cast<BauDev *>(cb_handle);
 	struct SMT_WHEEL_MOTOR_DATA_PUSH_MSG *_sub_msg = (struct SMT_WHEEL_MOTOR_DATA_PUSH_MSG *)msg->payload;
@@ -110,7 +109,7 @@ void ssnp_log_print_if(void *log_handle, char *fmt, ...)
 
 
 BauDev::BauDev(rclcpp::Node &parent, std::string port, int baudrate)
-		: node(parent), port(port), baudrate(baudrate) 
+		: node(parent), dev_sp(port, baudrate)
 {
 	ssnp_shell_init();	
 	ssnp_log_print_setup(this, ssnp_log_print_if);
@@ -127,6 +126,11 @@ BauDev::BauDev(rclcpp::Node &parent, std::string port, int baudrate)
 	if (0 != ssnp_msgs_listener_setup(ssnp, SMT_WHEEL_MOTOR_DATA_PUSH, ssnp_proc_wheel_motor_data, this))
 	{
 		RCLCPP_INFO(node.get_logger(), "wheel motor data proc setup failed");
+	}
+
+	if (0 != dev_sp.open())
+	{
+		RCLCPP_INFO(node.get_logger(), "%s", dev_sp.get_errstring().c_str());
 	}
 
 	RCLCPP_INFO(node.get_logger(), "bau device construct success");
@@ -155,84 +159,9 @@ float BauDev::encoder_count_to_speed(int32_t count)
 }
 
 
-int32_t BauDev::bau_open()
-{
-	fd = open(port.c_str(), O_RDWR | O_NOCTTY | O_NDELAY);
-	if (fd < 0)
-	{
-		RCLCPP_INFO(node.get_logger(), "open bau dev port %s failed, err: %d, %s", port.c_str(), errno, strerror(errno));
-		return -1;
-	}
-
-	int flags = 0;
-	flags = fcntl(fd, F_GETFL, 0);
-	flags &= ~O_NONBLOCK;
-
-	if (fcntl(fd, F_SETFL, flags) < 0)
-	{
-		RCLCPP_INFO(node.get_logger(), "fcntl bau dev failed, err: %s", strerror(errno));
-		return -2;
-	}
-
-	return bau_setopt();
-}
-
-
-void BauDev::bau_close()
-{
-	close(fd);
-}
-
-
-int32_t BauDev::bau_setopt()
-{
-	struct termios new_tio;
-	struct termios old_tio;
-	
-	bzero(&new_tio, sizeof(new_tio));
-	bzero(&old_tio, sizeof(old_tio));
-
-	if (0 != tcgetattr(fd, &old_tio))
-	{
-		RCLCPP_INFO(node.get_logger(), "%s", strerror(errno));
-		return -1;
-	}
-	
-	cfsetspeed(&new_tio, B115200);
-	
-	new_tio.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | ICRNL | IXON);
-	new_tio.c_oflag &= ~OPOST;
-	new_tio.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
-	new_tio.c_cflag &= ~(CSIZE | PARENB);
-	new_tio.c_cflag |= CS8;	
-
-	new_tio.c_cc[VTIME] = 10;
-	new_tio.c_cc[VMIN] = 0;
-
-	tcflush(fd, TCIOFLUSH);	
-
-	if (0 != tcsetattr(fd, TCSANOW, &new_tio))
-	{
-		RCLCPP_INFO(node.get_logger(), "%s", strerror(errno));
-		return -2;
-	}
-	return 0;
-}
-
-
 void BauDev::exec()
 {
-	int32_t exec_code = 0;
-	do
-	{
-		if (fd < 0)	
-		{
-			exec_code = -1;
-			break;
-		}
-
-		exec_code = ssnp_exec(ssnp);	
-	} while (false);	
+	int32_t exec_code = ssnp_exec(ssnp);	
 	
 	if (exec_code < 0)
 	{
@@ -241,12 +170,19 @@ void BauDev::exec()
 }
 
 
-
 void BauDev::car_speed_to_wheel_speed(float linear, float angular, float &Vr, float &Vl)
 {
 	Vr = linear + angular * wheel_spacing / 2;	
 	Vl = linear - angular * wheel_spacing / 2; 
 }
+
+
+void BauDev::wheel_speed_to_car_speed(const float &Vr, const float &Vl, float &linear, float &angular)
+{
+	linear = (Vr + Vl) / 2;
+	angular = (Vr - Vl) / wheel_spacing;
+}
+
 
 int32_t BauDev::set_speed(float linear, float angular)
 {

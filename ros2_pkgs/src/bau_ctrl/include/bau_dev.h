@@ -7,6 +7,7 @@
 #include <rclcpp/rclcpp.hpp>
 
 #include "ssnp/ssnp.h"
+#include "common/SerialPort.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -31,15 +32,14 @@ public:
 	BauDev(rclcpp::Node &parent, std::string port, int baudrate);
 
 	void set_wheel_params(float rpm, float ratio, float scrl, float radius, float wheel_spacing);
-	int32_t bau_open();
-	void bau_close();
 
 	int32_t set_speed(float linear, float angular);
 
 	void exec();
 private:
-	int32_t bau_setopt();
 	void car_speed_to_wheel_speed(float linear, float angular, float &Vr, float &Vl);
+	void wheel_speed_to_car_speed(const float &Vr, const float &Vl, float &linear, float &angular);
+
 	int32_t speed_to_encoder_count(float speed);
 	float encoder_count_to_speed(int32_t count);
 
@@ -49,13 +49,9 @@ private:
 	friend void ssnp_log_print_if(void *log_handle, char *fmt, ...);
 	friend int32_t ssnp_proc_wheel_motor_data(void *cb_handle, struct SSNP *ssnp, struct SSNP_FRAME *mgs);
 
-	struct SSNP *ssnp;
-
 	rclcpp::Node &node;
-	std::string port;
-	int baudrate;
-	
-	int fd;
+	Common::SerialPort dev_sp;
+	struct SSNP *ssnp;
 
 	float rpm;
 	float ratio;
