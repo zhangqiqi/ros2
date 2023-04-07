@@ -9,20 +9,33 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 include_directories(include/)
+include_directories(${COMMON_LIB_PATH}/include/)
+
+link_directories(${COMMON_LIB_PATH}/lib/)
 
 aux_source_directory(./src/ SRC_LIST)
 
 add_executable(lidar_reader ${SRC_LIST})
+
+target_link_libraries(lidar_reader common ssnp)
+target_compile_features(lidar_reader PUBLIC c_std_99 cxx_std_20)  # Require C99 and C++17
+
 ament_target_dependencies(
 	lidar_reader
 	rclcpp
 	std_msgs
-	#	sensor_msgs
+	sensor_msgs
 )
 install(TARGETS lidar_reader
   DESTINATION lib/${PROJECT_NAME})
+
+install(DIRECTORY launch
+	DESTINATION share/${PROJECT_NAME}/
+)
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

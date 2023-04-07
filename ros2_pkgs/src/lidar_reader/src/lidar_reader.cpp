@@ -23,14 +23,6 @@ public:
 		{
 			RCLCPP_INFO(get_logger(), "create lidar device failed");	
 		}
-		else
-		{
-			auto ret_code = lidar_dev->lidar_open();
-			if (0 != ret_code)
-			{
-				RCLCPP_INFO(get_logger(), "open lidar device failed");
-			}
-		}
 
 		callback_group_reentrant = this->create_callback_group(rclcpp::CallbackGroupType::Reentrant);
 

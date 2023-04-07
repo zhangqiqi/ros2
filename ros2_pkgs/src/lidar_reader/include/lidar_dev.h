@@ -3,24 +3,19 @@
 
 #include <string>
 #include "rclcpp/rclcpp.hpp"
-
+#include "common/SerialPort.h"
 
 class LidarDev
 {
 public:
 	LidarDev(rclcpp::Node &parent, std::string port, int speed);
-	int32_t lidar_open();
-	void lidar_close();
 
 	void exec();
 private:
 	int32_t lidar_setopt();
-
+	
 	rclcpp::Node &node;
-	std::string port;
-	int speed;
-
-	int fd;
+	Common::SerialPort dev_sp;
 };
 
 
