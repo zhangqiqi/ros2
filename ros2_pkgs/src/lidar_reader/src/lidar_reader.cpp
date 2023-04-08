@@ -20,7 +20,10 @@ class LidarReader : public rclcpp::Node
 public:
 	LidarReader() : Node("lidar_reader")
 	{
-		lidar_dev = std::make_shared<LidarDev>(*this, std::string("/dev/ttyUSB0"), 230400);
+		auto device_name = this->declare_parameter("device_name", "/dev/ttyUSB0");
+		auto device_baudrate = this->declare_parameter("device_baudrate", 230400);
+
+		lidar_dev = std::make_shared<LidarDev>(*this, device_name, device_baudrate);
 		if (nullptr == lidar_dev)
 		{
 			RCLCPP_INFO(get_logger(), "create lidar device failed");	
