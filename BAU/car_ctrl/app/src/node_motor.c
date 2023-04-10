@@ -5,16 +5,16 @@
 
 void node_tx_task(void const * argument)
 {
-	HAL_StatusTypeDef ret = HAL_OK;
+//	HAL_StatusTypeDef ret = HAL_OK;
 	BaseType_t result;
-	unsigned char odometry_data[50]={0};   //·¢ËÍ¸ø´®¿ÚµÄÀï³Ì¼ÆÊý¾ÝÊý×é
+	unsigned char odometry_data[50]={0};   //ï¿½ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	MSG_ROS_HEAD head;
 	MSG_ROS_ODOM_TYPE ros_odom_type;
 	MSG_ROS_CRC crc;
 	memset(&head, 0, sizeof(head));
 	memset(&ros_odom_type, 0, sizeof(ros_odom_type));
 	memset(&crc, 0, sizeof(crc));
-	uint16_t len = 0;
+//	uint16_t len = 0;
 	head.cmd = ROS_CMD_TYPE_ODOM;
 	head.len = sizeof(ros_odom_type);
 	head.magic =  ROS_MAGIC;
@@ -23,15 +23,16 @@ void node_tx_task(void const * argument)
 	while(1)
 	{
 		result = xQueueReceive(queue_odom_handle, (void *)&ros_odom_type, 100);
+		//osDelay(20);
 		if(pdTRUE == result)
 		{
 			memcpy(odometry_data, &head, sizeof(head));
 			memcpy(odometry_data + sizeof(head), &ros_odom_type, sizeof(ros_odom_type));
 			memcpy(odometry_data + sizeof(head) + sizeof(ros_odom_type), &crc.crc_data, sizeof(crc.crc_data));
-			len = sizeof(head) + sizeof(ros_odom_type) + sizeof(crc.crc_data);
+//			len = sizeof(head) + sizeof(ros_odom_type) + sizeof(crc.crc_data);
 			/*******uart send********/
 			osSemaphoreWait(semnode_tx_cpt, osWaitForever);
-			ret = HAL_UART_Transmit_DMA(&huart2, (uint8_t *)odometry_data, len);
+			// ret = HAL_UART_Transmit_DMA(&huart2, (uint8_t *)odometry_data, len);
 	//		LOGI("actual_left_speed %f actual_right_speed %f ret %d \r\n", ros_odom_type.actual_left_speed, ros_odom_type.actual_right_speed, ret);  
 	//		LOGI("ros_odom_type %f %f %f %f %f %f %f", ros_odom_type.x_data, ros_odom_type.y_data, ros_odom_type.theta_data, ros_odom_type.vel_linear,
 	//			ros_odom_type.vel_angular, ros_odom_type.actual_left_speed, ros_odom_type.actual_right_speed);

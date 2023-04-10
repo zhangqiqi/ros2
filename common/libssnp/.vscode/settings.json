@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		"ssnp_buffer.h": "c",
+		"ssnp_msgs.h": "c"
+	}
+}

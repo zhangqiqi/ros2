@@ -1,7 +1,26 @@
 {
     "files.associations": {
 		"PID.C": "cpp",
-		"chrono": "cpp"
+		"chrono": "cpp",
+		"queue.h": "c",
+		"snp_defs.h": "c",
+		"memory.h": "c",
+		"stddef.h": "c",
+		"functional": "c",
+		"memory": "c",
+		"ratio": "c",
+		"tuple": "c",
+		"type_traits": "c",
+		"utility": "c",
+		"xmemory0": "c",
+		"xtr1common": "c",
+		"xutility": "c",
+		"initializer_list": "c",
+		"list": "c",
+		"vector": "c",
+		"xhash": "c",
+		"xstring": "c",
+		"snp_timer.h": "c"
 	},
     "ros.distro": "humble"
 }

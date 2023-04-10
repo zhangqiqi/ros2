@@ -1,9 +1,9 @@
 car_ctrl_f407\cmsis_os.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.c
-car_ctrl_f407\cmsis_os.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+car_ctrl_f407\cmsis_os.o: E:\mdk\keil5.1\ARM\ARMCC\Bin\..\include\string.h
 car_ctrl_f407\cmsis_os.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
 car_ctrl_f407\cmsis_os.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-car_ctrl_f407\cmsis_os.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-car_ctrl_f407\cmsis_os.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+car_ctrl_f407\cmsis_os.o: E:\mdk\keil5.1\ARM\ARMCC\Bin\..\include\stddef.h
+car_ctrl_f407\cmsis_os.o: E:\mdk\keil5.1\ARM\ARMCC\Bin\..\include\stdint.h
 car_ctrl_f407\cmsis_os.o: ../Inc/FreeRTOSConfig.h
 car_ctrl_f407\cmsis_os.o: ../Inc/main.h
 car_ctrl_f407\cmsis_os.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h

@@ -20,7 +20,7 @@ uint32_t parse_speed_cmd(RX_BUF_TYPE *p_parse_buf)
 {
 	MSG_ROS_HEAD head;
 	uint16_t head_len = 0;	
-	uint16_t buf_len = 0;
+//	uint16_t buf_len = 0;
 	uint16_t payload_len = 0;
 	uint16_t msg_id = 0;
 	head_len = sizeof(head);

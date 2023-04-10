@@ -17,9 +17,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			Milemeter_R_Motor = 0;
 #endif			
 		}
-
-		Milemeter_R_Motor = __HAL_TIM_GET_COUNTER(&htim3);
-		Milemeter_L_Motor = __HAL_TIM_GET_COUNTER(&htim6);
 	}
 }
 
@@ -48,7 +45,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 {
-	if (huart == &huart5)
+	if (huart == &huart1)
 	{
 		osSemaphoreRelease(semlog_tx_cpt);
 	}
@@ -60,7 +57,7 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	if (huart == &huart5)
+	if (huart == &huart1)
 	{
 		osSemaphoreRelease(semlog_rx_cpt);		
 	}
@@ -72,7 +69,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 {
-	if (huart == &huart5)
+	if (huart == &huart1)
 	{
 		osSemaphoreRelease(semlog_rx_cpt);		
 	}

@@ -29,8 +29,6 @@ RX_BUF_TYPE recv_buf_ctrl, parse_buf_ctrl;
 uint8_t rx_buf[MAX_RECV_SIZE];
 uint8_t parse_rx_buf[MAX_RECV_SIZE];
 
-
-
 extern float position_x,position_y,oriention,velocity_linear,velocity_angular;         //����õ�����̼���ֵ
 
 
@@ -88,6 +86,27 @@ void queue_init(void)
 	queue_odom_handle = xQueueCreate(3,sizeof(MSG_ROS_ODOM_TYPE));
 }
 
+
+static uint32_t get_motor_encoder_cnt(TIM_HandleTypeDef *htim)
+{
+	uint32_t encoder_cnt = 0;
+	int32_t dir = 0;
+	
+	dir = __HAL_TIM_IS_TIM_COUNTING_DOWN(htim);
+	if ((1 == dir) && (__HAL_TIM_GET_COUNTER(htim) != 0))
+	{
+		encoder_cnt = htim->Init.Period - __HAL_TIM_GET_COUNTER(htim);
+	}
+	else
+	{
+		encoder_cnt = __HAL_TIM_GET_COUNTER(htim);
+	}
+	__HAL_TIM_SET_COUNTER(htim, 0);
+	
+	return encoder_cnt;
+}
+
+
 void odometry_task(void const * argument)
 {
 	uint8_t bSpeed_Buffer_Index = 0;//���������ֱ��������������
@@ -103,8 +122,9 @@ void odometry_task(void const * argument)
 	float pulse = 0;//���A PID���ں��PWMֵ����
 	float pulse1 = 0;//���B PID���ں��PWMֵ����
 	int right_speed, left_speed;
+//	static int right_dir = 0, left_dir = 0;      /**< �����ַ��� */
 	int32_t left_pwm_out = 0, right_pwm_out = 0;
-	int32_t i = 0, j = 0;
+	int32_t i = 0;
 	uint32_t time_cnt = 0;
 	float k2=22.0368358	;	   //�ٶ�ת������,ת/���� mm/s *60* 44 = n/min   һת 44���� 853.266392 19.392418 0.440736 9.696209006074964  969.6207771515426 10ms
 								//V mm/s = V * 60 * m/min    ת���� ���� = V * 60 * ת�ٱ� * 
@@ -113,15 +133,16 @@ void odometry_task(void const * argument)
 	memset(&queue_odom_tx, 0, sizeof(queue_odom_tx));
 	memset(&speed_pluse_cnt, 0, sizeof(speed_pluse_cnt));	
 	osSemaphoreWait(init_complete, osWaitForever);		/*�ȴ������ʼ�����*/
-	HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
-	HAL_TIM_Encoder_Start(&htim6, TIM_CHANNEL_ALL);
 	while(1)
 	{
-		osSemaphoreWait(sem_odometry_cal, 10);  /*Ĭ��10ms�ͷ��ź���*/
+		osSemaphoreWait(sem_odometry_cal, 5);  /*Ĭ��10ms�ͷ��ź���*/
 //		LOGI("Milemeter_R_Motor %d %d \r\n", Milemeter_R_Motor, Milemeter_L_Motor);
 
-		speed_pluse_cnt.left_cnt = Milemeter_L_Motor;
-		speed_pluse_cnt.right_cnt = Milemeter_R_Motor;
+//		speed_pluse_cnt.left_cnt = Milemeter_L_Motor;
+		
+		speed_pluse_cnt.left_cnt = get_motor_encoder_cnt(&htim2);
+		
+		speed_pluse_cnt.right_cnt = get_motor_encoder_cnt(&htim3);
 		
 		Milemeter_R_Motor = 0;
 		Milemeter_L_Motor = 0;
@@ -210,16 +231,24 @@ void odometry_task(void const * argument)
 		{
 			right_pwm_out = 0;
 		}		
-//		LOGI("right_pwm_out %d left_pwm_out %d\r\n", right_pwm_out, left_pwm_out);        
-		if (right_speed > 0)    /*����*/
+//		LOGI("right_pwm_out %d left_pwm_out %d\r\n", right_pwm_out, left_pwm_out);     
+
+#if 0
+			htim4.Instance->CCR3 = 0;
+			htim4.Instance->CCR4 = 840;	
+			htim4.Instance->CCR1 = 0;
+			htim4.Instance->CCR2 = 840;
+#else		
+		if (right_speed > 0)
+		{
+			htim4.Instance->CCR3 = 0;
+			htim4.Instance->CCR4 = right_pwm_out;	
+
+		}
+		else if (right_speed < 0)
 		{
 			htim4.Instance->CCR3 = right_pwm_out;
 			htim4.Instance->CCR4 = 0;
-		}
-		else if (right_speed < 0) /*����*/
-		{
-			htim4.Instance->CCR3 = 0;
-			htim4.Instance->CCR4 = right_pwm_out;			
 		}
 		else
 		{
@@ -229,22 +258,21 @@ void odometry_task(void const * argument)
 	
 		if (left_speed > 0)
 		{
-			htim3.Instance->CCR1 = left_pwm_out;
-			htim3.Instance->CCR2 = 0;
-
+			htim4.Instance->CCR1 = 0;
+			htim4.Instance->CCR2 = left_pwm_out;
 		}
 		else if (left_speed < 0)
 		{
-			htim3.Instance->CCR1 = 0;
-			htim3.Instance->CCR2 = left_pwm_out;
-			
+			htim4.Instance->CCR1 = left_pwm_out;
+			htim4.Instance->CCR2 = 0;
 		}
 		else
 		{
-			htim3.Instance->CCR1 = 0;
-			htim3.Instance->CCR2 = 0;
+			htim4.Instance->CCR1 = 0;
+			htim4.Instance->CCR2 = 0;
 
 		}
+#endif 
 
 //		LOGI("right_pwm_out %d left_pwm_out %d\r\n", right_pwm_out, left_pwm_out);  
 		odometry(&speed_pluse_cnt, &queue_odom_tx);//������̼�
@@ -264,10 +292,10 @@ void odometry_task(void const * argument)
 
 void node_recv_task(void const * argument)
 {
-	uint32_t cnt = 0, flag = 0;
+//	uint32_t cnt = 0, flag = 0;
 	RX_BUF_TYPE *recv_buf;
 	RX_BUF_TYPE	*parse_buf;
-	uint16_t recv_len = 0;
+//	uint16_t recv_len = 0;
 	recv_buf = &recv_buf_ctrl;
 	parse_buf = &parse_buf_ctrl;
 
@@ -282,37 +310,39 @@ void node_recv_task(void const * argument)
 	recv_buf->rx_size = 128;
 	memset(&ros_speed_data, 0, sizeof(ros_speed_data));
 	memset(rx_buf, 1, sizeof(rx_buf));
-	uint32_t t = 0;
-	HAL_UART_Receive_DMA(&huart2, recv_buf->rx_buf, recv_buf->rx_size);
+//	uint32_t t = 0;
+	// HAL_UART_Receive_DMA(&huart2, recv_buf->rx_buf, recv_buf->rx_size);
 	osSemaphoreWait(init_complete, osWaitForever);		/*�ȴ������ʼ�����*/	
 	while(1)
 	{
 		osSemaphoreWait(semnode_rx_cpt, 1);
-		recv_buf->pWritePtr = huart2.RxXferSize - huart2.hdmarx->Instance->NDTR;	/*�ܳ���-ʣ�೤�� = ���ճ���*/
-//		LOGI("..... parse_buf->pWritePtr:%d recv_buf->pWritePtr:%d huart1.RxXferSize:%d huart1.hdmarx->Instance->NDTR:%d recv_len:%d parse_buf->pReadPtr:%d recv_buf->pReadPtr:%d",
-//								parse_buf->pWritePtr, recv_buf->pWritePtr, huart1.RxXferSize, huart1.hdmarx->Instance->NDTR, recv_len, parse_buf->pReadPtr, recv_buf->pReadPtr);
-		recv_len = get_data_from_rx_buf(recv_buf, parse_buf->rx_buf + parse_buf->pWritePtr, parse_buf->rx_size - parse_buf->pWritePtr);
-		if(recv_len == 0)
-		{
-			//return;
-		}
-		else
-		{
-			parse_buf->pWritePtr += recv_len;
-	//		LOGI("..... parse_buf->pWritePtr:%d recv_buf->pWritePtr:%d huart1.RxXferSize:%d huart1.hdmarx->Instance->NDTR:%d recv_len:%d parse_buf->pReadPtr:%d recv_buf->pReadPtr:%d",
-	//								parse_buf->pWritePtr, recv_buf->pWritePtr, huart1.RxXferSize, huart1.hdmarx->Instance->NDTR, recv_len, parse_buf->pReadPtr, recv_buf->pReadPtr);
+		osDelay(100 * 1000);
+// 		recv_buf->pWritePtr = huart2.RxXferSize - huart2.hdmarx->Instance->NDTR;	/*�ܳ���-ʣ�೤�� = ���ճ���*/
+// //		LOGI("..... parse_buf->pWritePtr:%d recv_buf->pWritePtr:%d huart1.RxXferSize:%d huart1.hdmarx->Instance->NDTR:%d recv_len:%d parse_buf->pReadPtr:%d recv_buf->pReadPtr:%d",
+// //								parse_buf->pWritePtr, recv_buf->pWritePtr, huart1.RxXferSize, huart1.hdmarx->Instance->NDTR, recv_len, parse_buf->pReadPtr, recv_buf->pReadPtr);
+// 		recv_len = get_data_from_rx_buf(recv_buf, parse_buf->rx_buf + parse_buf->pWritePtr, parse_buf->rx_size - parse_buf->pWritePtr);
+// 		if(recv_len == 0)
+// 		{
+// 			//return;
+// 		}
+// 		else
+// 		{
+// 			parse_buf->pWritePtr += recv_len;
+// 	//		LOGI("..... parse_buf->pWritePtr:%d recv_buf->pWritePtr:%d huart1.RxXferSize:%d huart1.hdmarx->Instance->NDTR:%d recv_len:%d parse_buf->pReadPtr:%d recv_buf->pReadPtr:%d",
+// 	//								parse_buf->pWritePtr, recv_buf->pWritePtr, huart1.RxXferSize, huart1.hdmarx->Instance->NDTR, recv_len, parse_buf->pReadPtr, recv_buf->pReadPtr);
 
-	//		LOGI("..... %d %d", parse_buf->pWritePtr, recv_buf->pWritePtr);
-			parse_speed_cmd(parse_buf);
-	        //�����������ٶ�
-			LOGI("odometry_right %f odometry_left %f", ros_speed_data.right_motor_data, ros_speed_data.left_motor_data);
-			odometry_right = ros_speed_data.right_motor_data;
-			odometry_left = ros_speed_data.left_motor_data;
-		}
+// 	//		LOGI("..... %d %d", parse_buf->pWritePtr, recv_buf->pWritePtr);
+// 			parse_speed_cmd(parse_buf);
+// 	        //�����������ٶ�
+// 			LOGI("odometry_right %f odometry_left %f", ros_speed_data.right_motor_data, ros_speed_data.left_motor_data);
+// 			//odometry_right = ros_speed_data.right_motor_data;
+// 			//odometry_left = ros_speed_data.left_motor_data;
+// 		}
 		
 
 	}
 }
+
 
 void system_task(void const * argument)
 {
@@ -322,19 +352,27 @@ void system_task(void const * argument)
 
 	sem_init();
 	queue_init();
-	osThreadDef(odom, odometry_task, osPriorityAboveNormal, 0, 1024);
-	system_task_id = osThreadCreate(osThread(odom), NULL);	
+	
+	libmotor_app_init();
+	libsnp_app_init();
+	
+	// osThreadDef(odom, odometry_task, osPriorityAboveNormal, 0, 1024);
+	// system_task_id = osThreadCreate(osThread(odom), NULL);	
 
-	osThreadDef(node, node_recv_task, osPriorityNormal, 0, 1024);
-	node_recv_task_id = osThreadCreate(osThread(node), NULL);
+	// osThreadDef(node, node_recv_task, osPriorityNormal, 0, 1024);
+	// node_recv_task_id = osThreadCreate(osThread(node), NULL);
 
-	osThreadDef(node_tx, node_tx_task, osPriorityNormal, 0, 1024);
+	// osThreadDef(node_tx, node_tx_task, osPriorityNormal, 0, 1024);
 
-	node_tx_task_id = osThreadCreate(osThread(node_tx), NULL);
+	// node_tx_task_id = osThreadCreate(osThread(node_tx), NULL);
 
 	HAL_TIM_Base_Start_IT(&htim6);
-	HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_1);
-	HAL_TIM_PWM_Start(&htim3,TIM_CHANNEL_2);
+	
+	HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
+	HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
+	
+	HAL_TIM_PWM_Start(&htim4,TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(&htim4,TIM_CHANNEL_2);
 	
 	HAL_TIM_PWM_Start(&htim4,TIM_CHANNEL_3);
 	HAL_TIM_PWM_Start(&htim4,TIM_CHANNEL_4);
@@ -355,7 +393,7 @@ void system_task(void const * argument)
 
 //		HAL_UART_Transmit_DMA(&huart1, send_buf, 10);
 		osDelay(5000);
-		LOGI("func %s\r\n", __FUNCTION__);
+		// LOGI("func %s\r\n", __FUNCTION__);
 	}
 }
 
@@ -365,7 +403,7 @@ void main_app(void)
 	osSemaphoreDef(sem);
 	init_complete = osSemaphoreCreate(osSemaphore(sem), 1);
 	
-	osThreadDef(sys_init, system_task, osPriorityBelowNormal, 0, 512);
+	osThreadDef(sys_init, system_task, osPriorityBelowNormal, 0, 2048);
 	system_task_id = osThreadCreate(osThread(sys_init), NULL);	
 
 }
