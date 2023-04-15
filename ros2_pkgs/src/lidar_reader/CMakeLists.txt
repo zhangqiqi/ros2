@@ -30,7 +30,8 @@ ament_target_dependencies(
 	sensor_msgs
 )
 install(TARGETS lidar_reader
-  DESTINATION lib/${PROJECT_NAME})
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 install(DIRECTORY launch
 	DESTINATION share/${PROJECT_NAME}/

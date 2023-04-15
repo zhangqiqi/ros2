@@ -21,6 +21,9 @@ def generate_launch_description():
                 parameters=[{
                     'device_name': LaunchConfiguration('device_name'),
                     'device_baudrate': LaunchConfiguration('device_baudrate')
-                 }]
+                 }],
+                remappings = [
+                    ('LaserScan', 'scan')
+                ]
             )
         ])

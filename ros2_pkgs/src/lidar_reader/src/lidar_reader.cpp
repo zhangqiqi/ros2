@@ -31,7 +31,7 @@ public:
 
 		callback_group_reentrant = this->create_callback_group(rclcpp::CallbackGroupType::Reentrant);
 		timer_ = this->create_wall_timer(2ms, std::bind(&LidarReader::lidar_exec_timer, this));	
-		lidar_pub = this->create_publisher<sensor_msgs::msg::LaserScan>("LaserScan", 10);
+		lidar_pub = this->create_publisher<sensor_msgs::msg::LaserScan>("LaserScan", 100);
 	}
 private:
 	void lidar_exec_timer()
