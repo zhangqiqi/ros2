@@ -45,9 +45,10 @@ private:
 			{
 				break;
 			}
-			RCLCPP_DEBUG(get_logger(), "pub new lidar msg: angle(%f, %f), angle_increment(%f), time_increment(%f)",
-				msg->angle_min, msg->angle_max, msg->angle_increment, msg->time_increment
-			);
+			msg->header.stamp = this->now();
+//			RCLCPP_INFO(get_logger(), "pub new lidar msg: angle(%f, %f), angle_increment(%f), time_increment(%f), stamp(%u, %u), stamp now(%lf)",
+//				msg->angle_min, msg->angle_max, msg->angle_increment, msg->time_increment
+//			, msg->header.stamp.sec, msg->header.stamp.nanosec, this->now().seconds());
 			lidar_pub->publish(*msg);
 		} while (true);
 	}

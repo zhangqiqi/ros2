@@ -11,8 +11,8 @@
 #include "common/SerialPort.h"
 
 
-
 struct WHEELTEC_N10_FRAME;
+class LaserScanPoints;
 
 class LidarDev
 {
@@ -23,13 +23,18 @@ public:
 
 	void exec();
 private:
-	void push_lidar_msgs(const struct WHEELTEC_N10_FRAME *frame);
+	void push_lidar_frame(const struct WHEELTEC_N10_FRAME *frame);
+
+	void push_lidar_msgs();
 
 	rclcpp::Node &node;
 	Common::SerialPort dev_sp;
 	
 	std::vector<uint8_t> buffer;	
 	std::list<std::shared_ptr<sensor_msgs::msg::LaserScan>> lidar_msgs;
+	
+	std::shared_ptr<LaserScanPoints> points;
+
 };
 
 

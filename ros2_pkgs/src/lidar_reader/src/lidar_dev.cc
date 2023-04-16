@@ -11,6 +11,7 @@
 #include <fcntl.h>
 #include <strings.h>
 #include <termios.h>
+#include <vector>
 
 
 
@@ -47,6 +48,8 @@ struct WHEELTEC_N10_FRAME {
 };
 
 #pragma pack()
+
+
 
 /**
  * @brief n10帧数据和校验算法
@@ -110,7 +113,89 @@ int32_t wheeltec_n10_frame_unpack(uint8_t *data, int32_t len, struct WHEELTEC_N1
 }
 #endif
 
+class LaserScanPoints
+{
+public:
+	LaserScanPoints(rclcpp::Node &parent)
+		: node(parent)
+	{
+	
+	}
+	
+	bool append(const WHEELTEC_N10_FRAME &frame, double cur_stamp)
+	{
+		double start_angle = (frame.start_angle_h << 8) + frame.start_angle_l;
+		double stop_angle = (frame.stop_angle_h << 8) + frame.stop_angle_l;
+		
+		double angle_step = (stop_angle > start_angle) ?
+				(stop_angle - start_angle) / 15 : 
+				(stop_angle + 36000 - start_angle) / 15;
 
+		double cur_angle = start_angle;
+		double stamp_step = (frame.speed_h << 8) + frame.speed_l;
+		stamp_step = stamp_step / (2 * 16 * 1000 * 1000);		
+		
+		for (auto point = std::begin(frame.points); point != std::end(frame.points); ++point)
+		{
+			double _distance = double((point->distance_h << 8) + point->distance_l) / 1000;
+			double _peak = (double)point->peak / 1000;
+			distance.push_back(_distance);	
+			peak.push_back(_peak);
+			stamp.push_back(cur_stamp);
+			if (cur_angle > 36000)
+			{
+				angle.push_back(cur_angle - 36000);
+			}
+			else
+			{
+				angle.push_back(cur_angle);
+			}
+			cur_angle += angle_step;
+			cur_stamp += stamp_step;
+		}
+		return cur_angle > 36000;
+	}
+	
+	void get_laserscan_msg(std::shared_ptr<sensor_msgs::msg::LaserScan> msg)
+	{
+		decltype(angle.size()) i = 0;
+		for (i = 0; i < angle.size(); ++i)			
+		{
+			msg->ranges.push_back(distance[i]);
+			msg->intensities.push_back(peak[i]);
+			if ((i + 1) >= angle.size())
+			{
+				break;
+			}
+			if (angle[i] > angle[i + 1])
+			{
+		//		RCLCPP_INFO(node.get_logger(), "angle[i] = %f, angle[i + 1] = %f", angle[i], angle[i + 1]);	
+				break;
+			}
+		}
+		
+		msg->angle_min = angle[0] * 2 * std::numbers::pi / 36000;	
+		msg->angle_max = angle[i] * 2 * std::numbers::pi / 36000;
+
+		msg->angle_increment = (msg->angle_max - msg->angle_min) / (msg->ranges.size() - 1);
+		msg->time_increment = (stamp[i] - stamp[0]) / (msg->ranges.size() - 1);
+
+		distance.erase(distance.begin(), distance.begin() + i + 1);	
+		peak.erase(peak.begin(), peak.begin() + i + 1);
+		angle.erase(angle.begin(), angle.begin() + i + 1);
+		stamp.erase(stamp.begin(), stamp.begin() + i + 1);
+		
+		RCLCPP_INFO(node.get_logger(), "get new laser msg, start stamp(%lf) angle(%lf), stop stamp(%lf) angle(%lf)", stamp[0], msg->angle_min, stamp[i], msg->angle_max);
+	}
+
+private:
+	rclcpp::Node &node;
+	std::vector<double> distance;
+	std::vector<double> peak;
+	std::vector<double> angle;
+	std::vector<double> stamp;	
+
+};
 
 LidarDev::LidarDev(rclcpp::Node &parent, std::string port, int speed)
 		: node(parent), dev_sp(port, speed) 
@@ -120,7 +205,7 @@ LidarDev::LidarDev(rclcpp::Node &parent, std::string port, int speed)
 		RCLCPP_INFO(node.get_logger(), "lidar device open failed, err: %s", dev_sp.get_errstring().c_str());
 		return;
 	}
-	
+	points = std::make_shared<LaserScanPoints>(parent);	
 	RCLCPP_INFO(node.get_logger(), "lidar device construct success");
 }
 
@@ -137,43 +222,24 @@ std::shared_ptr<sensor_msgs::msg::LaserScan> LidarDev::get_next_msgs(void)
 	return ret;
 }
 
-void LidarDev::push_lidar_msgs(const struct WHEELTEC_N10_FRAME *frame)
+void LidarDev::push_lidar_msgs()
 {
+
 	auto _new_msg = std::make_shared<sensor_msgs::msg::LaserScan>();
-	_new_msg->header.stamp = node.now();
+//	_new_msg->header.stamp = node.now();
 	_new_msg->header.frame_id = "lidar_link";
-
-	float start_angle = (frame->start_angle_h << 8) + frame->start_angle_l;
-	float stop_angle = (frame->stop_angle_h << 8) + frame->stop_angle_l;
-	float speed = (frame->speed_h << 8) + frame->speed_l;
 	
-	if (stop_angle < start_angle)
-	{
-		stop_angle = 36000;
-	}
+	points->get_laserscan_msg(_new_msg);
 
-	int cnt = sizeof(frame->points) / sizeof(frame->points[0]);
-	for (int i = 0; i < cnt; ++i)	
-	{
-		float ranges = (frame->points[i].distance_h << 8) + frame->points[i].distance_l;
-		float intensities = frame->points[i].peak;
-
-		_new_msg->ranges.push_back(ranges / 1000);
-		_new_msg->intensities.push_back(intensities / 1000);
-	}
-
-	_new_msg->angle_min = start_angle * std::numbers::pi / 36000;
-	_new_msg->angle_max = stop_angle * std::numbers::pi / 36000;
-	_new_msg->angle_increment = 0.8 * std::numbers::pi / 360;
-	_new_msg->time_increment = speed / (32 *  1000 * 1000);
 	_new_msg->range_max = 12;
 	_new_msg->range_min = 0.015;
 	
-//	RCLCPP_INFO(node.get_logger(), "new lidar msg: angle(%f, %f), speed(%f)", 
-//		_new_msg->angle_min, _new_msg->angle_max, speed);
+	//RCLCPP_INFO(node.get_logger(), "new lidar msg: angle(%f, %f), points num(%ld)", 
+	//	_new_msg->angle_min, _new_msg->angle_max, _new_msg->ranges.size());
 
 	lidar_msgs.push_back(_new_msg);
 }
+
 
 void LidarDev::exec()
 {
@@ -194,7 +260,10 @@ void LidarDev::exec()
 		size = wheeltec_n10_frame_unpack(buffer.data(), buffer.size(), &frame);	
 		if (nullptr != frame)
 		{
-			push_lidar_msgs(frame);
+			if (true == points->append(*frame, node.now().seconds()))
+			{
+				push_lidar_msgs();
+			}
 		}
 		if (size > 0)
 		{
