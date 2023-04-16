@@ -45,6 +45,11 @@ private:
 			{
 				break;
 			}
+			if (msg->angle_max <= msg->angle_min)
+			{
+				continue;
+			}
+			
 			msg->header.stamp = this->now();
 //			RCLCPP_INFO(get_logger(), "pub new lidar msg: angle(%f, %f), angle_increment(%f), time_increment(%f), stamp(%u, %u), stamp now(%lf)",
 //				msg->angle_min, msg->angle_max, msg->angle_increment, msg->time_increment
