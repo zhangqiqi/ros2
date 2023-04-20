@@ -31,17 +31,19 @@ class BauDev
 public:
 	BauDev(rclcpp::Node &parent, std::string port, int baudrate);
 
-	void set_wheel_params(float rpm, float ratio, float scrl, float radius, float wheel_spacing);
+	void set_wheel_params(double rpm, double ratio, double scrl, double radius, double wheel_spacing);
 
-	int32_t set_speed(float linear, float angular);
+	int32_t set_speed(double linear, double angular);
+
+	int32_t get_speed(double &linear, double &angular);
 
 	void exec();
 private:
-	void car_speed_to_wheel_speed(float linear, float angular, float &Vr, float &Vl);
-	void wheel_speed_to_car_speed(const float &Vr, const float &Vl, float &linear, float &angular);
+	void car_speed_to_wheel_speed(double linear, double angular, double &Vr, double &Vl);
+	void wheel_speed_to_car_speed(const double &Vr, const double &Vl, double &linear, double &angular);
 
-	int32_t speed_to_encoder_count(float speed);
-	float encoder_count_to_speed(int32_t count);
+	int32_t speed_to_encoder_count(double speed);
+	double encoder_count_to_speed(int32_t count);
 
 	friend int32_t ssnp_recv_cb(void *read_handle, struct SSNP_BUFFER *recv_buf);
 	friend int32_t ssnp_trans_cb(void *write_handle, struct SSNP_BUFFER *trans_buf);
@@ -53,11 +55,14 @@ private:
 	Common::SerialPort dev_sp;
 	struct SSNP *ssnp;
 
-	float rpm;
-	float ratio;
-	float scrl;
-	float radius;
-	float wheel_spacing;
+	double rpm;
+	double ratio;
+	double scrl;
+	double radius;
+	double wheel_spacing;
+
+	double cur_linear;
+	double cur_angular;
 };
 
 #endif

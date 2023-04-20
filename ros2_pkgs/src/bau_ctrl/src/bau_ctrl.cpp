@@ -1,14 +1,24 @@
 #include <chrono>
+#include <geometry_msgs/msg/detail/twist_with_covariance_stamped__struct.hpp>
 #include <memory>
 #include <functional>
+#include <nav_msgs/msg/detail/odometry__struct.hpp>
 #include <rclcpp/callback_group.hpp>
 #include <rclcpp/executors/multi_threaded_executor.hpp>
 #include <rclcpp/logging.hpp>
 #include <rclcpp/parameter.hpp>
 #include <rclcpp/parameter_value.hpp>
+#include <rclcpp/publisher.hpp>
 #include <rclcpp/subscription.hpp>
 #include <geometry_msgs/msg/twist.hpp>
 #include <string>
+#include <geometry_msgs/msg/transform_stamped.h>
+#include <geometry_msgs/msg/twist_with_covariance_stamped.hpp>
+#include <tf2/tf2/LinearMath/Quaternion.h>
+#include <tf2_ros/tf2_ros/transform_broadcaster.h>
+#include <tf2_ros/transform_broadcaster.h>
+#include <tf2/LinearMath/Quaternion.h>
+#include <nav_msgs/msg/odometry.hpp>
 
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
@@ -30,6 +40,7 @@ public:
 		auto wheel_radius = this->declare_parameter("wheel_radius", 32.5);
 		auto wheel_spacing = this->declare_parameter("wheel_spacing", 170);
 
+		_twist_stamped_publisher = this->create_publisher<geometry_msgs::msg::TwistWithCovarianceStamped>("bau_ctrl/twist", 10);
 		bau_dev = std::make_shared<BauDev>(*this, dev_name, dev_baudrate);
 		if (nullptr == bau_dev)
 		{
@@ -66,10 +77,28 @@ private:
 	void bau_exec_timer()
 	{
 		this->bau_dev->exec();
+
+		double linear = 0;
+		double angular = 0;
+		bau_dev->get_speed(linear, angular);
+
+		geometry_msgs::msg::TwistWithCovarianceStamped _twist;
+
+		_twist.header.stamp = this->now();
+		_twist.header.frame_id = "base_link";
+		_twist.twist.twist.linear.x = linear;
+		_twist.twist.twist.linear.y = 0;
+		_twist.twist.twist.linear.z = 0;
+		_twist.twist.twist.angular.x = 0;
+		_twist.twist.twist.angular.y = 0;
+		_twist.twist.twist.angular.z = angular;
+		
+		_twist_stamped_publisher->publish(_twist);
 	}
 	
 	rclcpp::CallbackGroup::SharedPtr callback_group_reentrant ;
 	rclcpp::TimerBase::SharedPtr timer_;
+	rclcpp::Publisher<geometry_msgs::msg::TwistWithCovarianceStamped>::SharedPtr _twist_stamped_publisher;
 	std::shared_ptr<BauDev> bau_dev;
 	rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr subscription_twist;
 };

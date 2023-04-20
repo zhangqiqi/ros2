@@ -30,13 +30,13 @@ int32_t ssnp_recv_cb(void *read_handle, struct SSNP_BUFFER *recv_buf)
 	int32_t len = dev->dev_sp.read(buffer, sizeof(buffer));
 	if (len < 0)
 	{
-		RCLCPP_INFO(dev->node.get_logger(), "bau read failed, err: %s", strerror(errno));
+		RCLCPP_DEBUG(dev->node.get_logger(), "bau read failed, err: %s", strerror(errno));
 	}
 	else
 	{
 		ssnp_buffer_write(recv_buf, buffer, len);
 
-		RCLCPP_INFO(dev->node.get_logger(), "bau get new raw data, len: %d", len);
+		RCLCPP_DEBUG(dev->node.get_logger(), "bau get new raw data, len: %d", len);
 	}	
 	
 	return 0;
@@ -83,8 +83,13 @@ int32_t ssnp_proc_wheel_motor_data(void *cb_handle, [[maybe_unused]] struct SSNP
 	
 	RCLCPP_INFO(dev->node.get_logger(), "left: freq %d, target %d, sample %d; right: freq %d, target %d, sample %d",
 		_sub_msg->left_motor_data.freq, _sub_msg->left_motor_data.target_count, _sub_msg->left_motor_data.sample_count,
-		_sub_msg->right_motor_data.freq, _sub_msg->right_motor_data.target_count, _sub_msg->right_motor_data.sample_count		
+		_sub_msg->right_motor_data.freq, -_sub_msg->right_motor_data.target_count, -_sub_msg->right_motor_data.sample_count		
 	);
+
+	double left_speed = dev->encoder_count_to_speed(_sub_msg->left_motor_data.sample_count * _sub_msg->left_motor_data.freq);
+	double right_speed = dev->encoder_count_to_speed(-_sub_msg->right_motor_data.sample_count * _sub_msg->right_motor_data.freq);
+
+	dev->wheel_speed_to_car_speed(right_speed, left_speed, dev->cur_linear, dev->cur_angular);
 
 	return 0;
 }
@@ -109,7 +114,7 @@ void ssnp_log_print_if(void *log_handle, char *fmt, ...)
 
 
 BauDev::BauDev(rclcpp::Node &parent, std::string port, int baudrate)
-		: node(parent), dev_sp(port, baudrate)
+		: node(parent), dev_sp(port, baudrate), cur_linear(0.0), cur_angular(0.0)
 {
 	ssnp_shell_init();	
 	ssnp_log_print_setup(this, ssnp_log_print_if);
@@ -137,7 +142,7 @@ BauDev::BauDev(rclcpp::Node &parent, std::string port, int baudrate)
 }
 
 
-void BauDev::set_wheel_params(float rpm, float ratio, float scrl, float radius, float wheel_spacing)
+void BauDev::set_wheel_params(double rpm, double ratio, double scrl, double radius, double wheel_spacing)
 {
 	this->rpm = rpm;
 	this->ratio = ratio;
@@ -147,13 +152,13 @@ void BauDev::set_wheel_params(float rpm, float ratio, float scrl, float radius, 
 }
 
 
-int32_t BauDev::speed_to_encoder_count(float speed)
+int32_t BauDev::speed_to_encoder_count(double speed)
 {
 	return (speed / (2 * radius * std::numbers::pi)) * scrl;
 }
 
 
-float BauDev::encoder_count_to_speed(int32_t count)
+double BauDev::encoder_count_to_speed(int32_t count)
 {
 	return (count / scrl) * 2 * radius * std::numbers::pi;
 }
@@ -165,29 +170,38 @@ void BauDev::exec()
 	
 	if (exec_code < 0)
 	{
-		RCLCPP_INFO(node.get_logger(), "bau exec failed, exec code: %d", exec_code);
+		RCLCPP_DEBUG(node.get_logger(), "bau exec failed, exec code: %d", exec_code);
 	}
 }
 
 
-void BauDev::car_speed_to_wheel_speed(float linear, float angular, float &Vr, float &Vl)
+void BauDev::car_speed_to_wheel_speed(double linear, double angular, double &Vr, double &Vl)
 {
 	Vr = linear + angular * wheel_spacing / 2;	
 	Vl = linear - angular * wheel_spacing / 2; 
 }
 
 
-void BauDev::wheel_speed_to_car_speed(const float &Vr, const float &Vl, float &linear, float &angular)
+int32_t BauDev::get_speed(double &linear, double &angular)
+{
+	linear = cur_linear;
+	angular = cur_angular;
+
+	return 0;
+}
+
+
+void BauDev::wheel_speed_to_car_speed(const double &Vr, const double &Vl, double &linear, double &angular)
 {
 	linear = (Vr + Vl) / 2;
 	angular = (Vr - Vl) / wheel_spacing;
 }
 
 
-int32_t BauDev::set_speed(float linear, float angular)
+int32_t BauDev::set_speed(double linear, double angular)
 {
 	int32_t freq = 100;
-	float Vr, Vl;
+	double Vr, Vl;
 
 	car_speed_to_wheel_speed(linear, angular, Vr, Vl);
 
