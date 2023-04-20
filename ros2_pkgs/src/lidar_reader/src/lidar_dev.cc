@@ -185,7 +185,7 @@ public:
 		angle.erase(angle.begin(), angle.begin() + i + 1);
 		stamp.erase(stamp.begin(), stamp.begin() + i + 1);
 		
-		RCLCPP_INFO(node.get_logger(), "get new laser msg, start stamp(%lf) angle(%lf), stop stamp(%lf) angle(%lf)", stamp[0], msg->angle_min, stamp[i], msg->angle_max);
+		RCLCPP_DEBUG(node.get_logger(), "get new laser msg, start stamp(%lf) angle(%lf), stop stamp(%lf) angle(%lf)", stamp[0], msg->angle_min, stamp[i], msg->angle_max);
 	}
 
 private:
@@ -249,7 +249,7 @@ void LidarDev::exec()
 	size = dev_sp.read(data, sizeof(data));
 	if (size < 0)
 	{
-		RCLCPP_INFO(node.get_logger(), "get lidar data failed, err: %s", dev_sp.get_errstring().c_str()); 
+		RCLCPP_DEBUG(node.get_logger(), "get lidar data failed, err: %s", dev_sp.get_errstring().c_str()); 
 		return;
 	}
 	buffer.insert(buffer.end(), std::begin(data), std::begin(data) + size);	
