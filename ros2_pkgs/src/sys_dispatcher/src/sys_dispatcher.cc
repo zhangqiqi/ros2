@@ -28,7 +28,8 @@ public:
 		: Node("sys_dispatcher")
 	{
 		_timer = this->create_wall_timer(1000ms, std::bind(&SysDispatcher::sys_dispatcher_exec_timer, this));
-		_tf_publisher = std::make_shared<tf2_ros::StaticTransformBroadcaster>(this);
+		_tf_static_publisher = std::make_shared<tf2_ros::StaticTransformBroadcaster>(this);
+		_tf_publisher = std::make_shared<tf2_ros::TransformBroadcaster>(this);
 		make_transforms();	
 	}
 private:
@@ -41,44 +42,53 @@ private:
 	void make_transforms()
 	{
 		geometry_msgs::msg::TransformStamped t;
-	
+		tf2::Quaternion q;
+
 		t.header.stamp = this->now();
-		t.header.frame_id = "world";
-		t.child_frame_id = "base_link";
-		
+		t.header.frame_id = "map";
+		t.child_frame_id = "odom";
 		t.transform.translation.x = 0;
 		t.transform.translation.y = 0;
 		t.transform.translation.z = 0;
-		tf2::Quaternion q;
 		q.setRPY(0, 0, 0);
 		t.transform.rotation.x = q.x();
 		t.transform.rotation.y = q.y();
 		t.transform.rotation.z = q.z();
 		t.transform.rotation.w = q.w();
-			
 		_tf_publisher->sendTransform(t);
 
+		t.header.stamp = this->now();
+		t.header.frame_id = "odom";
+		t.child_frame_id = "base_link";
+		t.transform.translation.x = 0;
+		t.transform.translation.y = 0;
+		t.transform.translation.z = 0;
+		q.setRPY(0, 0, 0);
+		t.transform.rotation.x = q.x();
+		t.transform.rotation.y = q.y();
+		t.transform.rotation.z = q.z();
+		t.transform.rotation.w = q.w();
+		_tf_publisher->sendTransform(t);
 
 		t.header.stamp = this->now();
 		t.header.frame_id = "base_link";
 		t.child_frame_id = "lidar_link";
-
 		t.transform.translation.x = 0;
 		t.transform.translation.y = 0;
 		t.transform.translation.z = 0;
-
 		q.setRPY(0, 0, 0);
 		t.transform.rotation.x = q.x();
 		t.transform.rotation.y = q.y();
 		t.transform.rotation.z = q.z();
 		t.transform.rotation.w = q.w();
 
-		_tf_publisher->sendTransform(t);
+		_tf_static_publisher->sendTransform(t);
 	}
 
 
-	std::shared_ptr<tf2_ros::StaticTransformBroadcaster> _tf_publisher;
-	rclcpp::TimerBase::SharedPtr _timer;	
+	std::shared_ptr<tf2_ros::StaticTransformBroadcaster> _tf_static_publisher;
+	std::shared_ptr<tf2_ros::TransformBroadcaster> _tf_publisher;
+	rclcpp::TimerBase::SharedPtr _timer;
 
 };
 

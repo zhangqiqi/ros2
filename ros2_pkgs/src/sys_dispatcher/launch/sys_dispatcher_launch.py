@@ -12,14 +12,14 @@ def generate_launch_description():
             os.path.join(get_package_share_directory('bau_ctrl'), 'launch'),
             '/bau_ctrl_launch.py'
         ]),
-        launch_arguments={'device_name': '/dev/ttyUSB1', 'device_baudrate': '115200'}.items()
+        launch_arguments={'device_name': '/dev/ttyUSB0', 'device_baudrate': '115200'}.items()
     )
     lidar_reader = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             os.path.join(get_package_share_directory('lidar_reader'), 'launch'),
             '/lidar_launch.py'
         ]),
-        launch_arguments={'device_name': '/dev/ttyUSB0', 'device_baudrate': '230400'}.items()
+        launch_arguments={'device_name': '/dev/ttyUSB1', 'device_baudrate': '230400'}.items()
     )
 
     cartographer_node = IncludeLaunchDescription(
@@ -28,7 +28,23 @@ def generate_launch_description():
             '/my_robot.launch.py'
         ])
     )
+
+    nav2_node = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            os.path.join(get_package_share_directory('nav2_bringup'), 'launch'),
+            '/bringup_launch.py'
+        ]),
+        launch_arguments={'params_file': os.path.join(get_package_share_directory('sys_dispatcher'), 'params', 'nav2_params.yaml'), 'map': os.path.join('tmp', 'map.yaml')}.items() 
+    )
     
+    robot_localization_node = Node(
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_filter_node',
+        output='screen',
+        parameters=[os.path.join(get_package_share_directory('sys_dispatcher'), 'params', 'robot_localization_ekf.yaml')]
+    )
+
     sys_dispatcher_node = Node(
         package='sys_dispatcher',
         executable='sys_dispatcher',
@@ -39,8 +55,10 @@ def generate_launch_description():
 
     return LaunchDescription([
             sys_dispatcher_node, 
-            #bau_ctrl,
+            bau_ctrl,
             lidar_reader,
-            cartographer_node
+            robot_localization_node,
+            cartographer_node,
+            nav2_node
         ])
 
