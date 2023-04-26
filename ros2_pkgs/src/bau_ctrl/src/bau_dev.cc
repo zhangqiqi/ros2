@@ -83,11 +83,11 @@ int32_t ssnp_proc_wheel_motor_data(void *cb_handle, [[maybe_unused]] struct SSNP
 	
 	RCLCPP_INFO(dev->node.get_logger(), "left: freq %d, target %d, sample %d; right: freq %d, target %d, sample %d",
 		_sub_msg->left_motor_data.freq, _sub_msg->left_motor_data.target_count, _sub_msg->left_motor_data.sample_count,
-		_sub_msg->right_motor_data.freq, -_sub_msg->right_motor_data.target_count, -_sub_msg->right_motor_data.sample_count		
+		_sub_msg->right_motor_data.freq, _sub_msg->right_motor_data.target_count, _sub_msg->right_motor_data.sample_count		
 	);
 
 	double left_speed = dev->encoder_count_to_speed(_sub_msg->left_motor_data.sample_count * _sub_msg->left_motor_data.freq);
-	double right_speed = dev->encoder_count_to_speed(-_sub_msg->right_motor_data.sample_count * _sub_msg->right_motor_data.freq);
+	double right_speed = dev->encoder_count_to_speed(_sub_msg->right_motor_data.sample_count * _sub_msg->right_motor_data.freq);
 
 	dev->wheel_speed_to_car_speed(right_speed, left_speed, dev->cur_linear, dev->cur_angular);
 
@@ -114,7 +114,7 @@ void ssnp_log_print_if(void *log_handle, char *fmt, ...)
 
 
 BauDev::BauDev(rclcpp::Node &parent, std::string port, int baudrate)
-		: node(parent), dev_sp(port, baudrate), cur_linear(0.0), cur_angular(0.0)
+		: node(parent), dev_sp(port, baudrate), cur_linear(0.0), cur_angular(0.0), cur_linear_target(0.), cur_angular_target(0.)
 {
 	ssnp_shell_init();	
 	ssnp_log_print_setup(this, ssnp_log_print_if);
@@ -184,8 +184,10 @@ void BauDev::car_speed_to_wheel_speed(double linear, double angular, double &Vr,
 
 int32_t BauDev::get_speed(double &linear, double &angular)
 {
-	linear = cur_linear;
+	linear = cur_linear / 1000;
 	angular = cur_angular;
+//	linear = cur_linear_target / 1000;
+//	angular = cur_angular_target;
 
 	return 0;
 }
@@ -203,6 +205,11 @@ int32_t BauDev::set_speed(double linear, double angular)
 	int32_t freq = 100;
 	double Vr, Vl;
 
+	linear *= 1000;
+
+	cur_linear_target = linear;
+	cur_angular_target = angular;
+
 	car_speed_to_wheel_speed(linear, angular, Vr, Vl);
 
 	int32_t converted_left_count = speed_to_encoder_count(Vl);	
@@ -215,6 +222,8 @@ int32_t BauDev::set_speed(double linear, double angular)
 		.left_motor_count = converted_left_count / freq,
 		.right_motor_count = converted_right_count / freq,
 	};
+
+	RCLCPP_INFO(node.get_logger(), "send left motor count %d, right motor count %d", msg.left_motor_count, msg.right_motor_count);
 	
 	return ssnp_send_msg(ssnp, SMT_WHEEL_MOTOR_CTRL, (uint8_t *)&msg, sizeof(msg));	
 }

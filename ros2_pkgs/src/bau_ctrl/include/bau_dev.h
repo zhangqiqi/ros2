@@ -63,6 +63,9 @@ private:
 
 	double cur_linear;
 	double cur_angular;
+
+	double cur_linear_target;
+	double cur_angular_target;
 };
 
 #endif
