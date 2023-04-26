@@ -169,8 +169,8 @@ void libssnp_task_thread_exec(void const *argument)
 		msg.left_motor_data.sample_count = motor_get_cur_value(left_motor);
 
 		msg.right_motor_data.freq = 100;
-		msg.right_motor_data.target_count = motor_get_target(right_motor);
-		msg.right_motor_data.sample_count = motor_get_cur_value(right_motor);
+		msg.right_motor_data.target_count = -motor_get_target(right_motor);
+		msg.right_motor_data.sample_count = -motor_get_cur_value(right_motor);
 
 		ssnp_send_msg(ssnp, SMT_WHEEL_MOTOR_DATA_PUSH, (uint8_t *)&msg, sizeof(msg));
 
