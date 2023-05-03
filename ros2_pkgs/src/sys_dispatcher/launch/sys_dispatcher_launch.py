@@ -32,9 +32,10 @@ def generate_launch_description():
 
     cartographer_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
-            os.path.join(get_package_share_directory('cartographer_ros'), 'launch'),
-            '/my_robot.launch.py'
-        ])
+            os.path.join(get_package_share_directory('sys_dispatcher'), 'launch'),
+            '/cartographer.launch.py'
+        ]),
+        launch_arguments={'params_file': os.path.join(get_package_share_directory('sys_dispatcher'), 'params', 'cartographer.yaml')}.items()
     )
 
     nav2_node = IncludeLaunchDescription(
