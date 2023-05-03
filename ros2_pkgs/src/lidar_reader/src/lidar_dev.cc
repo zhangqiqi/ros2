@@ -142,6 +142,7 @@ public:
 			distance.push_back(_distance);	
 			peak.push_back(_peak);
 			stamp.push_back(cur_stamp);
+			timestamps.push_back(node.now());
 			if (cur_angle > 36000)
 			{
 				angle.push_back(cur_angle - 36000);
@@ -179,12 +180,15 @@ public:
 
 		msg->angle_increment = (msg->angle_max - msg->angle_min) / (msg->ranges.size() - 1);
 		msg->time_increment = (stamp[i] - stamp[0]) / (msg->ranges.size() - 1);
+		msg->header.stamp = timestamps[0];
 
 		distance.erase(distance.begin(), distance.begin() + i + 1);	
 		peak.erase(peak.begin(), peak.begin() + i + 1);
 		angle.erase(angle.begin(), angle.begin() + i + 1);
 		stamp.erase(stamp.begin(), stamp.begin() + i + 1);
+		timestamps.erase(timestamps.begin(), timestamps.begin() + i + 1);
 		
+
 		RCLCPP_DEBUG(node.get_logger(), "get new laser msg, start stamp(%lf) angle(%lf), stop stamp(%lf) angle(%lf)", stamp[0], msg->angle_min, stamp[i], msg->angle_max);
 	}
 
@@ -194,6 +198,7 @@ private:
 	std::vector<double> peak;
 	std::vector<double> angle;
 	std::vector<double> stamp;	
+	std::vector<decltype(node.now())> timestamps;
 
 };
 
@@ -264,6 +269,8 @@ void LidarDev::exec()
 			{
 				push_lidar_msgs();
 			}
+
+			//push_lidar_msgs();
 		}
 		if (size > 0)
 		{

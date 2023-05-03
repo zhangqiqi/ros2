@@ -63,7 +63,7 @@ public:
 		callback_group_reentrant = this->create_callback_group(rclcpp::CallbackGroupType::Reentrant);
 		
 		timer_ = this->create_wall_timer(
-			50ms, std::bind(&BauCtrl::bau_exec_timer, this), callback_group_reentrant);	
+			10ms, std::bind(&BauCtrl::bau_exec_timer, this), callback_group_reentrant);	
 	}
 
 private:
@@ -101,7 +101,6 @@ private:
 			0., 0., 0., 0., 0., 0.,
 			0., 0., 0., 0., 0., 1.,
 		});
-		RCLCPP_INFO(get_logger(), "published speed: linear %lf, angular %lf", _twist.twist.twist.linear.x, _twist.twist.twist.angular.z);
 		_twist_stamped_publisher->publish(_twist);
 	}
 	

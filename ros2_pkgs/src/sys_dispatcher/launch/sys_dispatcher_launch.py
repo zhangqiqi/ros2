@@ -22,6 +22,14 @@ def generate_launch_description():
         launch_arguments={'device_name': '/dev/ttyUSB1', 'device_baudrate': '230400'}.items()
     )
 
+    n10_lidar_sdk_node = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([
+            os.path.join(get_package_share_directory('lslidar_driver'), 'launch'),
+            '/lsn10_launch.py'
+        ]),
+        launch_arguments={'serial_port_': '/dev/ttyUSB1'}.items()
+    )
+
     cartographer_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             os.path.join(get_package_share_directory('cartographer_ros'), 'launch'),
@@ -42,6 +50,9 @@ def generate_launch_description():
         executable='ekf_node',
         name='ekf_filter_node',
         output='screen',
+        remappings=[
+            ('/odometry/filtered', '/odom')
+        ],
         parameters=[os.path.join(get_package_share_directory('sys_dispatcher'), 'params', 'robot_localization_ekf.yaml')]
     )
 
@@ -56,9 +67,10 @@ def generate_launch_description():
     return LaunchDescription([
             sys_dispatcher_node, 
             bau_ctrl,
-#            lidar_reader,
+           # lidar_reader,
+            n10_lidar_sdk_node,
             robot_localization_node,
-#            cartographer_node,
+            cartographer_node,
 #            nav2_node
         ])
 
