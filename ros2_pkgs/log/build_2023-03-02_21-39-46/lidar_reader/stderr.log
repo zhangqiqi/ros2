@@ -1,5 +1,0 @@
-gmake[2]: Warning: File '/home/zhangqi/ros2/ros2_pkgs/src/lidar_reader/src/lidar_dev.cc' has modification time 4145418 s in the future
-gmake[2]: *** [CMakeFiles/lidar_reader.dir/build.make:90: CMakeFiles/lidar_reader.dir/src/lidar_reader.cpp.o] Interrupt
-gmake[2]: *** [CMakeFiles/lidar_reader.dir/build.make:76: CMakeFiles/lidar_reader.dir/src/lidar_dev.cc.o] Interrupt
-gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/lidar_reader.dir/all] Interrupt
-gmake: *** [Makefile:146: all] Interrupt

@@ -1,4 +1,0 @@
-source;share/lidar_reader/local_setup.bash
-source;share/lidar_reader/local_setup.dsv
-source;share/lidar_reader/local_setup.sh
-source;share/lidar_reader/local_setup.zsh

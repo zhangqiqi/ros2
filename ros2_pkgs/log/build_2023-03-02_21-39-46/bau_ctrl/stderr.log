@@ -1,5 +1,0 @@
-gmake[2]: Warning: File '/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_ctrl.cpp' has modification time 4230443 s in the future
-gmake[2]: *** [CMakeFiles/bau_ctrl.dir/build.make:76: CMakeFiles/bau_ctrl.dir/src/bau_ctrl.cpp.o] Interrupt
-gmake[2]: *** [CMakeFiles/bau_ctrl.dir/build.make:90: CMakeFiles/bau_ctrl.dir/src/bau_dev.cc.o] Interrupt
-gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/bau_ctrl.dir/all] Interrupt
-gmake: *** [Makefile:146: all] Interrupt

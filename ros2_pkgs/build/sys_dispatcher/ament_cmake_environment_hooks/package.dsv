@@ -1,4 +1,0 @@
-source;share/sys_dispatcher/local_setup.bash
-source;share/sys_dispatcher/local_setup.dsv
-source;share/sys_dispatcher/local_setup.sh
-source;share/sys_dispatcher/local_setup.zsh

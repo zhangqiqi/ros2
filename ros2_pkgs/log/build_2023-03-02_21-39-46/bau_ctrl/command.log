@@ -1,2 +1,0 @@
-Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl -- -j4 -l4
-Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl' returned '-2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl -- -j4 -l4

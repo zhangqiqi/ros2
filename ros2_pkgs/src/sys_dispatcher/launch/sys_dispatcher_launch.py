@@ -68,7 +68,7 @@ def generate_launch_description():
     return LaunchDescription([
             sys_dispatcher_node, 
             bau_ctrl,
-           # lidar_reader,
+         #   lidar_reader,
             n10_lidar_sdk_node,
             robot_localization_node,
             cartographer_node,
