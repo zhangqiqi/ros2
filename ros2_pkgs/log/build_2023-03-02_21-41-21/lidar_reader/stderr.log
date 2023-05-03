@@ -1,0 +1,6 @@
+gmake[2]: Warning: File '/home/zhangqi/ros2/ros2_pkgs/src/lidar_reader/src/lidar_dev.cc' has modification time 4145324 s in the future
+[01m[K/home/zhangqi/ros2/ros2_pkgs/src/lidar_reader/src/lidar_dev.cc:[m[K In function ‘[01m[Kint32_t wheeltec_n10_frame_unpack(uint8_t*, int32_t, WHEELTEC_N10_FRAME**)[m[K’:
+[01m[K/home/zhangqi/ros2/ros2_pkgs/src/lidar_reader/src/lidar_dev.cc:94:31:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint32_t[m[K’ {aka ‘[01m[Kint[m[K’} and ‘[01m[Klong unsigned int[m[K’ [[01;35m[K-Wsign-compare[m[K]
+   94 |                 if ([01;35m[K(len - i) < sizeof(struct WHEELTEC_N10_FRAME)[m[K)
+      |                     [01;35m[K~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+gmake[2]: warning:  Clock skew detected.  Your build may be incomplete.

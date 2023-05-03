@@ -52,7 +52,7 @@ int32_t ssnp_trans_cb(void *write_handle, struct SSNP_BUFFER *trans_buf)
 	if (len > 0 && NULL != buffer)
 	{
 		int32_t ret = dev->dev_sp.write(buffer, len);
-		RCLCPP_INFO(dev->node.get_logger(), "bau send raw data, len: %d", ret);
+		RCLCPP_DEBUG(dev->node.get_logger(), "bau send raw data, len: %d", ret);
 		if (ret < 0)
 		{
 			RCLCPP_INFO(dev->node.get_logger(), "bau send failed, err: %s", strerror(errno));
@@ -81,7 +81,7 @@ int32_t ssnp_proc_wheel_motor_data(void *cb_handle, [[maybe_unused]] struct SSNP
 	BauDev *dev = static_cast<BauDev *>(cb_handle);
 	struct SMT_WHEEL_MOTOR_DATA_PUSH_MSG *_sub_msg = (struct SMT_WHEEL_MOTOR_DATA_PUSH_MSG *)msg->payload;
 	
-	RCLCPP_INFO(dev->node.get_logger(), "left: freq %d, target %d, sample %d; right: freq %d, target %d, sample %d",
+	RCLCPP_DEBUG(dev->node.get_logger(), "left: freq %d, target %d, sample %d; right: freq %d, target %d, sample %d",
 		_sub_msg->left_motor_data.freq, _sub_msg->left_motor_data.target_count, _sub_msg->left_motor_data.sample_count,
 		_sub_msg->right_motor_data.freq, _sub_msg->right_motor_data.target_count, _sub_msg->right_motor_data.sample_count		
 	);
@@ -197,6 +197,8 @@ void BauDev::wheel_speed_to_car_speed(const double &Vr, const double &Vl, double
 {
 	linear = (Vr + Vl) / 2;
 	angular = (Vr - Vl) / wheel_spacing;
+
+	RCLCPP_DEBUG(node.get_logger(), "runtime speed: linear %lf, angular %lf", linear, angular);
 }
 
 

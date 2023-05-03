@@ -1,0 +1,61 @@
+[0.160s] Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl -- -j4 -l4
+[0.361s] [35m[1mConsolidate compiler generated dependencies of target bau_ctrl[0m
+[0.477s] [ 33%] [32mBuilding CXX object CMakeFiles/bau_ctrl.dir/src/bau_dev.cc.o[0m
+[0.499s] [ 66%] [32mBuilding CXX object CMakeFiles/bau_ctrl.dir/src/bau_ctrl.cpp.o[0m
+[14.952s] In file included from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:9[m[K,
+[14.953s]                  from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9[m[K,
+[14.953s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9[m[K,
+[14.954s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_dev.cc:1[m[K:
+[14.955s] [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:32:14:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kreq_str[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wpedantic-Wpedantic]8;;[m[K]
+[14.956s]    32 |         char [01;35m[Kreq_str[m[K[];      /**< 请求消息字符串 */
+[14.956s]       |              [01;35m[K^~~~~~~[m[K
+[14.957s] [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:41:14:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kres_str[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wpedantic-Wpedantic]8;;[m[K]
+[14.958s]    41 |         char [01;35m[Kres_str[m[K[];      /**< 响应消息字符串 */
+[14.959s]       |              [01;35m[K^~~~~~~[m[K
+[14.960s] In file included from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9[m[K,
+[14.960s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9[m[K,
+[14.961s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_dev.cc:1[m[K:
+[14.962s] [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:27:17:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kpayload[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wpedantic-Wpedantic]8;;[m[K]
+[14.963s]    27 |         uint8_t [01;35m[Kpayload[m[K[];      /**< 负载数据域 */
+[14.964s]       |                 [01;35m[K^~~~~~~[m[K
+[15.340s] In file included from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:9[m[K,
+[15.341s]                  from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9[m[K,
+[15.342s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9[m[K,
+[15.342s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_ctrl.cpp:25[m[K:
+[15.343s] [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:32:14:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kreq_str[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wpedantic-Wpedantic]8;;[m[K]
+[15.344s]    32 |         char [01;35m[Kreq_str[m[K[];      /**< 请求消息字符串 */
+[15.345s]       |              [01;35m[K^~~~~~~[m[K
+[15.345s] [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:41:14:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kres_str[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wpedantic-Wpedantic]8;;[m[K]
+[15.347s]    41 |         char [01;35m[Kres_str[m[K[];      /**< 响应消息字符串 */
+[15.347s]       |              [01;35m[K^~~~~~~[m[K
+[15.348s] In file included from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9[m[K,
+[15.349s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9[m[K,
+[15.350s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_ctrl.cpp:25[m[K:
+[15.351s] [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:27:17:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kpayload[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wpedantic-Wpedantic]8;;[m[K]
+[15.351s]    27 |         uint8_t [01;35m[Kpayload[m[K[];      /**< 负载数据域 */
+[15.352s]       |                 [01;35m[K^~~~~~~[m[K
+[41.835s] [100%] [32m[1mLinking CXX executable bau_ctrl[0m
+[43.955s] [100%] Built target bau_ctrl
+[43.993s] Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl -- -j4 -l4
+[44.155s] Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl
+[44.183s] -- Install configuration: ""
+[44.184s] -- Installing: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/lib/bau_ctrl/bau_ctrl
+[44.213s] -- Set runtime path of "/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/lib/bau_ctrl/bau_ctrl" to ""
+[44.213s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl//launch
+[44.213s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl//launch/bau_ctrl_launch.py
+[44.214s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/ament_index/resource_index/package_run_dependencies/bau_ctrl
+[44.214s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/ament_index/resource_index/parent_prefix_path/bau_ctrl
+[44.215s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/environment/ament_prefix_path.sh
+[44.215s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/environment/ament_prefix_path.dsv
+[44.215s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/environment/path.sh
+[44.216s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/environment/path.dsv
+[44.216s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/local_setup.bash
+[44.217s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/local_setup.sh
+[44.217s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/local_setup.zsh
+[44.217s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/local_setup.dsv
+[44.217s] -- Installing: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.dsv
+[44.218s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/ament_index/resource_index/packages/bau_ctrl
+[44.218s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/cmake/bau_ctrlConfig.cmake
+[44.219s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/cmake/bau_ctrlConfig-version.cmake
+[44.219s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.xml
+[44.232s] Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl

@@ -1,0 +1,28 @@
+[35m[1mConsolidate compiler generated dependencies of target lidar_reader[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/lidar_reader.dir/src/lidar_dev.cc.o[0m
+[01m[K/home/zhangqi/ros2/ros2_pkgs/src/lidar_reader/src/lidar_dev.cc:[m[K In function ‘[01m[Kint32_t wheeltec_n10_frame_unpack(uint8_t*, int32_t, WHEELTEC_N10_FRAME**)[m[K’:
+[01m[K/home/zhangqi/ros2/ros2_pkgs/src/lidar_reader/src/lidar_dev.cc:94:31:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint32_t[m[K’ {aka ‘[01m[Kint[m[K’} and ‘[01m[Klong unsigned int[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wsign-compare-Wsign-compare]8;;[m[K]
+   94 |                 if ([01;35m[K(len - i) < sizeof(struct WHEELTEC_N10_FRAME)[m[K)
+      |                     [01;35m[K~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[ 66%] [32m[1mLinking CXX executable lidar_reader[0m
+[100%] Built target lidar_reader
+-- Install configuration: ""
+-- Installing: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/lib/lidar_reader/lidar_reader
+-- Set runtime path of "/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/lib/lidar_reader/lidar_reader" to ""
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader//launch
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader//launch/lidar_launch.py
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/ament_index/resource_index/package_run_dependencies/lidar_reader
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/ament_index/resource_index/parent_prefix_path/lidar_reader
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/environment/ament_prefix_path.sh
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/environment/path.sh
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/environment/path.dsv
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/local_setup.bash
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/local_setup.sh
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/local_setup.zsh
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/local_setup.dsv
+-- Installing: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.dsv
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/ament_index/resource_index/packages/lidar_reader
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/cmake/lidar_readerConfig.cmake
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/cmake/lidar_readerConfig-version.cmake
+-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.xml

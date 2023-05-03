@@ -1,0 +1,24 @@
+[0.281s] Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/lidar_reader': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/lidar_reader -- -j4 -l4
+[1.998s] [100%] Built target lidar_reader
+[2.110s] Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/lidar_reader' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/lidar_reader -- -j4 -l4
+[2.757s] Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/lidar_reader': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/lidar_reader
+[2.841s] -- Install configuration: ""
+[2.873s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/lib/lidar_reader/lidar_reader
+[2.876s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader//launch
+[2.879s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader//launch/lidar_launch.py
+[2.899s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/ament_index/resource_index/package_run_dependencies/lidar_reader
+[2.904s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/ament_index/resource_index/parent_prefix_path/lidar_reader
+[2.907s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/environment/ament_prefix_path.sh
+[2.908s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/environment/ament_prefix_path.dsv
+[2.910s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/environment/path.sh
+[2.912s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/environment/path.dsv
+[2.913s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/local_setup.bash
+[2.916s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/local_setup.sh
+[2.921s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/local_setup.zsh
+[2.924s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/local_setup.dsv
+[2.925s] -- Installing: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.dsv
+[2.955s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/ament_index/resource_index/packages/lidar_reader
+[2.970s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/cmake/lidar_readerConfig.cmake
+[2.973s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/cmake/lidar_readerConfig-version.cmake
+[2.975s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.xml
+[2.979s] Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/lidar_reader' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/lidar_reader

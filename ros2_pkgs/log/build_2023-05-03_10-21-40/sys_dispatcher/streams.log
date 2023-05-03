@@ -1,0 +1,28 @@
+[0.170s] Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher -- -j4 -l4
+[1.477s] [100%] Built target sys_dispatcher
+[1.737s] Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher -- -j4 -l4
+[1.900s] Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher
+[1.945s] -- Install configuration: ""
+[2.015s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/lib/sys_dispatcher/sys_dispatcher
+[2.037s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher//launch
+[2.042s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher//launch/sys_dispatcher_launch.py
+[2.043s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher//params
+[2.044s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher//params/nav2_params.yaml
+[2.045s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher//params/robot_localization_ekf.yaml.bak
+[2.045s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher//params/robot_localization_ekf.yaml
+[2.053s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/ament_index/resource_index/package_run_dependencies/sys_dispatcher
+[2.054s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/ament_index/resource_index/parent_prefix_path/sys_dispatcher
+[2.057s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/environment/ament_prefix_path.sh
+[2.057s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/environment/ament_prefix_path.dsv
+[2.058s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/environment/path.sh
+[2.060s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/environment/path.dsv
+[2.061s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/local_setup.bash
+[2.062s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/local_setup.sh
+[2.062s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/local_setup.zsh
+[2.063s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/local_setup.dsv
+[2.064s] -- Installing: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/package.dsv
+[2.079s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/ament_index/resource_index/packages/sys_dispatcher
+[2.080s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/cmake/sys_dispatcherConfig.cmake
+[2.080s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/cmake/sys_dispatcherConfig-version.cmake
+[2.081s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/package.xml
+[2.140s] Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher

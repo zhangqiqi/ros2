@@ -1,0 +1,601 @@
+[0.000000] (-) TimerEvent: {}
+[0.004331] (bau_ctrl) JobQueued: {'identifier': 'bau_ctrl', 'dependencies': OrderedDict()}
+[0.004655] (car_uart_node) JobQueued: {'identifier': 'car_uart_node', 'dependencies': OrderedDict()}
+[0.005108] (lidar_reader) JobQueued: {'identifier': 'lidar_reader', 'dependencies': OrderedDict()}
+[0.005324] (sys_dispatcher) JobQueued: {'identifier': 'sys_dispatcher', 'dependencies': OrderedDict()}
+[0.005734] (bau_ctrl) JobStarted: {'identifier': 'bau_ctrl'}
+[0.047289] (car_uart_node) JobStarted: {'identifier': 'car_uart_node'}
+[0.079498] (lidar_reader) JobStarted: {'identifier': 'lidar_reader'}
+[0.098644] (-) TimerEvent: {}
+[0.111484] (sys_dispatcher) JobStarted: {'identifier': 'sys_dispatcher'}
+[0.151214] (bau_ctrl) JobProgress: {'identifier': 'bau_ctrl', 'progress': 'cmake'}
+[0.154228] (bau_ctrl) JobProgress: {'identifier': 'bau_ctrl', 'progress': 'build'}
+[0.156886] (bau_ctrl) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl', '--', '-j4', '-l4'], 'cwd': '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('C_INCLUDE_PATH', ':/opt/ros/humble/include'), ('USER', 'zhangqi'), ('SSH_CLIENT', '192.168.2.5 39496 22'), ('LC_TIME', 'zh_CN.UTF-8'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/home/zhangqi/ros2/libs/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/zhangqi'), ('OLDPWD', '/dev'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('LC_MONETARY', 'zh_CN.UTF-8'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('CPLUS_INCLUDE_PATH', ':/opt/ros/humble/include'), ('COLCON_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'zhangqi'), ('_', './colcon.sh'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'zh_CN.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'zh_CN.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'zh_CN.UTF-8'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'zh_CN.UTF-8'), ('LC_IDENTIFICATION', 'zh_CN.UTF-8'), ('PWD', '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.2.5 39496 192.168.2.169 22'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'zh_CN.UTF-8'), ('LC_PAPER', 'zh_CN.UTF-8'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble')]), 'shell': False}
+[0.168968] (car_uart_node) JobProgress: {'identifier': 'car_uart_node', 'progress': 'cmake'}
+[0.171596] (car_uart_node) JobProgress: {'identifier': 'car_uart_node', 'progress': 'build'}
+[0.172650] (car_uart_node) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/zhangqi/ros2/ros2_pkgs/build/car_uart_node', '--', '-j4', '-l4'], 'cwd': '/home/zhangqi/ros2/ros2_pkgs/build/car_uart_node', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('C_INCLUDE_PATH', ':/opt/ros/humble/include'), ('USER', 'zhangqi'), ('SSH_CLIENT', '192.168.2.5 39496 22'), ('LC_TIME', 'zh_CN.UTF-8'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/home/zhangqi/ros2/libs/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/zhangqi'), ('OLDPWD', '/dev'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('LC_MONETARY', 'zh_CN.UTF-8'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('CPLUS_INCLUDE_PATH', ':/opt/ros/humble/include'), ('COLCON_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'zhangqi'), ('_', './colcon.sh'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'zh_CN.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'zh_CN.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'zh_CN.UTF-8'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'zh_CN.UTF-8'), ('LC_IDENTIFICATION', 'zh_CN.UTF-8'), ('PWD', '/home/zhangqi/ros2/ros2_pkgs/build/car_uart_node'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.2.5 39496 192.168.2.169 22'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'zh_CN.UTF-8'), ('LC_PAPER', 'zh_CN.UTF-8'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble')]), 'shell': False}
+[0.184554] (lidar_reader) JobProgress: {'identifier': 'lidar_reader', 'progress': 'cmake'}
+[0.188009] (lidar_reader) JobProgress: {'identifier': 'lidar_reader', 'progress': 'build'}
+[0.189413] (lidar_reader) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/zhangqi/ros2/ros2_pkgs/build/lidar_reader', '--', '-j4', '-l4'], 'cwd': '/home/zhangqi/ros2/ros2_pkgs/build/lidar_reader', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('C_INCLUDE_PATH', ':/opt/ros/humble/include'), ('USER', 'zhangqi'), ('SSH_CLIENT', '192.168.2.5 39496 22'), ('LC_TIME', 'zh_CN.UTF-8'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/home/zhangqi/ros2/libs/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/zhangqi'), ('OLDPWD', '/dev'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('LC_MONETARY', 'zh_CN.UTF-8'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('CPLUS_INCLUDE_PATH', ':/opt/ros/humble/include'), ('COLCON_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'zhangqi'), ('_', './colcon.sh'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'zh_CN.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'zh_CN.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'zh_CN.UTF-8'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'zh_CN.UTF-8'), ('LC_IDENTIFICATION', 'zh_CN.UTF-8'), ('PWD', '/home/zhangqi/ros2/ros2_pkgs/build/lidar_reader'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.2.5 39496 192.168.2.169 22'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'zh_CN.UTF-8'), ('LC_PAPER', 'zh_CN.UTF-8'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble')]), 'shell': False}
+[0.200172] (-) TimerEvent: {}
+[0.232867] (sys_dispatcher) JobProgress: {'identifier': 'sys_dispatcher', 'progress': 'cmake'}
+[0.237837] (sys_dispatcher) JobProgress: {'identifier': 'sys_dispatcher', 'progress': 'build'}
+[0.239301] (sys_dispatcher) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher', '--', '-j4', '-l4'], 'cwd': '/home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('C_INCLUDE_PATH', ':/opt/ros/humble/include'), ('USER', 'zhangqi'), ('SSH_CLIENT', '192.168.2.5 39496 22'), ('LC_TIME', 'zh_CN.UTF-8'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/home/zhangqi/ros2/libs/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/zhangqi'), ('OLDPWD', '/dev'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('LC_MONETARY', 'zh_CN.UTF-8'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('CPLUS_INCLUDE_PATH', ':/opt/ros/humble/include'), ('COLCON_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'zhangqi'), ('_', './colcon.sh'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'zh_CN.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'zh_CN.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'zh_CN.UTF-8'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'zh_CN.UTF-8'), ('LC_IDENTIFICATION', 'zh_CN.UTF-8'), ('PWD', '/home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.2.5 39496 192.168.2.169 22'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'zh_CN.UTF-8'), ('LC_PAPER', 'zh_CN.UTF-8'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble')]), 'shell': False}
+[0.301029] (-) TimerEvent: {}
+[0.342722] (car_uart_node) CommandEnded: {'returncode': 0}
+[0.366192] (bau_ctrl) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target bau_ctrl\x1b[0m\n'}
+[0.401189] (-) TimerEvent: {}
+[0.467004] (car_uart_node) JobProgress: {'identifier': 'car_uart_node', 'progress': 'install'}
+[0.467801] (lidar_reader) StdoutLine: {'line': b'[100%] Built target lidar_reader\n'}
+[0.482381] (bau_ctrl) StdoutLine: {'line': b'[ 33%] \x1b[32mBuilding CXX object CMakeFiles/bau_ctrl.dir/src/bau_dev.cc.o\x1b[0m\n'}
+[0.501615] (-) TimerEvent: {}
+[0.503844] (bau_ctrl) StdoutLine: {'line': b'[ 66%] \x1b[32mBuilding CXX object CMakeFiles/bau_ctrl.dir/src/bau_ctrl.cpp.o\x1b[0m\n'}
+[0.530031] (car_uart_node) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/zhangqi/ros2/ros2_pkgs/build/car_uart_node'], 'cwd': '/home/zhangqi/ros2/ros2_pkgs/build/car_uart_node', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('C_INCLUDE_PATH', ':/opt/ros/humble/include'), ('USER', 'zhangqi'), ('SSH_CLIENT', '192.168.2.5 39496 22'), ('LC_TIME', 'zh_CN.UTF-8'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/home/zhangqi/ros2/libs/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/zhangqi'), ('OLDPWD', '/dev'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('LC_MONETARY', 'zh_CN.UTF-8'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('CPLUS_INCLUDE_PATH', ':/opt/ros/humble/include'), ('COLCON_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'zhangqi'), ('_', './colcon.sh'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'zh_CN.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'zh_CN.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'zh_CN.UTF-8'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'zh_CN.UTF-8'), ('LC_IDENTIFICATION', 'zh_CN.UTF-8'), ('PWD', '/home/zhangqi/ros2/ros2_pkgs/build/car_uart_node'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.2.5 39496 192.168.2.169 22'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'zh_CN.UTF-8'), ('LC_PAPER', 'zh_CN.UTF-8'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble')]), 'shell': False}
+[0.532478] (sys_dispatcher) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/sys_dispatcher.dir/src/sys_dispatcher.cc.o\x1b[0m\n'}
+[0.566705] (lidar_reader) CommandEnded: {'returncode': 0}
+[0.576882] (car_uart_node) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[0.579158] (car_uart_node) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/ament_index/resource_index/package_run_dependencies/car_uart_node\n'}
+[0.579611] (car_uart_node) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/ament_index/resource_index/parent_prefix_path/car_uart_node\n'}
+[0.579963] (car_uart_node) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/environment/ament_prefix_path.sh\n'}
+[0.585892] (car_uart_node) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/environment/ament_prefix_path.dsv\n'}
+[0.586632] (car_uart_node) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/environment/path.sh\n'}
+[0.587021] (car_uart_node) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/environment/path.dsv\n'}
+[0.587486] (car_uart_node) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/local_setup.bash\n'}
+[0.587836] (car_uart_node) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/local_setup.sh\n'}
+[0.588334] (car_uart_node) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/local_setup.zsh\n'}
+[0.588800] (car_uart_node) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/local_setup.dsv\n'}
+[0.589416] (car_uart_node) StdoutLine: {'line': b'-- Installing: /home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/package.dsv\n'}
+[0.589936] (car_uart_node) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/ament_index/resource_index/packages/car_uart_node\n'}
+[0.590446] (car_uart_node) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/cmake/car_uart_nodeConfig.cmake\n'}
+[0.591056] (car_uart_node) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/cmake/car_uart_nodeConfig-version.cmake\n'}
+[0.591524] (car_uart_node) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/package.xml\n'}
+[0.601964] (-) TimerEvent: {}
+[0.616419] (car_uart_node) CommandEnded: {'returncode': 0}
+[0.702146] (-) TimerEvent: {}
+[0.802946] (-) TimerEvent: {}
+[0.830973] (lidar_reader) JobProgress: {'identifier': 'lidar_reader', 'progress': 'install'}
+[0.831204] (lidar_reader) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/zhangqi/ros2/ros2_pkgs/build/lidar_reader'], 'cwd': '/home/zhangqi/ros2/ros2_pkgs/build/lidar_reader', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('C_INCLUDE_PATH', ':/opt/ros/humble/include'), ('USER', 'zhangqi'), ('SSH_CLIENT', '192.168.2.5 39496 22'), ('LC_TIME', 'zh_CN.UTF-8'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/home/zhangqi/ros2/libs/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/zhangqi'), ('OLDPWD', '/dev'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('LC_MONETARY', 'zh_CN.UTF-8'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('CPLUS_INCLUDE_PATH', ':/opt/ros/humble/include'), ('COLCON_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'zhangqi'), ('_', './colcon.sh'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'zh_CN.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'zh_CN.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'zh_CN.UTF-8'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'zh_CN.UTF-8'), ('LC_IDENTIFICATION', 'zh_CN.UTF-8'), ('PWD', '/home/zhangqi/ros2/ros2_pkgs/build/lidar_reader'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.2.5 39496 192.168.2.169 22'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'zh_CN.UTF-8'), ('LC_PAPER', 'zh_CN.UTF-8'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble')]), 'shell': False}
+[0.866141] (lidar_reader) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[0.867616] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/lib/lidar_reader/lidar_reader\n'}
+[0.869073] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader//launch\n'}
+[0.870183] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader//launch/lidar_launch.py\n'}
+[0.871107] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/ament_index/resource_index/package_run_dependencies/lidar_reader\n'}
+[0.878335] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/ament_index/resource_index/parent_prefix_path/lidar_reader\n'}
+[0.879253] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/environment/ament_prefix_path.sh\n'}
+[0.879856] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/environment/ament_prefix_path.dsv\n'}
+[0.880511] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/environment/path.sh\n'}
+[0.881049] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/environment/path.dsv\n'}
+[0.881488] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/local_setup.bash\n'}
+[0.882018] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/local_setup.sh\n'}
+[0.882547] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/local_setup.zsh\n'}
+[0.883048] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/local_setup.dsv\n'}
+[0.883379] (lidar_reader) StdoutLine: {'line': b'-- Installing: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.dsv\n'}
+[0.883648] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/ament_index/resource_index/packages/lidar_reader\n'}
+[0.883911] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/cmake/lidar_readerConfig.cmake\n'}
+[0.884173] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/cmake/lidar_readerConfig-version.cmake\n'}
+[0.884701] (lidar_reader) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.xml\n'}
+[0.904308] (-) TimerEvent: {}
+[0.932289] (car_uart_node) JobEnded: {'identifier': 'car_uart_node', 'rc': 0}
+[0.935968] (lidar_reader) CommandEnded: {'returncode': 0}
+[1.004498] (-) TimerEvent: {}
+[1.105211] (-) TimerEvent: {}
+[1.167203] (lidar_reader) JobEnded: {'identifier': 'lidar_reader', 'rc': 0}
+[1.205411] (-) TimerEvent: {}
+[1.306419] (-) TimerEvent: {}
+[1.407653] (-) TimerEvent: {}
+[1.508989] (-) TimerEvent: {}
+[1.610527] (-) TimerEvent: {}
+[1.711922] (-) TimerEvent: {}
+[1.813401] (-) TimerEvent: {}
+[1.914891] (-) TimerEvent: {}
+[2.016797] (-) TimerEvent: {}
+[2.118173] (-) TimerEvent: {}
+[2.219889] (-) TimerEvent: {}
+[2.321310] (-) TimerEvent: {}
+[2.422626] (-) TimerEvent: {}
+[2.524066] (-) TimerEvent: {}
+[2.625920] (-) TimerEvent: {}
+[2.727923] (-) TimerEvent: {}
+[2.830259] (-) TimerEvent: {}
+[2.932612] (-) TimerEvent: {}
+[3.034626] (-) TimerEvent: {}
+[3.136785] (-) TimerEvent: {}
+[3.238777] (-) TimerEvent: {}
+[3.340826] (-) TimerEvent: {}
+[3.443159] (-) TimerEvent: {}
+[3.545355] (-) TimerEvent: {}
+[3.647308] (-) TimerEvent: {}
+[3.749652] (-) TimerEvent: {}
+[3.851874] (-) TimerEvent: {}
+[3.954722] (-) TimerEvent: {}
+[4.057249] (-) TimerEvent: {}
+[4.159550] (-) TimerEvent: {}
+[4.262069] (-) TimerEvent: {}
+[4.364388] (-) TimerEvent: {}
+[4.475624] (-) TimerEvent: {}
+[4.576796] (-) TimerEvent: {}
+[4.679218] (-) TimerEvent: {}
+[4.781518] (-) TimerEvent: {}
+[4.883708] (-) TimerEvent: {}
+[4.986234] (-) TimerEvent: {}
+[5.088408] (-) TimerEvent: {}
+[5.190532] (-) TimerEvent: {}
+[5.292771] (-) TimerEvent: {}
+[5.395087] (-) TimerEvent: {}
+[5.497733] (-) TimerEvent: {}
+[5.599989] (-) TimerEvent: {}
+[5.702123] (-) TimerEvent: {}
+[5.804407] (-) TimerEvent: {}
+[5.906501] (-) TimerEvent: {}
+[6.008515] (-) TimerEvent: {}
+[6.110887] (-) TimerEvent: {}
+[6.213126] (-) TimerEvent: {}
+[6.315075] (-) TimerEvent: {}
+[6.417268] (-) TimerEvent: {}
+[6.519519] (-) TimerEvent: {}
+[6.621785] (-) TimerEvent: {}
+[6.724404] (-) TimerEvent: {}
+[6.826698] (-) TimerEvent: {}
+[6.929076] (-) TimerEvent: {}
+[7.031011] (-) TimerEvent: {}
+[7.133311] (-) TimerEvent: {}
+[7.235360] (-) TimerEvent: {}
+[7.337574] (-) TimerEvent: {}
+[7.439558] (-) TimerEvent: {}
+[7.541834] (-) TimerEvent: {}
+[7.644315] (-) TimerEvent: {}
+[7.746740] (-) TimerEvent: {}
+[7.849359] (-) TimerEvent: {}
+[7.951552] (-) TimerEvent: {}
+[8.053455] (-) TimerEvent: {}
+[8.155415] (-) TimerEvent: {}
+[8.257592] (-) TimerEvent: {}
+[8.359518] (-) TimerEvent: {}
+[8.461492] (-) TimerEvent: {}
+[8.563568] (-) TimerEvent: {}
+[8.665563] (-) TimerEvent: {}
+[8.767497] (-) TimerEvent: {}
+[8.869655] (-) TimerEvent: {}
+[8.971792] (-) TimerEvent: {}
+[9.073728] (-) TimerEvent: {}
+[9.175691] (-) TimerEvent: {}
+[9.277670] (-) TimerEvent: {}
+[9.379713] (-) TimerEvent: {}
+[9.483782] (-) TimerEvent: {}
+[9.586137] (-) TimerEvent: {}
+[9.688654] (-) TimerEvent: {}
+[9.790831] (-) TimerEvent: {}
+[9.892812] (-) TimerEvent: {}
+[9.994697] (-) TimerEvent: {}
+[10.096871] (-) TimerEvent: {}
+[10.198843] (-) TimerEvent: {}
+[10.300870] (-) TimerEvent: {}
+[10.402888] (-) TimerEvent: {}
+[10.504825] (-) TimerEvent: {}
+[10.606770] (-) TimerEvent: {}
+[10.708749] (-) TimerEvent: {}
+[10.810664] (-) TimerEvent: {}
+[10.912663] (-) TimerEvent: {}
+[11.014753] (-) TimerEvent: {}
+[11.117460] (-) TimerEvent: {}
+[11.219817] (-) TimerEvent: {}
+[11.322934] (-) TimerEvent: {}
+[11.425275] (-) TimerEvent: {}
+[11.528169] (-) TimerEvent: {}
+[11.630546] (-) TimerEvent: {}
+[11.732803] (-) TimerEvent: {}
+[11.834928] (-) TimerEvent: {}
+[11.937021] (-) TimerEvent: {}
+[12.039020] (-) TimerEvent: {}
+[12.141398] (-) TimerEvent: {}
+[12.243455] (-) TimerEvent: {}
+[12.345474] (-) TimerEvent: {}
+[12.447404] (-) TimerEvent: {}
+[12.549394] (-) TimerEvent: {}
+[12.651354] (-) TimerEvent: {}
+[12.753333] (-) TimerEvent: {}
+[12.855315] (-) TimerEvent: {}
+[12.957239] (-) TimerEvent: {}
+[13.059221] (-) TimerEvent: {}
+[13.161185] (-) TimerEvent: {}
+[13.263496] (-) TimerEvent: {}
+[13.365485] (-) TimerEvent: {}
+[13.467597] (-) TimerEvent: {}
+[13.569723] (-) TimerEvent: {}
+[13.671735] (-) TimerEvent: {}
+[13.773673] (-) TimerEvent: {}
+[13.875705] (-) TimerEvent: {}
+[13.977651] (-) TimerEvent: {}
+[14.079576] (-) TimerEvent: {}
+[14.181640] (-) TimerEvent: {}
+[14.283579] (-) TimerEvent: {}
+[14.385508] (-) TimerEvent: {}
+[14.488936] (-) TimerEvent: {}
+[14.590905] (-) TimerEvent: {}
+[14.692789] (-) TimerEvent: {}
+[14.794739] (-) TimerEvent: {}
+[14.896807] (-) TimerEvent: {}
+[14.956152] (bau_ctrl) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:9\x1b[m\x1b[K,\n'}
+[14.957861] (bau_ctrl) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9\x1b[m\x1b[K,\n'}
+[14.958660] (bau_ctrl) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9\x1b[m\x1b[K,\n'}
+[14.959426] (bau_ctrl) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_dev.cc:1\x1b[m\x1b[K:\n'}
+[14.960143] (bau_ctrl) StderrLine: {'line': b'\x1b[01m\x1b[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:32:14:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[KISO C++ forbids flexible array member \xe2\x80\x98\x1b[01m\x1b[Kreq_str\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wpedantic\x07-Wpedantic\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[14.960963] (bau_ctrl) StderrLine: {'line': b'   32 |         char \x1b[01;35m\x1b[Kreq_str\x1b[m\x1b[K[];      /**< \xe8\xaf\xb7\xe6\xb1\x82\xe6\xb6\x88\xe6\x81\xaf\xe5\xad\x97\xe7\xac\xa6\xe4\xb8\xb2 */\n'}
+[14.961711] (bau_ctrl) StderrLine: {'line': b'      |              \x1b[01;35m\x1b[K^~~~~~~\x1b[m\x1b[K\n'}
+[14.962440] (bau_ctrl) StderrLine: {'line': b'\x1b[01m\x1b[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:41:14:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[KISO C++ forbids flexible array member \xe2\x80\x98\x1b[01m\x1b[Kres_str\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wpedantic\x07-Wpedantic\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[14.963218] (bau_ctrl) StderrLine: {'line': b'   41 |         char \x1b[01;35m\x1b[Kres_str\x1b[m\x1b[K[];      /**< \xe5\x93\x8d\xe5\xba\x94\xe6\xb6\x88\xe6\x81\xaf\xe5\xad\x97\xe7\xac\xa6\xe4\xb8\xb2 */\n'}
+[14.963961] (bau_ctrl) StderrLine: {'line': b'      |              \x1b[01;35m\x1b[K^~~~~~~\x1b[m\x1b[K\n'}
+[14.964895] (bau_ctrl) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9\x1b[m\x1b[K,\n'}
+[14.965755] (bau_ctrl) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9\x1b[m\x1b[K,\n'}
+[14.966500] (bau_ctrl) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_dev.cc:1\x1b[m\x1b[K:\n'}
+[14.967275] (bau_ctrl) StderrLine: {'line': b'\x1b[01m\x1b[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:27:17:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[KISO C++ forbids flexible array member \xe2\x80\x98\x1b[01m\x1b[Kpayload\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wpedantic\x07-Wpedantic\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[14.968056] (bau_ctrl) StderrLine: {'line': b'   27 |         uint8_t \x1b[01;35m\x1b[Kpayload\x1b[m\x1b[K[];      /**< \xe8\xb4\x9f\xe8\xbd\xbd\xe6\x95\xb0\xe6\x8d\xae\xe5\x9f\x9f */\n'}
+[14.968879] (bau_ctrl) StderrLine: {'line': b'      |                 \x1b[01;35m\x1b[K^~~~~~~\x1b[m\x1b[K\n'}
+[14.997085] (-) TimerEvent: {}
+[15.099431] (-) TimerEvent: {}
+[15.201433] (-) TimerEvent: {}
+[15.303410] (-) TimerEvent: {}
+[15.344781] (bau_ctrl) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:9\x1b[m\x1b[K,\n'}
+[15.345998] (bau_ctrl) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9\x1b[m\x1b[K,\n'}
+[15.346759] (bau_ctrl) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9\x1b[m\x1b[K,\n'}
+[15.347586] (bau_ctrl) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_ctrl.cpp:25\x1b[m\x1b[K:\n'}
+[15.348394] (bau_ctrl) StderrLine: {'line': b'\x1b[01m\x1b[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:32:14:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[KISO C++ forbids flexible array member \xe2\x80\x98\x1b[01m\x1b[Kreq_str\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wpedantic\x07-Wpedantic\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[15.349198] (bau_ctrl) StderrLine: {'line': b'   32 |         char \x1b[01;35m\x1b[Kreq_str\x1b[m\x1b[K[];      /**< \xe8\xaf\xb7\xe6\xb1\x82\xe6\xb6\x88\xe6\x81\xaf\xe5\xad\x97\xe7\xac\xa6\xe4\xb8\xb2 */\n'}
+[15.349930] (bau_ctrl) StderrLine: {'line': b'      |              \x1b[01;35m\x1b[K^~~~~~~\x1b[m\x1b[K\n'}
+[15.350662] (bau_ctrl) StderrLine: {'line': b'\x1b[01m\x1b[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:41:14:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[KISO C++ forbids flexible array member \xe2\x80\x98\x1b[01m\x1b[Kres_str\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wpedantic\x07-Wpedantic\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[15.351404] (bau_ctrl) StderrLine: {'line': b'   41 |         char \x1b[01;35m\x1b[Kres_str\x1b[m\x1b[K[];      /**< \xe5\x93\x8d\xe5\xba\x94\xe6\xb6\x88\xe6\x81\xaf\xe5\xad\x97\xe7\xac\xa6\xe4\xb8\xb2 */\n'}
+[15.352730] (bau_ctrl) StderrLine: {'line': b'      |              \x1b[01;35m\x1b[K^~~~~~~\x1b[m\x1b[K\n'}
+[15.353487] (bau_ctrl) StderrLine: {'line': b'In file included from \x1b[01m\x1b[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9\x1b[m\x1b[K,\n'}
+[15.354199] (bau_ctrl) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9\x1b[m\x1b[K,\n'}
+[15.354990] (bau_ctrl) StderrLine: {'line': b'                 from \x1b[01m\x1b[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_ctrl.cpp:25\x1b[m\x1b[K:\n'}
+[15.355744] (bau_ctrl) StderrLine: {'line': b'\x1b[01m\x1b[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:27:17:\x1b[m\x1b[K \x1b[01;35m\x1b[Kwarning: \x1b[m\x1b[KISO C++ forbids flexible array member \xe2\x80\x98\x1b[01m\x1b[Kpayload\x1b[m\x1b[K\xe2\x80\x99 [\x1b[01;35m\x1b[K\x1b]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wpedantic\x07-Wpedantic\x1b]8;;\x07\x1b[m\x1b[K]\n'}
+[15.356767] (bau_ctrl) StderrLine: {'line': b'   27 |         uint8_t \x1b[01;35m\x1b[Kpayload\x1b[m\x1b[K[];      /**< \xe8\xb4\x9f\xe8\xbd\xbd\xe6\x95\xb0\xe6\x8d\xae\xe5\x9f\x9f */\n'}
+[15.357514] (bau_ctrl) StderrLine: {'line': b'      |                 \x1b[01;35m\x1b[K^~~~~~~\x1b[m\x1b[K\n'}
+[15.403625] (-) TimerEvent: {}
+[15.505625] (-) TimerEvent: {}
+[15.607706] (-) TimerEvent: {}
+[15.709666] (-) TimerEvent: {}
+[15.811610] (-) TimerEvent: {}
+[15.913560] (-) TimerEvent: {}
+[16.015542] (-) TimerEvent: {}
+[16.117456] (-) TimerEvent: {}
+[16.219348] (-) TimerEvent: {}
+[16.321346] (-) TimerEvent: {}
+[16.423296] (-) TimerEvent: {}
+[16.525237] (-) TimerEvent: {}
+[16.627086] (-) TimerEvent: {}
+[16.729024] (-) TimerEvent: {}
+[16.830941] (-) TimerEvent: {}
+[16.932988] (-) TimerEvent: {}
+[17.035391] (-) TimerEvent: {}
+[17.138322] (-) TimerEvent: {}
+[17.240195] (-) TimerEvent: {}
+[17.342214] (-) TimerEvent: {}
+[17.444313] (-) TimerEvent: {}
+[17.546354] (-) TimerEvent: {}
+[17.647280] (-) TimerEvent: {}
+[17.748483] (-) TimerEvent: {}
+[17.849681] (-) TimerEvent: {}
+[17.950924] (-) TimerEvent: {}
+[18.052173] (-) TimerEvent: {}
+[18.153456] (-) TimerEvent: {}
+[18.254778] (-) TimerEvent: {}
+[18.356245] (-) TimerEvent: {}
+[18.457164] (-) TimerEvent: {}
+[18.557994] (-) TimerEvent: {}
+[18.658823] (-) TimerEvent: {}
+[18.759619] (-) TimerEvent: {}
+[18.860463] (-) TimerEvent: {}
+[18.961253] (-) TimerEvent: {}
+[19.062056] (-) TimerEvent: {}
+[19.162889] (-) TimerEvent: {}
+[19.263673] (-) TimerEvent: {}
+[19.364501] (-) TimerEvent: {}
+[19.465350] (-) TimerEvent: {}
+[19.566273] (-) TimerEvent: {}
+[19.667115] (-) TimerEvent: {}
+[19.767885] (-) TimerEvent: {}
+[19.868757] (-) TimerEvent: {}
+[19.969543] (-) TimerEvent: {}
+[20.070343] (-) TimerEvent: {}
+[20.171281] (-) TimerEvent: {}
+[20.272073] (-) TimerEvent: {}
+[20.373100] (-) TimerEvent: {}
+[20.474476] (-) TimerEvent: {}
+[20.575289] (-) TimerEvent: {}
+[20.676025] (-) TimerEvent: {}
+[20.776841] (-) TimerEvent: {}
+[20.877638] (-) TimerEvent: {}
+[20.978461] (-) TimerEvent: {}
+[21.079271] (-) TimerEvent: {}
+[21.180126] (-) TimerEvent: {}
+[21.280986] (-) TimerEvent: {}
+[21.381733] (-) TimerEvent: {}
+[21.482579] (-) TimerEvent: {}
+[21.583376] (-) TimerEvent: {}
+[21.684159] (-) TimerEvent: {}
+[21.785000] (-) TimerEvent: {}
+[21.885777] (-) TimerEvent: {}
+[21.986632] (-) TimerEvent: {}
+[22.087453] (-) TimerEvent: {}
+[22.188305] (-) TimerEvent: {}
+[22.289080] (-) TimerEvent: {}
+[22.389887] (-) TimerEvent: {}
+[22.490709] (-) TimerEvent: {}
+[22.591517] (-) TimerEvent: {}
+[22.692333] (-) TimerEvent: {}
+[22.793117] (-) TimerEvent: {}
+[22.893901] (-) TimerEvent: {}
+[22.994655] (-) TimerEvent: {}
+[23.095422] (-) TimerEvent: {}
+[23.196264] (-) TimerEvent: {}
+[23.297037] (-) TimerEvent: {}
+[23.397833] (-) TimerEvent: {}
+[23.498653] (-) TimerEvent: {}
+[23.599438] (-) TimerEvent: {}
+[23.700252] (-) TimerEvent: {}
+[23.801025] (-) TimerEvent: {}
+[23.901820] (-) TimerEvent: {}
+[24.002653] (-) TimerEvent: {}
+[24.103443] (-) TimerEvent: {}
+[24.204287] (-) TimerEvent: {}
+[24.305054] (-) TimerEvent: {}
+[24.405780] (-) TimerEvent: {}
+[24.506631] (-) TimerEvent: {}
+[24.607544] (-) TimerEvent: {}
+[24.708540] (-) TimerEvent: {}
+[24.809404] (-) TimerEvent: {}
+[24.910281] (-) TimerEvent: {}
+[25.011201] (-) TimerEvent: {}
+[25.112324] (-) TimerEvent: {}
+[25.213440] (-) TimerEvent: {}
+[25.271428] (sys_dispatcher) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable sys_dispatcher\x1b[0m\n'}
+[25.313607] (-) TimerEvent: {}
+[25.414472] (-) TimerEvent: {}
+[25.515569] (-) TimerEvent: {}
+[25.616595] (-) TimerEvent: {}
+[25.717826] (-) TimerEvent: {}
+[25.819049] (-) TimerEvent: {}
+[25.920347] (-) TimerEvent: {}
+[26.021204] (-) TimerEvent: {}
+[26.122100] (-) TimerEvent: {}
+[26.223110] (-) TimerEvent: {}
+[26.324004] (-) TimerEvent: {}
+[26.401537] (sys_dispatcher) StdoutLine: {'line': b'[100%] Built target sys_dispatcher\n'}
+[26.424266] (-) TimerEvent: {}
+[26.440944] (sys_dispatcher) CommandEnded: {'returncode': 0}
+[26.524425] (-) TimerEvent: {}
+[26.561646] (sys_dispatcher) JobProgress: {'identifier': 'sys_dispatcher', 'progress': 'install'}
+[26.562707] (sys_dispatcher) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher'], 'cwd': '/home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('C_INCLUDE_PATH', ':/opt/ros/humble/include'), ('USER', 'zhangqi'), ('SSH_CLIENT', '192.168.2.5 39496 22'), ('LC_TIME', 'zh_CN.UTF-8'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/home/zhangqi/ros2/libs/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/zhangqi'), ('OLDPWD', '/dev'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('LC_MONETARY', 'zh_CN.UTF-8'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('CPLUS_INCLUDE_PATH', ':/opt/ros/humble/include'), ('COLCON_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'zhangqi'), ('_', './colcon.sh'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'zh_CN.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'zh_CN.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'zh_CN.UTF-8'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'zh_CN.UTF-8'), ('LC_IDENTIFICATION', 'zh_CN.UTF-8'), ('PWD', '/home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.2.5 39496 192.168.2.169 22'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'zh_CN.UTF-8'), ('LC_PAPER', 'zh_CN.UTF-8'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble')]), 'shell': False}
+[26.595024] (sys_dispatcher) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[26.596434] (sys_dispatcher) StdoutLine: {'line': b'-- Installing: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/lib/sys_dispatcher/sys_dispatcher\n'}
+[26.606620] (sys_dispatcher) StdoutLine: {'line': b'-- Set runtime path of "/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/lib/sys_dispatcher/sys_dispatcher" to ""\n'}
+[26.607414] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher//launch\n'}
+[26.607909] (sys_dispatcher) StdoutLine: {'line': b'-- Installing: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher//launch/sys_dispatcher_launch.py\n'}
+[26.608803] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher//params\n'}
+[26.609589] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher//params/nav2_params.yaml\n'}
+[26.610174] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher//params/robot_localization_ekf.yaml.bak\n'}
+[26.610775] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher//params/robot_localization_ekf.yaml\n'}
+[26.611473] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/ament_index/resource_index/package_run_dependencies/sys_dispatcher\n'}
+[26.612083] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/ament_index/resource_index/parent_prefix_path/sys_dispatcher\n'}
+[26.612829] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/environment/ament_prefix_path.sh\n'}
+[26.613519] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/environment/ament_prefix_path.dsv\n'}
+[26.614151] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/environment/path.sh\n'}
+[26.614744] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/environment/path.dsv\n'}
+[26.615204] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/local_setup.bash\n'}
+[26.615619] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/local_setup.sh\n'}
+[26.616159] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/local_setup.zsh\n'}
+[26.616850] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/local_setup.dsv\n'}
+[26.617450] (sys_dispatcher) StdoutLine: {'line': b'-- Installing: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/package.dsv\n'}
+[26.617955] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/ament_index/resource_index/packages/sys_dispatcher\n'}
+[26.618515] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/cmake/sys_dispatcherConfig.cmake\n'}
+[26.619153] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/cmake/sys_dispatcherConfig-version.cmake\n'}
+[26.619750] (sys_dispatcher) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/package.xml\n'}
+[26.622777] (sys_dispatcher) CommandEnded: {'returncode': 0}
+[26.637203] (-) TimerEvent: {}
+[26.738924] (-) TimerEvent: {}
+[26.840412] (-) TimerEvent: {}
+[26.879354] (sys_dispatcher) JobEnded: {'identifier': 'sys_dispatcher', 'rc': 0}
+[26.940608] (-) TimerEvent: {}
+[27.041326] (-) TimerEvent: {}
+[27.142031] (-) TimerEvent: {}
+[27.242721] (-) TimerEvent: {}
+[27.343450] (-) TimerEvent: {}
+[27.444272] (-) TimerEvent: {}
+[27.545165] (-) TimerEvent: {}
+[27.646011] (-) TimerEvent: {}
+[27.746675] (-) TimerEvent: {}
+[27.847324] (-) TimerEvent: {}
+[27.948051] (-) TimerEvent: {}
+[28.048872] (-) TimerEvent: {}
+[28.149548] (-) TimerEvent: {}
+[28.250244] (-) TimerEvent: {}
+[28.350924] (-) TimerEvent: {}
+[28.451669] (-) TimerEvent: {}
+[28.552360] (-) TimerEvent: {}
+[28.653047] (-) TimerEvent: {}
+[28.753753] (-) TimerEvent: {}
+[28.854458] (-) TimerEvent: {}
+[28.955142] (-) TimerEvent: {}
+[29.055833] (-) TimerEvent: {}
+[29.156582] (-) TimerEvent: {}
+[29.257270] (-) TimerEvent: {}
+[29.357972] (-) TimerEvent: {}
+[29.458703] (-) TimerEvent: {}
+[29.559403] (-) TimerEvent: {}
+[29.660115] (-) TimerEvent: {}
+[29.760904] (-) TimerEvent: {}
+[29.861648] (-) TimerEvent: {}
+[29.962336] (-) TimerEvent: {}
+[30.063030] (-) TimerEvent: {}
+[30.163776] (-) TimerEvent: {}
+[30.264497] (-) TimerEvent: {}
+[30.365185] (-) TimerEvent: {}
+[30.465900] (-) TimerEvent: {}
+[30.566589] (-) TimerEvent: {}
+[30.667298] (-) TimerEvent: {}
+[30.768024] (-) TimerEvent: {}
+[30.868748] (-) TimerEvent: {}
+[30.969429] (-) TimerEvent: {}
+[31.070147] (-) TimerEvent: {}
+[31.170857] (-) TimerEvent: {}
+[31.271598] (-) TimerEvent: {}
+[31.372346] (-) TimerEvent: {}
+[31.473109] (-) TimerEvent: {}
+[31.573812] (-) TimerEvent: {}
+[31.674537] (-) TimerEvent: {}
+[31.775343] (-) TimerEvent: {}
+[31.876093] (-) TimerEvent: {}
+[31.976875] (-) TimerEvent: {}
+[32.077631] (-) TimerEvent: {}
+[32.178346] (-) TimerEvent: {}
+[32.279016] (-) TimerEvent: {}
+[32.379708] (-) TimerEvent: {}
+[32.480400] (-) TimerEvent: {}
+[32.581087] (-) TimerEvent: {}
+[32.681802] (-) TimerEvent: {}
+[32.782526] (-) TimerEvent: {}
+[32.883205] (-) TimerEvent: {}
+[32.983903] (-) TimerEvent: {}
+[33.084678] (-) TimerEvent: {}
+[33.185478] (-) TimerEvent: {}
+[33.286163] (-) TimerEvent: {}
+[33.386866] (-) TimerEvent: {}
+[33.487612] (-) TimerEvent: {}
+[33.588339] (-) TimerEvent: {}
+[33.689000] (-) TimerEvent: {}
+[33.789711] (-) TimerEvent: {}
+[33.890451] (-) TimerEvent: {}
+[33.991136] (-) TimerEvent: {}
+[34.091845] (-) TimerEvent: {}
+[34.192553] (-) TimerEvent: {}
+[34.293237] (-) TimerEvent: {}
+[34.393940] (-) TimerEvent: {}
+[34.494605] (-) TimerEvent: {}
+[34.595257] (-) TimerEvent: {}
+[34.695967] (-) TimerEvent: {}
+[34.796690] (-) TimerEvent: {}
+[34.897399] (-) TimerEvent: {}
+[34.998066] (-) TimerEvent: {}
+[35.098743] (-) TimerEvent: {}
+[35.199419] (-) TimerEvent: {}
+[35.300109] (-) TimerEvent: {}
+[35.400828] (-) TimerEvent: {}
+[35.501852] (-) TimerEvent: {}
+[35.602901] (-) TimerEvent: {}
+[35.703591] (-) TimerEvent: {}
+[35.804306] (-) TimerEvent: {}
+[35.904985] (-) TimerEvent: {}
+[36.005653] (-) TimerEvent: {}
+[36.106347] (-) TimerEvent: {}
+[36.207033] (-) TimerEvent: {}
+[36.307734] (-) TimerEvent: {}
+[36.408406] (-) TimerEvent: {}
+[36.509082] (-) TimerEvent: {}
+[36.609758] (-) TimerEvent: {}
+[36.710474] (-) TimerEvent: {}
+[36.811155] (-) TimerEvent: {}
+[36.911851] (-) TimerEvent: {}
+[37.012587] (-) TimerEvent: {}
+[37.113285] (-) TimerEvent: {}
+[37.213960] (-) TimerEvent: {}
+[37.314675] (-) TimerEvent: {}
+[37.415389] (-) TimerEvent: {}
+[37.516080] (-) TimerEvent: {}
+[37.616792] (-) TimerEvent: {}
+[37.717493] (-) TimerEvent: {}
+[37.818155] (-) TimerEvent: {}
+[37.918815] (-) TimerEvent: {}
+[38.019481] (-) TimerEvent: {}
+[38.120186] (-) TimerEvent: {}
+[38.220879] (-) TimerEvent: {}
+[38.321629] (-) TimerEvent: {}
+[38.422296] (-) TimerEvent: {}
+[38.522997] (-) TimerEvent: {}
+[38.623728] (-) TimerEvent: {}
+[38.724418] (-) TimerEvent: {}
+[38.825119] (-) TimerEvent: {}
+[38.925749] (-) TimerEvent: {}
+[39.026469] (-) TimerEvent: {}
+[39.127331] (-) TimerEvent: {}
+[39.228087] (-) TimerEvent: {}
+[39.328852] (-) TimerEvent: {}
+[39.429555] (-) TimerEvent: {}
+[39.530239] (-) TimerEvent: {}
+[39.630908] (-) TimerEvent: {}
+[39.731602] (-) TimerEvent: {}
+[39.832404] (-) TimerEvent: {}
+[39.933107] (-) TimerEvent: {}
+[40.033797] (-) TimerEvent: {}
+[40.134472] (-) TimerEvent: {}
+[40.235160] (-) TimerEvent: {}
+[40.335858] (-) TimerEvent: {}
+[40.436584] (-) TimerEvent: {}
+[40.537275] (-) TimerEvent: {}
+[40.637949] (-) TimerEvent: {}
+[40.738630] (-) TimerEvent: {}
+[40.839358] (-) TimerEvent: {}
+[40.940054] (-) TimerEvent: {}
+[41.040768] (-) TimerEvent: {}
+[41.141621] (-) TimerEvent: {}
+[41.242977] (-) TimerEvent: {}
+[41.344030] (-) TimerEvent: {}
+[41.444792] (-) TimerEvent: {}
+[41.545600] (-) TimerEvent: {}
+[41.646505] (-) TimerEvent: {}
+[41.747586] (-) TimerEvent: {}
+[41.840753] (bau_ctrl) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable bau_ctrl\x1b[0m\n'}
+[41.847843] (-) TimerEvent: {}
+[41.948814] (-) TimerEvent: {}
+[42.050490] (-) TimerEvent: {}
+[42.151548] (-) TimerEvent: {}
+[42.252450] (-) TimerEvent: {}
+[42.353198] (-) TimerEvent: {}
+[42.454045] (-) TimerEvent: {}
+[42.554987] (-) TimerEvent: {}
+[42.655864] (-) TimerEvent: {}
+[42.756742] (-) TimerEvent: {}
+[42.857686] (-) TimerEvent: {}
+[42.958518] (-) TimerEvent: {}
+[43.059340] (-) TimerEvent: {}
+[43.160070] (-) TimerEvent: {}
+[43.260792] (-) TimerEvent: {}
+[43.361557] (-) TimerEvent: {}
+[43.462457] (-) TimerEvent: {}
+[43.563116] (-) TimerEvent: {}
+[43.663770] (-) TimerEvent: {}
+[43.764531] (-) TimerEvent: {}
+[43.865163] (-) TimerEvent: {}
+[43.960116] (bau_ctrl) StdoutLine: {'line': b'[100%] Built target bau_ctrl\n'}
+[43.965319] (-) TimerEvent: {}
+[43.997605] (bau_ctrl) CommandEnded: {'returncode': 0}
+[44.065497] (-) TimerEvent: {}
+[44.153038] (bau_ctrl) JobProgress: {'identifier': 'bau_ctrl', 'progress': 'install'}
+[44.154264] (bau_ctrl) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl'], 'cwd': '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('C_INCLUDE_PATH', ':/opt/ros/humble/include'), ('USER', 'zhangqi'), ('SSH_CLIENT', '192.168.2.5 39496 22'), ('LC_TIME', 'zh_CN.UTF-8'), ('XDG_SESSION_TYPE', 'tty'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib:/home/zhangqi/ros2/libs/lib'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/zhangqi'), ('OLDPWD', '/dev'), ('SSH_TTY', '/dev/pts/0'), ('ROS_PYTHON_VERSION', '3'), ('LC_MONETARY', 'zh_CN.UTF-8'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('CPLUS_INCLUDE_PATH', ':/opt/ros/humble/include'), ('COLCON_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install'), ('ROS_DISTRO', 'humble'), ('LOGNAME', 'zhangqi'), ('_', './colcon.sh'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('TERM', 'xterm-256color'), ('XDG_SESSION_ID', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/opt/ros/humble/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('LC_ADDRESS', 'zh_CN.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('LANG', 'en_US.UTF-8'), ('LC_TELEPHONE', 'zh_CN.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('AMENT_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('LC_NAME', 'zh_CN.UTF-8'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'zh_CN.UTF-8'), ('LC_IDENTIFICATION', 'zh_CN.UTF-8'), ('PWD', '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl'), ('LC_ALL', 'en_US.UTF-8'), ('SSH_CONNECTION', '192.168.2.5 39496 192.168.2.169 22'), ('XDG_DATA_DIRS', '/usr/local/share:/usr/share:/var/lib/snapd/desktop'), ('PYTHONPATH', '/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'zh_CN.UTF-8'), ('LC_PAPER', 'zh_CN.UTF-8'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher:/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader:/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node:/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl:/home/zhangqi/ros2/ros2_pkgs/install/SysDispatcher:/opt/ros/humble')]), 'shell': False}
+[44.165640] (-) TimerEvent: {}
+[44.187946] (bau_ctrl) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[44.189642] (bau_ctrl) StdoutLine: {'line': b'-- Installing: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/lib/bau_ctrl/bau_ctrl\n'}
+[44.217965] (bau_ctrl) StdoutLine: {'line': b'-- Set runtime path of "/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/lib/bau_ctrl/bau_ctrl" to ""\n'}
+[44.218583] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl//launch\n'}
+[44.218984] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl//launch/bau_ctrl_launch.py\n'}
+[44.219287] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/ament_index/resource_index/package_run_dependencies/bau_ctrl\n'}
+[44.219708] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/ament_index/resource_index/parent_prefix_path/bau_ctrl\n'}
+[44.220017] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/environment/ament_prefix_path.sh\n'}
+[44.220492] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/environment/ament_prefix_path.dsv\n'}
+[44.220870] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/environment/path.sh\n'}
+[44.221274] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/environment/path.dsv\n'}
+[44.221704] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/local_setup.bash\n'}
+[44.222097] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/local_setup.sh\n'}
+[44.222468] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/local_setup.zsh\n'}
+[44.222770] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/local_setup.dsv\n'}
+[44.223051] (bau_ctrl) StdoutLine: {'line': b'-- Installing: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.dsv\n'}
+[44.223511] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/ament_index/resource_index/packages/bau_ctrl\n'}
+[44.223880] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/cmake/bau_ctrlConfig.cmake\n'}
+[44.224357] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/cmake/bau_ctrlConfig-version.cmake\n'}
+[44.224809] (bau_ctrl) StdoutLine: {'line': b'-- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.xml\n'}
+[44.229389] (bau_ctrl) CommandEnded: {'returncode': 0}
+[44.265917] (-) TimerEvent: {}
+[44.366529] (-) TimerEvent: {}
+[44.467837] (-) TimerEvent: {}
+[44.471375] (bau_ctrl) JobEnded: {'identifier': 'bau_ctrl', 'rc': 0}
+[44.474830] (-) EventReactorShutdown: {}

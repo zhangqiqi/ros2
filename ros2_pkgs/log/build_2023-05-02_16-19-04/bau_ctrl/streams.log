@@ -1,0 +1,44 @@
+[0.153s] Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl -- -j4 -l4
+[0.356s] [35m[1mConsolidate compiler generated dependencies of target bau_ctrl[0m
+[0.475s] [ 33%] [32mBuilding CXX object CMakeFiles/bau_ctrl.dir/src/bau_ctrl.cpp.o[0m
+[11.524s] In file included from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:9[m[K,
+[11.524s]                  from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9[m[K,
+[11.524s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9[m[K,
+[11.525s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_ctrl.cpp:26[m[K:
+[11.525s] [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:32:14:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kreq_str[m[K’ [[01;35m[K-Wpedantic[m[K]
+[11.525s]    32 |         char [01;35m[Kreq_str[m[K[];      /**< 请求消息字符串 */
+[11.526s]       |              [01;35m[K^~~~~~~[m[K
+[11.526s] [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:41:14:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kres_str[m[K’ [[01;35m[K-Wpedantic[m[K]
+[11.526s]    41 |         char [01;35m[Kres_str[m[K[];      /**< 响应消息字符串 */
+[11.527s]       |              [01;35m[K^~~~~~~[m[K
+[11.527s] In file included from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9[m[K,
+[11.527s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9[m[K,
+[11.528s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_ctrl.cpp:26[m[K:
+[11.528s] [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:27:17:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kpayload[m[K’ [[01;35m[K-Wpedantic[m[K]
+[11.528s]    27 |         uint8_t [01;35m[Kpayload[m[K[];      /**< 负载数据域 */
+[11.529s]       |                 [01;35m[K^~~~~~~[m[K
+[35.918s] [ 66%] [32m[1mLinking CXX executable bau_ctrl[0m
+[38.039s] [100%] Built target bau_ctrl
+[38.077s] Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl -- -j4 -l4
+[38.236s] Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl
+[38.265s] -- Install configuration: ""
+[38.266s] -- Installing: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/lib/bau_ctrl/bau_ctrl
+[38.295s] -- Set runtime path of "/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/lib/bau_ctrl/bau_ctrl" to ""
+[38.295s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl//launch
+[38.296s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl//launch/bau_ctrl_launch.py
+[38.296s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/ament_index/resource_index/package_run_dependencies/bau_ctrl
+[38.296s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/ament_index/resource_index/parent_prefix_path/bau_ctrl
+[38.297s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/environment/ament_prefix_path.sh
+[38.297s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/environment/ament_prefix_path.dsv
+[38.297s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/environment/path.sh
+[38.298s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/environment/path.dsv
+[38.298s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/local_setup.bash
+[38.299s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/local_setup.sh
+[38.299s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/local_setup.zsh
+[38.299s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/local_setup.dsv
+[38.300s] -- Installing: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.dsv
+[38.300s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/ament_index/resource_index/packages/bau_ctrl
+[38.301s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/cmake/bau_ctrlConfig.cmake
+[38.301s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/cmake/bau_ctrlConfig-version.cmake
+[38.301s] -- Up-to-date: /home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.xml
+[38.314s] Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl

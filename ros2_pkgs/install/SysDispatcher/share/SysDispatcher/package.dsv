@@ -1,0 +1,8 @@
+source;share/SysDispatcher/hook/cmake_prefix_path.ps1
+source;share/SysDispatcher/hook/cmake_prefix_path.dsv
+source;share/SysDispatcher/hook/cmake_prefix_path.sh
+source;share/SysDispatcher/local_setup.bash
+source;share/SysDispatcher/local_setup.dsv
+source;share/SysDispatcher/local_setup.ps1
+source;share/SysDispatcher/local_setup.sh
+source;share/SysDispatcher/local_setup.zsh

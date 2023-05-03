@@ -1,0 +1,11 @@
+[0.170s] Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl -- -j4 -l4
+[0.426s] [35m[1mConsolidate compiler generated dependencies of target bau_ctrl[0m
+[0.539s] [ 33%] [32mBuilding CXX object CMakeFiles/bau_ctrl.dir/src/bau_ctrl.cpp.o[0m
+[2.279s] [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_ctrl.cpp:15:10:[m[K [01;31m[Kfatal error: [m[Kstd_msgs/Header: No such file or directory
+[2.280s]    15 | #include [01;31m[K<std_msgs/Header>[m[K
+[2.280s]       |          [01;31m[K^~~~~~~~~~~~~~~~~[m[K
+[2.281s] compilation terminated.
+[2.289s] gmake[2]: *** [CMakeFiles/bau_ctrl.dir/build.make:76: CMakeFiles/bau_ctrl.dir/src/bau_ctrl.cpp.o] Error 1
+[2.290s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/bau_ctrl.dir/all] Error 2
+[2.291s] gmake: *** [Makefile:146: all] Error 2
+[2.297s] Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl -- -j4 -l4

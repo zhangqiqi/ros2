@@ -1,0 +1,26 @@
+[0.185s] Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl -- -j4 -l4
+[0.531s] [ 33%] [32mBuilding CXX object CMakeFiles/bau_ctrl.dir/src/bau_ctrl.cpp.o[0m
+[12.425s] In file included from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:9[m[K,
+[12.426s]                  from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9[m[K,
+[12.426s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9[m[K,
+[12.426s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_ctrl.cpp:26[m[K:
+[12.427s] [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:32:14:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kreq_str[m[K’ [[01;35m[K-Wpedantic[m[K]
+[12.427s]    32 |         char [01;35m[Kreq_str[m[K[];      /**< 请求消息字符串 */
+[12.427s]       |              [01;35m[K^~~~~~~[m[K
+[12.428s] [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:41:14:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kres_str[m[K’ [[01;35m[K-Wpedantic[m[K]
+[12.428s]    41 |         char [01;35m[Kres_str[m[K[];      /**< 响应消息字符串 */
+[12.428s]       |              [01;35m[K^~~~~~~[m[K
+[12.429s] In file included from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9[m[K,
+[12.429s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9[m[K,
+[12.429s]                  from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_ctrl.cpp:26[m[K:
+[12.430s] [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:27:17:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kpayload[m[K’ [[01;35m[K-Wpedantic[m[K]
+[12.430s]    27 |         uint8_t [01;35m[Kpayload[m[K[];      /**< 负载数据域 */
+[12.430s]       |                 [01;35m[K^~~~~~~[m[K
+[12.714s] [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_ctrl.cpp:[m[K In member function ‘[01m[Kvoid BauCtrl::bau_exec_timer()[m[K’:
+[12.715s] [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_ctrl.cpp:88:31:[m[K [01;31m[Kerror: [m[K‘[01m[Kusing _header_type = struct std_msgs::msg::Header_<std::allocator<void> >[m[K’ {aka ‘[01m[Kstruct std_msgs::msg::Header_<std::allocator<void> >[m[K’} has no member named ‘[01m[Kseq[m[K’
+[12.715s]    88 |                 _twist.header.[01;31m[Kseq[m[K = twist_frame_seq++;
+[12.716s]       |                               [01;31m[K^~~[m[K
+[21.630s] gmake[2]: *** [CMakeFiles/bau_ctrl.dir/build.make:76: CMakeFiles/bau_ctrl.dir/src/bau_ctrl.cpp.o] Error 1
+[21.631s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/bau_ctrl.dir/all] Error 2
+[21.632s] gmake: *** [Makefile:146: all] Error 2
+[21.638s] Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl -- -j4 -l4

@@ -1,0 +1,4 @@
+Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/car_uart_node': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/car_uart_node -- -j4 -l4
+Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/car_uart_node' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/car_uart_node -- -j4 -l4
+Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/car_uart_node': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/car_uart_node
+Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/car_uart_node' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/car_uart_node

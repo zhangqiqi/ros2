@@ -1,0 +1,34 @@
+gmake[2]: Warning: File '/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_ctrl.cpp' has modification time 4231347 s in the future
+In file included from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:9[m[K,
+                 from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9[m[K,
+                 from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9[m[K,
+                 from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_dev.cc:1[m[K:
+[01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:32:14:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kreq_str[m[K’ [[01;35m[K-Wpedantic[m[K]
+   32 |         char [01;35m[Kreq_str[m[K[];      /**< 请求消息字符串 */
+      |              [01;35m[K^~~~~~~[m[K
+[01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:41:14:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kres_str[m[K’ [[01;35m[K-Wpedantic[m[K]
+   41 |         char [01;35m[Kres_str[m[K[];      /**< 响应消息字符串 */
+      |              [01;35m[K^~~~~~~[m[K
+In file included from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9[m[K,
+                 from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9[m[K,
+                 from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_dev.cc:1[m[K:
+[01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:27:17:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kpayload[m[K’ [[01;35m[K-Wpedantic[m[K]
+   27 |         uint8_t [01;35m[Kpayload[m[K[];      /**< 负载数据域 */
+      |                 [01;35m[K^~~~~~~[m[K
+In file included from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:9[m[K,
+                 from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9[m[K,
+                 from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9[m[K,
+                 from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_ctrl.cpp:25[m[K:
+[01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:32:14:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kreq_str[m[K’ [[01;35m[K-Wpedantic[m[K]
+   32 |         char [01;35m[Kreq_str[m[K[];      /**< 请求消息字符串 */
+      |              [01;35m[K^~~~~~~[m[K
+[01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs_def.h:41:14:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kres_str[m[K’ [[01;35m[K-Wpedantic[m[K]
+   41 |         char [01;35m[Kres_str[m[K[];      /**< 响应消息字符串 */
+      |              [01;35m[K^~~~~~~[m[K
+In file included from [01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp.h:9[m[K,
+                 from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/include/bau_dev.h:9[m[K,
+                 from [01m[K/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl/src/bau_ctrl.cpp:25[m[K:
+[01m[K/home/zhangqi/ros2/libs/include/ssnp/ssnp_msgs.h:27:17:[m[K [01;35m[Kwarning: [m[KISO C++ forbids flexible array member ‘[01m[Kpayload[m[K’ [[01;35m[K-Wpedantic[m[K]
+   27 |         uint8_t [01;35m[Kpayload[m[K[];      /**< 负载数据域 */
+      |                 [01;35m[K^~~~~~~[m[K
+gmake[2]: warning:  Clock skew detected.  Your build may be incomplete.

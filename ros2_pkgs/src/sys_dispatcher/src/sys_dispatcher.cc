@@ -55,7 +55,7 @@ private:
 		t.transform.rotation.y = q.y();
 		t.transform.rotation.z = q.z();
 		t.transform.rotation.w = q.w();
-		_tf_publisher->sendTransform(t);
+//		_tf_publisher->sendTransform(t);
 
 		t.header.stamp = this->now();
 		t.header.frame_id = "odom";
@@ -68,15 +68,15 @@ private:
 		t.transform.rotation.y = q.y();
 		t.transform.rotation.z = q.z();
 		t.transform.rotation.w = q.w();
-		_tf_publisher->sendTransform(t);
+//		_tf_publisher->sendTransform(t);
 
 		t.header.stamp = this->now();
 		t.header.frame_id = "base_link";
 		t.child_frame_id = "lidar_link";
 		t.transform.translation.x = 0;
 		t.transform.translation.y = 0;
-		t.transform.translation.z = 0;
-		q.setRPY(0, 0, 0);
+		t.transform.translation.z = 0.15;
+		q.setRPY(0, 0, std::numbers::pi);
 		t.transform.rotation.x = q.x();
 		t.transform.rotation.y = q.y();
 		t.transform.rotation.z = q.z();

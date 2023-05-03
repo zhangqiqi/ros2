@@ -1,0 +1,4 @@
+source;share/bau_ctrl/local_setup.bash
+source;share/bau_ctrl/local_setup.dsv
+source;share/bau_ctrl/local_setup.sh
+source;share/bau_ctrl/local_setup.zsh

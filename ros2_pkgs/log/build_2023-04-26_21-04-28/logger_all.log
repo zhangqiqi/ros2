@@ -1,0 +1,332 @@
+[3.825s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--cmake-args', '-DCOMMON_LIB_PATH=~/ros2/libs/', '-DCMAKE_EXPORT_COMPILE_COMMANDS=on']
+[3.826s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=4, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=['-DCOMMON_LIB_PATH=~/ros2/libs/', '-DCMAKE_EXPORT_COMPILE_COMMANDS=on'], cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0xffffb8eeba30>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0xffffb97be260>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0xffffb97be260>>)
+[4.132s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[4.133s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[4.134s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[4.134s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[4.134s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[4.135s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[4.135s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/zhangqi/ros2/ros2_pkgs'
+[4.136s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[4.137s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[4.138s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[4.138s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[4.139s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[4.139s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[4.140s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[4.140s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[4.140s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[4.259s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[4.259s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[4.260s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[4.260s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[4.260s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[4.262s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[4.263s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[4.263s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[4.265s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[4.266s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[4.266s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[4.268s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[4.269s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[4.270s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[4.271s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[4.271s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[4.272s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[4.272s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[4.273s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[4.273s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[4.274s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[4.274s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[4.274s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[4.275s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[4.276s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[4.276s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[4.276s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[4.277s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[4.278s] Level 1:colcon.colcon_core.package_identification:_identify(src/bau_ctrl) by extensions ['ignore', 'ignore_ament_install']
+[4.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/bau_ctrl) by extension 'ignore'
+[4.279s] Level 1:colcon.colcon_core.package_identification:_identify(src/bau_ctrl) by extension 'ignore_ament_install'
+[4.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/bau_ctrl) by extensions ['colcon_pkg']
+[4.280s] Level 1:colcon.colcon_core.package_identification:_identify(src/bau_ctrl) by extension 'colcon_pkg'
+[4.281s] Level 1:colcon.colcon_core.package_identification:_identify(src/bau_ctrl) by extensions ['colcon_meta']
+[4.281s] Level 1:colcon.colcon_core.package_identification:_identify(src/bau_ctrl) by extension 'colcon_meta'
+[4.282s] Level 1:colcon.colcon_core.package_identification:_identify(src/bau_ctrl) by extensions ['ros']
+[4.282s] Level 1:colcon.colcon_core.package_identification:_identify(src/bau_ctrl) by extension 'ros'
+[4.308s] DEBUG:colcon.colcon_core.package_identification:Package 'src/bau_ctrl' with type 'ros.ament_cmake' and name 'bau_ctrl'
+[4.310s] Level 1:colcon.colcon_core.package_identification:_identify(src/car_uart_node) by extensions ['ignore', 'ignore_ament_install']
+[4.311s] Level 1:colcon.colcon_core.package_identification:_identify(src/car_uart_node) by extension 'ignore'
+[4.311s] Level 1:colcon.colcon_core.package_identification:_identify(src/car_uart_node) by extension 'ignore_ament_install'
+[4.312s] Level 1:colcon.colcon_core.package_identification:_identify(src/car_uart_node) by extensions ['colcon_pkg']
+[4.312s] Level 1:colcon.colcon_core.package_identification:_identify(src/car_uart_node) by extension 'colcon_pkg'
+[4.313s] Level 1:colcon.colcon_core.package_identification:_identify(src/car_uart_node) by extensions ['colcon_meta']
+[4.313s] Level 1:colcon.colcon_core.package_identification:_identify(src/car_uart_node) by extension 'colcon_meta'
+[4.314s] Level 1:colcon.colcon_core.package_identification:_identify(src/car_uart_node) by extensions ['ros']
+[4.314s] Level 1:colcon.colcon_core.package_identification:_identify(src/car_uart_node) by extension 'ros'
+[4.319s] DEBUG:colcon.colcon_core.package_identification:Package 'src/car_uart_node' with type 'ros.ament_cmake' and name 'car_uart_node'
+[4.320s] Level 1:colcon.colcon_core.package_identification:_identify(src/lidar_reader) by extensions ['ignore', 'ignore_ament_install']
+[4.321s] Level 1:colcon.colcon_core.package_identification:_identify(src/lidar_reader) by extension 'ignore'
+[4.321s] Level 1:colcon.colcon_core.package_identification:_identify(src/lidar_reader) by extension 'ignore_ament_install'
+[4.322s] Level 1:colcon.colcon_core.package_identification:_identify(src/lidar_reader) by extensions ['colcon_pkg']
+[4.322s] Level 1:colcon.colcon_core.package_identification:_identify(src/lidar_reader) by extension 'colcon_pkg'
+[4.323s] Level 1:colcon.colcon_core.package_identification:_identify(src/lidar_reader) by extensions ['colcon_meta']
+[4.323s] Level 1:colcon.colcon_core.package_identification:_identify(src/lidar_reader) by extension 'colcon_meta'
+[4.324s] Level 1:colcon.colcon_core.package_identification:_identify(src/lidar_reader) by extensions ['ros']
+[4.324s] Level 1:colcon.colcon_core.package_identification:_identify(src/lidar_reader) by extension 'ros'
+[4.331s] DEBUG:colcon.colcon_core.package_identification:Package 'src/lidar_reader' with type 'ros.ament_cmake' and name 'lidar_reader'
+[4.332s] Level 1:colcon.colcon_core.package_identification:_identify(src/sys_dispatcher) by extensions ['ignore', 'ignore_ament_install']
+[4.333s] Level 1:colcon.colcon_core.package_identification:_identify(src/sys_dispatcher) by extension 'ignore'
+[4.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/sys_dispatcher) by extension 'ignore_ament_install'
+[4.334s] Level 1:colcon.colcon_core.package_identification:_identify(src/sys_dispatcher) by extensions ['colcon_pkg']
+[4.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/sys_dispatcher) by extension 'colcon_pkg'
+[4.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/sys_dispatcher) by extensions ['colcon_meta']
+[4.335s] Level 1:colcon.colcon_core.package_identification:_identify(src/sys_dispatcher) by extension 'colcon_meta'
+[4.336s] Level 1:colcon.colcon_core.package_identification:_identify(src/sys_dispatcher) by extensions ['ros']
+[4.336s] Level 1:colcon.colcon_core.package_identification:_identify(src/sys_dispatcher) by extension 'ros'
+[4.345s] DEBUG:colcon.colcon_core.package_identification:Package 'src/sys_dispatcher' with type 'ros.ament_cmake' and name 'sys_dispatcher'
+[4.345s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[4.346s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[4.346s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[4.346s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[4.347s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[4.581s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[4.582s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[4.616s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 5 installed packages in /home/zhangqi/ros2/ros2_pkgs/install
+[4.650s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 318 installed packages in /opt/ros/humble
+[4.671s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[5.444s] Level 5:colcon.colcon_core.verb:set package 'bau_ctrl' build argument 'cmake_args' from command line to '['-DCOMMON_LIB_PATH=~/ros2/libs/', '-DCMAKE_EXPORT_COMPILE_COMMANDS=on']'
+[5.444s] Level 5:colcon.colcon_core.verb:set package 'bau_ctrl' build argument 'cmake_target' from command line to 'None'
+[5.445s] Level 5:colcon.colcon_core.verb:set package 'bau_ctrl' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[5.445s] Level 5:colcon.colcon_core.verb:set package 'bau_ctrl' build argument 'cmake_clean_cache' from command line to 'False'
+[5.446s] Level 5:colcon.colcon_core.verb:set package 'bau_ctrl' build argument 'cmake_clean_first' from command line to 'False'
+[5.446s] Level 5:colcon.colcon_core.verb:set package 'bau_ctrl' build argument 'cmake_force_configure' from command line to 'False'
+[5.446s] Level 5:colcon.colcon_core.verb:set package 'bau_ctrl' build argument 'ament_cmake_args' from command line to 'None'
+[5.447s] Level 5:colcon.colcon_core.verb:set package 'bau_ctrl' build argument 'catkin_cmake_args' from command line to 'None'
+[5.447s] Level 5:colcon.colcon_core.verb:set package 'bau_ctrl' build argument 'catkin_skip_building_tests' from command line to 'False'
+[5.447s] DEBUG:colcon.colcon_core.verb:Building package 'bau_ctrl' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DCOMMON_LIB_PATH=~/ros2/libs/', '-DCMAKE_EXPORT_COMPILE_COMMANDS=on'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl', 'merge_install': False, 'path': '/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl', 'symlink_install': False, 'test_result_base': None}
+[5.458s] Level 5:colcon.colcon_core.verb:set package 'car_uart_node' build argument 'cmake_args' from command line to '['-DCOMMON_LIB_PATH=~/ros2/libs/', '-DCMAKE_EXPORT_COMPILE_COMMANDS=on']'
+[5.459s] Level 5:colcon.colcon_core.verb:set package 'car_uart_node' build argument 'cmake_target' from command line to 'None'
+[5.459s] Level 5:colcon.colcon_core.verb:set package 'car_uart_node' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[5.459s] Level 5:colcon.colcon_core.verb:set package 'car_uart_node' build argument 'cmake_clean_cache' from command line to 'False'
+[5.459s] Level 5:colcon.colcon_core.verb:set package 'car_uart_node' build argument 'cmake_clean_first' from command line to 'False'
+[5.460s] Level 5:colcon.colcon_core.verb:set package 'car_uart_node' build argument 'cmake_force_configure' from command line to 'False'
+[5.460s] Level 5:colcon.colcon_core.verb:set package 'car_uart_node' build argument 'ament_cmake_args' from command line to 'None'
+[5.460s] Level 5:colcon.colcon_core.verb:set package 'car_uart_node' build argument 'catkin_cmake_args' from command line to 'None'
+[5.461s] Level 5:colcon.colcon_core.verb:set package 'car_uart_node' build argument 'catkin_skip_building_tests' from command line to 'False'
+[5.461s] DEBUG:colcon.colcon_core.verb:Building package 'car_uart_node' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/zhangqi/ros2/ros2_pkgs/build/car_uart_node', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DCOMMON_LIB_PATH=~/ros2/libs/', '-DCMAKE_EXPORT_COMPILE_COMMANDS=on'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node', 'merge_install': False, 'path': '/home/zhangqi/ros2/ros2_pkgs/src/car_uart_node', 'symlink_install': False, 'test_result_base': None}
+[5.472s] Level 5:colcon.colcon_core.verb:set package 'lidar_reader' build argument 'cmake_args' from command line to '['-DCOMMON_LIB_PATH=~/ros2/libs/', '-DCMAKE_EXPORT_COMPILE_COMMANDS=on']'
+[5.472s] Level 5:colcon.colcon_core.verb:set package 'lidar_reader' build argument 'cmake_target' from command line to 'None'
+[5.472s] Level 5:colcon.colcon_core.verb:set package 'lidar_reader' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[5.473s] Level 5:colcon.colcon_core.verb:set package 'lidar_reader' build argument 'cmake_clean_cache' from command line to 'False'
+[5.473s] Level 5:colcon.colcon_core.verb:set package 'lidar_reader' build argument 'cmake_clean_first' from command line to 'False'
+[5.473s] Level 5:colcon.colcon_core.verb:set package 'lidar_reader' build argument 'cmake_force_configure' from command line to 'False'
+[5.474s] Level 5:colcon.colcon_core.verb:set package 'lidar_reader' build argument 'ament_cmake_args' from command line to 'None'
+[5.474s] Level 5:colcon.colcon_core.verb:set package 'lidar_reader' build argument 'catkin_cmake_args' from command line to 'None'
+[5.474s] Level 5:colcon.colcon_core.verb:set package 'lidar_reader' build argument 'catkin_skip_building_tests' from command line to 'False'
+[5.475s] DEBUG:colcon.colcon_core.verb:Building package 'lidar_reader' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/zhangqi/ros2/ros2_pkgs/build/lidar_reader', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DCOMMON_LIB_PATH=~/ros2/libs/', '-DCMAKE_EXPORT_COMPILE_COMMANDS=on'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader', 'merge_install': False, 'path': '/home/zhangqi/ros2/ros2_pkgs/src/lidar_reader', 'symlink_install': False, 'test_result_base': None}
+[5.485s] Level 5:colcon.colcon_core.verb:set package 'sys_dispatcher' build argument 'cmake_args' from command line to '['-DCOMMON_LIB_PATH=~/ros2/libs/', '-DCMAKE_EXPORT_COMPILE_COMMANDS=on']'
+[5.486s] Level 5:colcon.colcon_core.verb:set package 'sys_dispatcher' build argument 'cmake_target' from command line to 'None'
+[5.486s] Level 5:colcon.colcon_core.verb:set package 'sys_dispatcher' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[5.486s] Level 5:colcon.colcon_core.verb:set package 'sys_dispatcher' build argument 'cmake_clean_cache' from command line to 'False'
+[5.487s] Level 5:colcon.colcon_core.verb:set package 'sys_dispatcher' build argument 'cmake_clean_first' from command line to 'False'
+[5.487s] Level 5:colcon.colcon_core.verb:set package 'sys_dispatcher' build argument 'cmake_force_configure' from command line to 'False'
+[5.487s] Level 5:colcon.colcon_core.verb:set package 'sys_dispatcher' build argument 'ament_cmake_args' from command line to 'None'
+[5.487s] Level 5:colcon.colcon_core.verb:set package 'sys_dispatcher' build argument 'catkin_cmake_args' from command line to 'None'
+[5.488s] Level 5:colcon.colcon_core.verb:set package 'sys_dispatcher' build argument 'catkin_skip_building_tests' from command line to 'False'
+[5.488s] DEBUG:colcon.colcon_core.verb:Building package 'sys_dispatcher' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DCOMMON_LIB_PATH=~/ros2/libs/', '-DCMAKE_EXPORT_COMPILE_COMMANDS=on'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher', 'merge_install': False, 'path': '/home/zhangqi/ros2/ros2_pkgs/src/sys_dispatcher', 'symlink_install': False, 'test_result_base': None}
+[5.495s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[5.527s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[5.531s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl' with build type 'ament_cmake'
+[5.532s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/zhangqi/ros2/ros2_pkgs/src/bau_ctrl'
+[5.575s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[5.578s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[5.578s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[5.650s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/zhangqi/ros2/ros2_pkgs/src/car_uart_node' with build type 'ament_cmake'
+[5.651s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/zhangqi/ros2/ros2_pkgs/src/car_uart_node'
+[5.666s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[5.667s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[5.734s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/zhangqi/ros2/ros2_pkgs/src/lidar_reader' with build type 'ament_cmake'
+[5.735s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/zhangqi/ros2/ros2_pkgs/src/lidar_reader'
+[5.749s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[5.751s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[5.817s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/zhangqi/ros2/ros2_pkgs/src/sys_dispatcher' with build type 'ament_cmake'
+[5.818s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/zhangqi/ros2/ros2_pkgs/src/sys_dispatcher'
+[5.833s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[5.834s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[5.940s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl -- -j4 -l4
+[5.992s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/car_uart_node': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/car_uart_node -- -j4 -l4
+[6.024s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/lidar_reader': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/lidar_reader -- -j4 -l4
+[6.085s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher -- -j4 -l4
+[6.375s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/car_uart_node' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/car_uart_node -- -j4 -l4
+[6.743s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/car_uart_node': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/car_uart_node
+[6.789s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/lidar_reader' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/lidar_reader -- -j4 -l4
+[6.891s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(car_uart_node)
+[6.904s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/car_uart_node' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/car_uart_node
+[6.950s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node' for CMake module files
+[6.961s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node' for CMake config files
+[6.968s] Level 1:colcon.colcon_core.shell:create_environment_hook('car_uart_node', 'cmake_prefix_path')
+[6.982s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/hook/cmake_prefix_path.ps1'
+[6.988s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/hook/cmake_prefix_path.dsv'
+[6.993s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/hook/cmake_prefix_path.sh'
+[7.003s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/bin'
+[7.004s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/lib/pkgconfig/car_uart_node.pc'
+[7.006s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/lib/python3.10/site-packages'
+[7.008s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/bin'
+[7.023s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/package.ps1'
+[7.032s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/package.dsv'
+[7.038s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/package.sh'
+[7.046s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/package.bash'
+[7.054s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/package.zsh'
+[7.062s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/colcon-core/packages/car_uart_node)
+[7.088s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher -- -j4 -l4
+[7.184s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/lidar_reader': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/lidar_reader
+[7.348s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(car_uart_node)
+[7.376s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node' for CMake module files
+[7.390s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node' for CMake config files
+[7.394s] Level 1:colcon.colcon_core.shell:create_environment_hook('car_uart_node', 'cmake_prefix_path')
+[7.408s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/hook/cmake_prefix_path.ps1'
+[7.412s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/hook/cmake_prefix_path.dsv'
+[7.416s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/hook/cmake_prefix_path.sh'
+[7.423s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/bin'
+[7.424s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/lib/pkgconfig/car_uart_node.pc'
+[7.427s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/lib/python3.10/site-packages'
+[7.429s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/bin'
+[7.443s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/package.ps1'
+[7.448s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/package.dsv'
+[7.454s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/package.sh'
+[7.458s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/package.bash'
+[7.462s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/car_uart_node/package.zsh'
+[7.467s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/zhangqi/ros2/ros2_pkgs/install/car_uart_node/share/colcon-core/packages/car_uart_node)
+[7.478s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(lidar_reader)
+[7.501s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader' for CMake module files
+[7.502s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/lidar_reader' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/lidar_reader
+[7.510s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader' for CMake config files
+[7.516s] Level 1:colcon.colcon_core.shell:create_environment_hook('lidar_reader', 'cmake_prefix_path')
+[7.530s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/hook/cmake_prefix_path.ps1'
+[7.534s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/hook/cmake_prefix_path.dsv'
+[7.538s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/hook/cmake_prefix_path.sh'
+[7.543s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/lib'
+[7.545s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/bin'
+[7.546s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/lib/pkgconfig/lidar_reader.pc'
+[7.548s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/lib/python3.10/site-packages'
+[7.550s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/bin'
+[7.564s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.ps1'
+[7.569s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.dsv'
+[7.574s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.sh'
+[7.578s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.bash'
+[7.582s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.zsh'
+[7.586s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/colcon-core/packages/lidar_reader)
+[7.615s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher
+[7.731s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(sys_dispatcher)
+[7.750s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/sys_dispatcher
+[7.756s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher' for CMake module files
+[7.765s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher' for CMake config files
+[7.774s] Level 1:colcon.colcon_core.shell:create_environment_hook('sys_dispatcher', 'cmake_prefix_path')
+[7.788s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/hook/cmake_prefix_path.ps1'
+[7.792s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/hook/cmake_prefix_path.dsv'
+[7.796s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/hook/cmake_prefix_path.sh'
+[7.802s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/lib'
+[7.803s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/bin'
+[7.804s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/lib/pkgconfig/sys_dispatcher.pc'
+[7.806s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/lib/python3.10/site-packages'
+[7.808s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/bin'
+[7.823s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/package.ps1'
+[7.828s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/package.dsv'
+[7.832s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/package.sh'
+[7.837s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/package.bash'
+[7.841s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/package.zsh'
+[7.844s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/colcon-core/packages/sys_dispatcher)
+[7.949s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(lidar_reader)
+[7.970s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader' for CMake module files
+[7.980s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader' for CMake config files
+[7.986s] Level 1:colcon.colcon_core.shell:create_environment_hook('lidar_reader', 'cmake_prefix_path')
+[8.000s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/hook/cmake_prefix_path.ps1'
+[8.004s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/hook/cmake_prefix_path.dsv'
+[8.008s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/hook/cmake_prefix_path.sh'
+[8.015s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/lib'
+[8.016s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/bin'
+[8.017s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/lib/pkgconfig/lidar_reader.pc'
+[8.019s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/lib/python3.10/site-packages'
+[8.021s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/bin'
+[8.036s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.ps1'
+[8.041s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.dsv'
+[8.047s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.sh'
+[8.052s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.bash'
+[8.057s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/lidar_reader/package.zsh'
+[8.061s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/zhangqi/ros2/ros2_pkgs/install/lidar_reader/share/colcon-core/packages/lidar_reader)
+[8.167s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(sys_dispatcher)
+[8.189s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher' for CMake module files
+[8.198s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher' for CMake config files
+[8.205s] Level 1:colcon.colcon_core.shell:create_environment_hook('sys_dispatcher', 'cmake_prefix_path')
+[8.219s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/hook/cmake_prefix_path.ps1'
+[8.223s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/hook/cmake_prefix_path.dsv'
+[8.227s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/hook/cmake_prefix_path.sh'
+[8.232s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/lib'
+[8.233s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/bin'
+[8.234s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/lib/pkgconfig/sys_dispatcher.pc'
+[8.236s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/lib/python3.10/site-packages'
+[8.238s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/bin'
+[8.252s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/package.ps1'
+[8.257s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/package.dsv'
+[8.263s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/package.sh'
+[8.267s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/package.bash'
+[8.271s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/sys_dispatcher/package.zsh'
+[8.276s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/zhangqi/ros2/ros2_pkgs/install/sys_dispatcher/share/colcon-core/packages/sys_dispatcher)
+[44.172s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl -- -j4 -l4
+[44.510s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl
+[44.691s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(bau_ctrl)
+[44.709s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/zhangqi/ros2/ros2_pkgs/build/bau_ctrl
+[44.713s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl' for CMake module files
+[44.721s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl' for CMake config files
+[44.728s] Level 1:colcon.colcon_core.shell:create_environment_hook('bau_ctrl', 'cmake_prefix_path')
+[44.741s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/hook/cmake_prefix_path.ps1'
+[44.745s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/hook/cmake_prefix_path.dsv'
+[44.749s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/hook/cmake_prefix_path.sh'
+[44.754s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/lib'
+[44.755s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/bin'
+[44.756s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/lib/pkgconfig/bau_ctrl.pc'
+[44.758s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/lib/python3.10/site-packages'
+[44.760s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/bin'
+[44.776s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.ps1'
+[44.780s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.dsv'
+[44.785s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.sh'
+[44.789s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.bash'
+[44.793s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.zsh'
+[44.796s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/colcon-core/packages/bau_ctrl)
+[45.131s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(bau_ctrl)
+[45.151s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl' for CMake module files
+[45.159s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl' for CMake config files
+[45.165s] Level 1:colcon.colcon_core.shell:create_environment_hook('bau_ctrl', 'cmake_prefix_path')
+[45.179s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/hook/cmake_prefix_path.ps1'
+[45.184s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/hook/cmake_prefix_path.dsv'
+[45.188s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/hook/cmake_prefix_path.sh'
+[45.193s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/lib'
+[45.194s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/bin'
+[45.195s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/lib/pkgconfig/bau_ctrl.pc'
+[45.197s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/lib/python3.10/site-packages'
+[45.199s] Level 1:colcon.colcon_core.environment:checking '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/bin'
+[45.214s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.ps1'
+[45.219s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.dsv'
+[45.224s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.sh'
+[45.228s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.bash'
+[45.232s] INFO:colcon.colcon_core.shell:Creating package script '/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/bau_ctrl/package.zsh'
+[45.236s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/zhangqi/ros2/ros2_pkgs/install/bau_ctrl/share/colcon-core/packages/bau_ctrl)
+[45.239s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[45.242s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[45.244s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[45.245s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[45.295s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[45.296s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[45.297s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[45.304s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.Notifications was not provided by any .service files
+[45.304s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[45.318s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/zhangqi/ros2/ros2_pkgs/install/local_setup.ps1'
+[45.327s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/zhangqi/ros2/ros2_pkgs/install/_local_setup_util_ps1.py'
+[45.342s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/zhangqi/ros2/ros2_pkgs/install/setup.ps1'
+[45.360s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/zhangqi/ros2/ros2_pkgs/install/local_setup.sh'
+[45.366s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/zhangqi/ros2/ros2_pkgs/install/_local_setup_util_sh.py'
+[45.371s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/zhangqi/ros2/ros2_pkgs/install/setup.sh'
+[45.390s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/zhangqi/ros2/ros2_pkgs/install/local_setup.bash'
+[45.396s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/zhangqi/ros2/ros2_pkgs/install/setup.bash'
+[45.413s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/zhangqi/ros2/ros2_pkgs/install/local_setup.zsh'
+[45.419s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/zhangqi/ros2/ros2_pkgs/install/setup.zsh'

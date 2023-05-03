@@ -12,6 +12,7 @@
 #include <rclcpp/subscription.hpp>
 #include <geometry_msgs/msg/twist.hpp>
 #include <string>
+#include <std_msgs/msg/header.hpp>
 #include <geometry_msgs/msg/transform_stamped.h>
 #include <geometry_msgs/msg/twist_with_covariance_stamped.hpp>
 #include <tf2/tf2/LinearMath/Quaternion.h>
@@ -92,7 +93,15 @@ private:
 		_twist.twist.twist.angular.x = 0;
 		_twist.twist.twist.angular.y = 0;
 		_twist.twist.twist.angular.z = angular;
-		
+		_twist.twist.covariance = std::array<double, 36>({
+			1., 0., 0., 0., 0., 0.,
+			0., 0., 0., 0., 0., 0.,
+			0., 0., 0., 0., 0., 0.,
+			0., 0., 0., 0., 0., 0.,
+			0., 0., 0., 0., 0., 0.,
+			0., 0., 0., 0., 0., 1.,
+		});
+		RCLCPP_INFO(get_logger(), "published speed: linear %lf, angular %lf", _twist.twist.twist.linear.x, _twist.twist.twist.angular.z);
 		_twist_stamped_publisher->publish(_twist);
 	}
 	
