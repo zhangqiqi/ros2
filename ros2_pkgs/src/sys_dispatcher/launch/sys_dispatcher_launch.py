@@ -41,9 +41,9 @@ def generate_launch_description():
     nav2_node = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             os.path.join(get_package_share_directory('nav2_bringup'), 'launch'),
-            '/bringup_launch.py'
+            '/navigation_launch.py'
         ]),
-        launch_arguments={'params_file': os.path.join(get_package_share_directory('sys_dispatcher'), 'params', 'nav2_params.yaml'), 'map': os.path.join('tmp', 'map.yaml')}.items() 
+       # launch_arguments={'params_file': os.path.join(get_package_share_directory('sys_dispatcher'), 'params', 'nav2_params.yaml'), 'map': os.path.join('/home', 'zhangqi', 'tmp', 'map.yaml')}.items() 
     )
     
     robot_localization_node = Node(
@@ -66,12 +66,13 @@ def generate_launch_description():
     ) 
 
     return LaunchDescription([
+            nav2_node,
             sys_dispatcher_node, 
             bau_ctrl,
          #   lidar_reader,
             n10_lidar_sdk_node,
             robot_localization_node,
-            cartographer_node,
-#            nav2_node
+            cartographer_node
         ])
+
 
