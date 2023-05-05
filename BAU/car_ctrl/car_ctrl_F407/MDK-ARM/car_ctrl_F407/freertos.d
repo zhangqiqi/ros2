@@ -1,7 +1,7 @@
 car_ctrl_f407\freertos.o: ../Src/freertos.c
 car_ctrl_f407\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-car_ctrl_f407\freertos.o: E:\mdk\keil5.1\ARM\ARMCC\Bin\..\include\stddef.h
-car_ctrl_f407\freertos.o: E:\mdk\keil5.1\ARM\ARMCC\Bin\..\include\stdint.h
+car_ctrl_f407\freertos.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+car_ctrl_f407\freertos.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 car_ctrl_f407\freertos.o: ../Inc/FreeRTOSConfig.h
 car_ctrl_f407\freertos.o: ../Inc/main.h
 car_ctrl_f407\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h

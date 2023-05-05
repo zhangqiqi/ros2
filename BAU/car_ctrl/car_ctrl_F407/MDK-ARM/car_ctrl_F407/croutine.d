@@ -1,7 +1,7 @@
 car_ctrl_f407\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/croutine.c
 car_ctrl_f407\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-car_ctrl_f407\croutine.o: E:\mdk\keil5.1\ARM\ARMCC\Bin\..\include\stddef.h
-car_ctrl_f407\croutine.o: E:\mdk\keil5.1\ARM\ARMCC\Bin\..\include\stdint.h
+car_ctrl_f407\croutine.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+car_ctrl_f407\croutine.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 car_ctrl_f407\croutine.o: ../Inc/FreeRTOSConfig.h
 car_ctrl_f407\croutine.o: ../Inc/main.h
 car_ctrl_f407\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h

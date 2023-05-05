@@ -1,0 +1,13 @@
+car_ctrl_f407\motor.o: ..\..\..\..\device\motor\src\motor.c
+car_ctrl_f407\motor.o: ..\..\..\..\device\motor\include\motor.h
+car_ctrl_f407\motor.o: ..\..\..\..\device\motor\include\motor_defs.h
+car_ctrl_f407\motor.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+car_ctrl_f407\motor.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+car_ctrl_f407\motor.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+car_ctrl_f407\motor.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+car_ctrl_f407\motor.o: ..\..\..\..\device\motor\PID\motor_pid.h
+car_ctrl_f407\motor.o: ..\..\..\..\device\counter\include\counter.h
+car_ctrl_f407\motor.o: ..\..\..\..\device\counter\include\counter_defs.h
+car_ctrl_f407\motor.o: ..\..\..\..\device\motor\src\include\motor_internal.h
+car_ctrl_f407\motor.o: ..\..\..\..\device\motor\src\include\queue.h
+car_ctrl_f407\motor.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h

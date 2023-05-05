@@ -176,8 +176,8 @@ void libmotor_app_init(void)
 		.Ki = 0,
 		.Kd = 0,
 		.tau = 0.02,
-		.limMin = -15.0,
-		.limMax = 15.0,
+		.limMin = -60.0,
+		.limMax = 60.0,
 		.limMinInt = -5.0,
 		.limMaxInt = 5.0,
 	};
