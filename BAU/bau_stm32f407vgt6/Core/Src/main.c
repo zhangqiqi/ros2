@@ -22,7 +22,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdlib.h>
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -65,6 +66,20 @@ const osThreadAttr_t defaultTask_attributes = {
 };
 /* USER CODE BEGIN PV */
 
+osThreadId_t running_led_task_handle;
+const osThreadAttr_t running_led_task_attr = {
+	.name = "running_led",
+	.stack_size = 128 * 4,
+	.priority = (osPriority_t) osPriorityNormal,
+};
+
+osThreadId_t watchdog_task_handle;
+const osThreadAttr_t watchdog_task_attr = {
+	.name = "watchdog",
+	.stack_size = 128 * 4,
+	.priority = (osPriority_t) osPriorityNormal,
+};
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -81,7 +96,8 @@ static void MX_SPI1_Init(void);
 void StartDefaultTask(void *argument);
 
 /* USER CODE BEGIN PFP */
-
+void running_led_task();
+void watchdog_task();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -153,7 +169,8 @@ int main(void)
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
+	running_led_task_handle = osThreadNew(running_led_task, NULL, &running_led_task_attr);
+	watchdog_task_handle = osThreadNew(watchdog_task, NULL, &watchdog_task_attr);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -236,7 +253,7 @@ static void MX_IWDG_Init(void)
 
   /* USER CODE END IWDG_Init 1 */
   hiwdg.Instance = IWDG;
-  hiwdg.Init.Prescaler = IWDG_PRESCALER_4;
+  hiwdg.Init.Prescaler = IWDG_PRESCALER_8;
   hiwdg.Init.Reload = 4095;
   if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
   {
@@ -559,6 +576,7 @@ static void MX_GPIO_Init(void)
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
@@ -592,6 +610,29 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void running_led_task(void *arg)
+{
+	for (;;)
+	{
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_15);
+		osDelay(1000);
+	}
+}
+
+void watchdog_task(void *arg)
+{
+	do
+	{
+		HAL_IWDG_Refresh(&hiwdg);
+		osDelay(500);
+	} while (true);
+	
+}
+
 
 /* USER CODE END 4 */
 
