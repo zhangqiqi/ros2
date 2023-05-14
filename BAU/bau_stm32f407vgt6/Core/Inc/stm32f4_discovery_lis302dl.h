@@ -102,29 +102,29 @@ typedef struct
 #define LIS302DL_SPI                       SPI1
 #define LIS302DL_SPI_CLK                   RCC_APB2Periph_SPI1
 
-#define LIS302DL_SPI_SCK_PIN               GPIO_Pin_5                  /* PA.05 */
+#define LIS302DL_SPI_SCK_PIN               GPIO_PIN_5                  /* PA.05 */
 #define LIS302DL_SPI_SCK_GPIO_PORT         GPIOA                       /* GPIOA */
 #define LIS302DL_SPI_SCK_GPIO_CLK          RCC_AHB1Periph_GPIOA
 #define LIS302DL_SPI_SCK_SOURCE            GPIO_PinSource5
 #define LIS302DL_SPI_SCK_AF                GPIO_AF_SPI1
 
-#define LIS302DL_SPI_MISO_PIN              GPIO_Pin_6                  /* PA.6 */
+#define LIS302DL_SPI_MISO_PIN              GPIO_PIN_6                  /* PA.6 */
 #define LIS302DL_SPI_MISO_GPIO_PORT        GPIOA                       /* GPIOA */
 #define LIS302DL_SPI_MISO_GPIO_CLK         RCC_AHB1Periph_GPIOA
 #define LIS302DL_SPI_MISO_SOURCE           GPIO_PinSource6
 #define LIS302DL_SPI_MISO_AF               GPIO_AF_SPI1
 
-#define LIS302DL_SPI_MOSI_PIN              GPIO_Pin_7                  /* PA.7 */
+#define LIS302DL_SPI_MOSI_PIN              GPIO_PIN_7                  /* PA.7 */
 #define LIS302DL_SPI_MOSI_GPIO_PORT        GPIOA                       /* GPIOA */
 #define LIS302DL_SPI_MOSI_GPIO_CLK         RCC_AHB1Periph_GPIOA
 #define LIS302DL_SPI_MOSI_SOURCE           GPIO_PinSource7
 #define LIS302DL_SPI_MOSI_AF               GPIO_AF_SPI1
 
-#define LIS302DL_SPI_CS_PIN                GPIO_Pin_3                  /* PE.03 */
+#define LIS302DL_SPI_CS_PIN                GPIO_PIN_3                  /* PE.03 */
 #define LIS302DL_SPI_CS_GPIO_PORT          GPIOE                       /* GPIOE */
 #define LIS302DL_SPI_CS_GPIO_CLK           RCC_AHB1Periph_GPIOE
 
-#define LIS302DL_SPI_INT1_PIN              GPIO_Pin_0                  /* PE.00 */
+#define LIS302DL_SPI_INT1_PIN              GPIO_PIN_0                  /* PE.00 */
 #define LIS302DL_SPI_INT1_GPIO_PORT        GPIOE                       /* GPIOE */
 #define LIS302DL_SPI_INT1_GPIO_CLK         RCC_AHB1Periph_GPIOE
 #define LIS302DL_SPI_INT1_EXTI_LINE        EXTI_Line0
@@ -132,7 +132,7 @@ typedef struct
 #define LIS302DL_SPI_INT1_EXTI_PIN_SOURCE  EXTI_PinSource0
 #define LIS302DL_SPI_INT1_EXTI_IRQn        EXTI0_IRQn 
 
-#define LIS302DL_SPI_INT2_PIN              GPIO_Pin_1                  /* PE.01 */
+#define LIS302DL_SPI_INT2_PIN              GPIO_PIN_1                  /* PE.01 */
 #define LIS302DL_SPI_INT2_GPIO_PORT        GPIOE                       /* GPIOE */
 #define LIS302DL_SPI_INT2_GPIO_CLK         RCC_AHB1Periph_GPIOE
 #define LIS302DL_SPI_INT2_EXTI_LINE        EXTI_Line1

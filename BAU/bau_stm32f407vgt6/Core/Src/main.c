@@ -24,6 +24,8 @@
 /* USER CODE BEGIN Includes */
 #include <stdlib.h>
 #include <stdbool.h>
+
+#include "lis302dl.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -66,6 +68,13 @@ const osThreadAttr_t defaultTask_attributes = {
 };
 /* USER CODE BEGIN PV */
 
+osThreadId_t lis302dl_task_handle;
+const osThreadAttr_t lis302dl_task_attr = {
+	.name = "lis302dl",
+	.stack_size = 128 * 4,
+	.priority = (osPriority_t) osPriorityNormal
+};
+
 osThreadId_t running_led_task_handle;
 const osThreadAttr_t running_led_task_attr = {
 	.name = "running_led",
@@ -96,8 +105,9 @@ static void MX_SPI1_Init(void);
 void StartDefaultTask(void *argument);
 
 /* USER CODE BEGIN PFP */
-void running_led_task();
-void watchdog_task();
+void lis302ld_task(void *arg);
+void running_led_task(void *arg);
+void watchdog_task(void *arg);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -134,7 +144,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_IWDG_Init();
+//   MX_IWDG_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
   MX_TIM4_Init();
@@ -169,6 +179,7 @@ int main(void)
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
+	lis302dl_task_handle = osThreadNew(lis302ld_task, NULL, &lis302dl_task_attr);
 	running_led_task_handle = osThreadNew(running_led_task, NULL, &running_led_task_attr);
 	watchdog_task_handle = osThreadNew(watchdog_task, NULL, &watchdog_task_attr);
   /* USER CODE END RTOS_THREADS */
@@ -288,7 +299,7 @@ static void MX_SPI1_Init(void)
   hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi1.Init.NSS = SPI_NSS_SOFT;
-  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
   hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -556,7 +567,7 @@ static void MX_DMA_Init(void)
   HAL_NVIC_SetPriority(DMA1_Stream6_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream6_IRQn);
   /* DMA2_Stream2_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
   /* DMA2_Stream7_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream7_IRQn, 5, 0);
@@ -576,15 +587,25 @@ static void MX_GPIO_Init(void)
 /* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOE_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : PE3 */
+  GPIO_InitStruct.Pin = GPIO_PIN_3;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PA0 */
   GPIO_InitStruct.Pin = GPIO_PIN_0;
@@ -610,6 +631,99 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+static void lis302dl_read_if(void *spi, uint8_t *buffer, uint8_t read_addr, uint16_t read_num)
+{
+	HAL_StatusTypeDef ret = HAL_OK;
+	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_RESET);
+	ret = HAL_SPI_Transmit(spi, &read_addr, sizeof(read_addr), 100);
+	if (HAL_OK != ret)
+	{
+		ret = HAL_OK;
+	}
+
+	ret = HAL_SPI_Receive(spi, buffer, read_num, 100);
+	if (HAL_OK != ret)
+	{
+		ret = HAL_OK;
+	}
+	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET);
+}
+
+
+static void lis302dl_write_if(void *spi, uint8_t *buffer, uint8_t write_addr, uint16_t write_num)
+{
+	HAL_StatusTypeDef ret = HAL_OK;
+	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_RESET);
+	ret = HAL_SPI_Transmit(spi, &write_addr, sizeof(write_addr), 100);
+	if (HAL_OK != ret)
+	{
+		ret = HAL_OK;
+	}
+
+	ret = HAL_SPI_Transmit(spi, buffer, write_num, 100);
+	if (HAL_OK != ret)
+	{
+		ret = HAL_OK;
+	}
+	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET);
+}
+
+
+void lis302ld_task(void *arg)
+{
+	uint8_t device_idx = 0;
+	uint8_t ctrl = 0;
+
+	// lis302dl_read(lis302dl, &device_idx, LIS302DL_WHO_AM_I_ADDR, 1);
+	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_RESET);
+
+	ctrl = LIS302DL_WHO_AM_I_ADDR | 0x80;
+	HAL_SPI_Transmit(&hspi1, &ctrl, sizeof(ctrl), 100);
+	HAL_SPI_Receive(&hspi1, &device_idx, sizeof(device_idx), 100);
+
+	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET);
+
+	struct LIS302DL *lis302dl =  lis302dl_init(&hspi1, lis302dl_read_if, lis302dl_write_if);
+
+	lis302dl_interrupt_config(lis302dl, LIS302DL_INTERRUPTREQUEST_LATCHED, LIS302DL_CLICKINTERRUPT_Z_ENABLE, LIS302DL_DOUBLECLICKINTERRUPT_Z_ENABLE);
+	osDelay(30);
+
+	ctrl = 0x07;
+	lis302dl_write(lis302dl, &ctrl, LIS302DL_CTRL_REG3_ADDR, 1);
+
+	ctrl = 0x70;
+	lis302dl_write(lis302dl, &ctrl, LIS302DL_CLICK_CFG_REG_ADDR, 1);
+
+	ctrl = 0xAA;
+	lis302dl_write(lis302dl, &ctrl, LIS302DL_CLICK_THSY_X_REG_ADDR, 1);
+
+	ctrl = 0x0A;
+	lis302dl_write(lis302dl, &ctrl, LIS302DL_CLICK_THSZ_REG_ADDR, 1);
+
+	ctrl = 0x03;
+	lis302dl_write(lis302dl, &ctrl, LIS302DL_CLICK_TIMELIMIT_REG_ADDR, 1);
+
+	ctrl = 0x7E;
+	lis302dl_write(lis302dl, &ctrl, LIS302DL_CLICK_LATENCY_REG_ADDR, 1);
+
+	ctrl = 0x7F;
+	lis302dl_write(lis302dl, &ctrl, LIS302DL_CLICK_WINDOW_REG_ADDR, 1);
+
+
+	do
+	{
+		static int32_t acc[3] = {0};
+		lis302dl_read_acc(lis302dl, acc);
+
+		uint8_t status = 0x00;
+		lis302dl_read(lis302dl, &status, LIS302DL_STATUS_REG_ADDR, 1);
+
+		osDelay(10);
+	} while (true);
+	
+}
+
 
 void running_led_task(void *arg)
 {
