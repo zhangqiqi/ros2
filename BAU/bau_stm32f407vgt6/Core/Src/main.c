@@ -26,6 +26,7 @@
 #include <stdbool.h>
 
 #include "lis302dl.h"
+#include "mpu6050.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,6 +45,8 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+I2C_HandleTypeDef hi2c2;
+
 IWDG_HandleTypeDef hiwdg;
 
 SPI_HandleTypeDef hspi1;
@@ -75,6 +78,13 @@ const osThreadAttr_t lis302dl_task_attr = {
 	.priority = (osPriority_t) osPriorityNormal
 };
 
+osThreadId_t mpu6050_task_handle;
+const osThreadAttr_t mpu6050_task_attr = {
+	.name = "mpu6050",
+	.stack_size = 128 * 4,
+	.priority = (osPriority_t) osPriorityNormal
+};
+
 osThreadId_t running_led_task_handle;
 const osThreadAttr_t running_led_task_attr = {
 	.name = "running_led",
@@ -102,9 +112,11 @@ static void MX_TIM4_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_SPI1_Init(void);
+static void MX_I2C2_Init(void);
 void StartDefaultTask(void *argument);
 
 /* USER CODE BEGIN PFP */
+void mpu6050_task(void *arg);
 void lis302ld_task(void *arg);
 void running_led_task(void *arg);
 void watchdog_task(void *arg);
@@ -144,13 +156,14 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-//   MX_IWDG_Init();
+  MX_IWDG_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
   MX_TIM4_Init();
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_SPI1_Init();
+  MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -179,6 +192,7 @@ int main(void)
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
+	mpu6050_task_handle = osThreadNew(mpu6050_task, NULL, &mpu6050_task_attr);
 	lis302dl_task_handle = osThreadNew(lis302ld_task, NULL, &lis302dl_task_attr);
 	running_led_task_handle = osThreadNew(running_led_task, NULL, &running_led_task_attr);
 	watchdog_task_handle = osThreadNew(watchdog_task, NULL, &watchdog_task_attr);
@@ -246,6 +260,40 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief I2C2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_I2C2_Init(void)
+{
+
+  /* USER CODE BEGIN I2C2_Init 0 */
+
+  /* USER CODE END I2C2_Init 0 */
+
+  /* USER CODE BEGIN I2C2_Init 1 */
+
+  /* USER CODE END I2C2_Init 1 */
+  hi2c2.Instance = I2C2;
+  hi2c2.Init.ClockSpeed = 100000;
+  hi2c2.Init.DutyCycle = I2C_DUTYCYCLE_2;
+  hi2c2.Init.OwnAddress1 = 0;
+  hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c2.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c2.Init.OwnAddress2 = 0;
+  hi2c2.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c2.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  if (HAL_I2C_Init(&hi2c2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN I2C2_Init 2 */
+
+  /* USER CODE END I2C2_Init 2 */
+
 }
 
 /**
@@ -591,8 +639,8 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET);
@@ -631,6 +679,18 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void mpu6050_task(void *arg)
+{
+	struct MPU6050 *mpu6050 = mpu6050_init(&hi2c2);
+
+	do
+	{
+		mpu6050_exec(mpu6050);
+		osDelay(1000);
+	} while (true);
+	
+}
 
 static void lis302dl_read_if(void *spi, uint8_t *buffer, uint8_t read_addr, uint16_t read_num)
 {

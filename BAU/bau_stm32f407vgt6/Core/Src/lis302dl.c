@@ -26,7 +26,7 @@ static struct LIS302DL single_instance = {
 	.output_data_rate = LIS302DL_DATARATE_100,
 	.axes_enable = LIS302DL_X_ENABLE | LIS302DL_Y_ENABLE | LIS302DL_Z_ENABLE,
 	.full_scale = LIS302DL_FULLSCALE_2_3,
-	.self_test = LIS302DL_SELFTEST_NORMAL
+	.self_test = LIS302DL_SELFTEST_P | LIS302DL_SELFTEST_M
 };
 
 
