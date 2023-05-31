@@ -55,12 +55,15 @@ TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
 
-UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
-DMA_HandleTypeDef hdma_usart1_rx;
-DMA_HandleTypeDef hdma_usart1_tx;
+UART_HandleTypeDef huart3;
+UART_HandleTypeDef huart6;
 DMA_HandleTypeDef hdma_usart2_tx;
 DMA_HandleTypeDef hdma_usart2_rx;
+DMA_HandleTypeDef hdma_usart3_rx;
+DMA_HandleTypeDef hdma_usart3_tx;
+DMA_HandleTypeDef hdma_usart6_rx;
+DMA_HandleTypeDef hdma_usart6_tx;
 
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
@@ -70,6 +73,13 @@ const osThreadAttr_t defaultTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* USER CODE BEGIN PV */
+
+osThreadId_t uart1_diff_task_handle;
+const osThreadAttr_t uart1_diff_attr = {
+	.name = "uart1_test",
+	.stack_size = 128 * 4,
+	.priority = (osPriority_t) osPriorityNormal
+};
 
 osThreadId_t lis302dl_task_handle;
 const osThreadAttr_t lis302dl_task_attr = {
@@ -109,10 +119,11 @@ static void MX_IWDG_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_TIM4_Init(void);
-static void MX_USART1_UART_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_I2C2_Init(void);
+static void MX_USART3_UART_Init(void);
+static void MX_USART6_UART_Init(void);
 void StartDefaultTask(void *argument);
 
 /* USER CODE BEGIN PFP */
@@ -120,6 +131,7 @@ void mpu6050_task(void *arg);
 void lis302ld_task(void *arg);
 void running_led_task(void *arg);
 void watchdog_task(void *arg);
+void uart1_diff_task(void *arg);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -156,14 +168,15 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_IWDG_Init();
+//   MX_IWDG_Init();
   MX_TIM2_Init();
   MX_TIM3_Init();
   MX_TIM4_Init();
-  MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_SPI1_Init();
   MX_I2C2_Init();
+  MX_USART3_UART_Init();
+  MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -196,6 +209,7 @@ int main(void)
 	lis302dl_task_handle = osThreadNew(lis302ld_task, NULL, &lis302dl_task_attr);
 	running_led_task_handle = osThreadNew(running_led_task, NULL, &running_led_task_attr);
 	watchdog_task_handle = osThreadNew(watchdog_task, NULL, &watchdog_task_attr);
+	// uart1_diff_task_handle = osThreadNew(uart1_diff_task, NULL, &uart1_diff_attr);
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -532,39 +546,6 @@ static void MX_TIM4_Init(void)
 }
 
 /**
-  * @brief USART1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART1_UART_Init(void)
-{
-
-  /* USER CODE BEGIN USART1_Init 0 */
-
-  /* USER CODE END USART1_Init 0 */
-
-  /* USER CODE BEGIN USART1_Init 1 */
-
-  /* USER CODE END USART1_Init 1 */
-  huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
-  huart1.Init.WordLength = UART_WORDLENGTH_8B;
-  huart1.Init.StopBits = UART_STOPBITS_1;
-  huart1.Init.Parity = UART_PARITY_NONE;
-  huart1.Init.Mode = UART_MODE_TX_RX;
-  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USART1_Init 2 */
-
-  /* USER CODE END USART1_Init 2 */
-
-}
-
-/**
   * @brief USART2 Initialization Function
   * @param None
   * @retval None
@@ -598,28 +579,100 @@ static void MX_USART2_UART_Init(void)
 }
 
 /**
+  * @brief USART3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART3_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART3_Init 0 */
+
+  /* USER CODE END USART3_Init 0 */
+
+  /* USER CODE BEGIN USART3_Init 1 */
+
+  /* USER CODE END USART3_Init 1 */
+  huart3.Instance = USART3;
+  huart3.Init.BaudRate = 115200;
+  huart3.Init.WordLength = UART_WORDLENGTH_8B;
+  huart3.Init.StopBits = UART_STOPBITS_1;
+  huart3.Init.Parity = UART_PARITY_NONE;
+  huart3.Init.Mode = UART_MODE_TX_RX;
+  huart3.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart3.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART3_Init 2 */
+
+  /* USER CODE END USART3_Init 2 */
+
+}
+
+/**
+  * @brief USART6 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART6_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART6_Init 0 */
+
+  /* USER CODE END USART6_Init 0 */
+
+  /* USER CODE BEGIN USART6_Init 1 */
+
+  /* USER CODE END USART6_Init 1 */
+  huart6.Instance = USART6;
+  huart6.Init.BaudRate = 115200;
+  huart6.Init.WordLength = UART_WORDLENGTH_8B;
+  huart6.Init.StopBits = UART_STOPBITS_1;
+  huart6.Init.Parity = UART_PARITY_NONE;
+  huart6.Init.Mode = UART_MODE_TX_RX;
+  huart6.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart6.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart6) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART6_Init 2 */
+
+  /* USER CODE END USART6_Init 2 */
+
+}
+
+/**
   * Enable DMA controller clock
   */
 static void MX_DMA_Init(void)
 {
 
   /* DMA controller clock enable */
-  __HAL_RCC_DMA2_CLK_ENABLE();
   __HAL_RCC_DMA1_CLK_ENABLE();
+  __HAL_RCC_DMA2_CLK_ENABLE();
 
   /* DMA interrupt init */
+  /* DMA1_Stream1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
+  /* DMA1_Stream3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream3_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream3_IRQn);
   /* DMA1_Stream5_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream5_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream5_IRQn);
   /* DMA1_Stream6_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream6_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream6_IRQn);
-  /* DMA2_Stream2_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
-  /* DMA2_Stream7_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA2_Stream7_IRQn, 5, 0);
-  HAL_NVIC_EnableIRQ(DMA2_Stream7_IRQn);
+  /* DMA2_Stream1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream1_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream1_IRQn);
+  /* DMA2_Stream6_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream6_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream6_IRQn);
 
 }
 
@@ -684,10 +737,22 @@ void mpu6050_task(void *arg)
 {
 	struct MPU6050 *mpu6050 = mpu6050_init(&hi2c2);
 
+	struct MPU6050_ACCEL accel = {0};
+	struct MPU6050_GYRO gyro = {0};
+
 	do
 	{
-		mpu6050_exec(mpu6050);
-		osDelay(1000);
+		mpu6050_exec(mpu6050, &accel, &gyro);
+		char upload_mpu6050[128] = {0};
+
+		snprintf(upload_mpu6050, sizeof(upload_mpu6050) - 1,
+			"accel(x: %6d, y: %6d, z: %6d), gyro(x: %6d, y: %6d, z: %6d)\r\n",
+			accel.x, accel.y, accel.z,
+			gyro.x, gyro.y, gyro.z
+		);
+
+		HAL_UART_Transmit(&huart2, upload_mpu6050, strlen(upload_mpu6050), 100);
+		osDelay(100);
 	} while (true);
 	
 }
@@ -803,6 +868,45 @@ void watchdog_task(void *arg)
 	{
 		HAL_IWDG_Refresh(&hiwdg);
 		osDelay(500);
+	} while (true);
+	
+}
+
+
+void uart1_diff_task(void *arg)
+{
+	HAL_StatusTypeDef ret = HAL_OK;
+	char recv_buf[128] = {0};
+
+	int32_t send_cnt = 0;
+	int32_t recv_cnt = 0;
+
+	do
+	{
+		char buffer[128] = {0};
+		snprintf(buffer, sizeof(buffer) - 1, "send cnt: %12d, recv cnt: %12d\r\n", send_cnt, recv_cnt);
+		HAL_UART_Transmit(&huart2, buffer, strlen(buffer), 100);
+
+		HAL_UART_Receive_DMA(&huart6, recv_buf, sizeof(recv_buf));
+		ret = HAL_UART_Transmit(&huart6, buffer, strlen(buffer), 100);
+		if (HAL_OK != ret)
+		{
+			ret = HAL_OK;
+		}
+		else
+		{
+			send_cnt += strlen(buffer);
+		}
+		osDelay(500);
+
+		HAL_UART_DMAStop(&huart6);
+
+		int32_t read_cnt = huart6.RxXferSize - huart6.hdmarx->Instance->NDTR;
+		if (read_cnt > 0)
+		{
+			memset(recv_buf, 0, sizeof(recv_buf));
+			recv_cnt += read_cnt;
+		}
 	} while (true);
 	
 }
