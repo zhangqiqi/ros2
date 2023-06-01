@@ -25,7 +25,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "lis302dl.h"
 #include "mpu6050.h"
 #include "libsnp_app.h"
 /* USER CODE END Includes */
