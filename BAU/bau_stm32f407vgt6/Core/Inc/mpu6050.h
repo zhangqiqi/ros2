@@ -12,9 +12,9 @@ extern "C" {
  * 加速度计采样值
 */
 struct MPU6050_ACCEL {
-	int32_t x;
-	int32_t y;
-	int32_t z;
+	float x;
+	float y;
+	float z;
 };
 
 
@@ -22,9 +22,9 @@ struct MPU6050_ACCEL {
  * 陀螺仪采样值
 */
 struct MPU6050_GYRO {
-	int32_t x;
-	int32_t y;
-	int32_t z;
+	float x;
+	float y;
+	float z;
 };
 
 

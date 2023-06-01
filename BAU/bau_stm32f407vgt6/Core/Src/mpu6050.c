@@ -35,6 +35,7 @@
 
 #define MPU6050_WHO_AM_I (0x75)
 
+
 struct MPU6050 {
 	I2C_HandleTypeDef *i2c;
 
@@ -114,6 +115,32 @@ struct MPU6050 *mpu6050_init(I2C_HandleTypeDef *handle)
 	return &__mpu6050_instance;
 }
 
+static inline float mpu6050_accel_convert(struct MPU6050 *handle, float accel)
+{
+	int16_t lsb_1g = 0;
+
+	switch (handle->accel_config & 0x18)
+	{
+	case MPU6050_ACCEL_AFS_SEL_0:
+		lsb_1g = 16384;
+		break;
+	case MPU6050_ACCEL_AFS_SEL_1:
+		lsb_1g = 8192;
+		break;
+	case MPU6050_ACCEL_AFS_SEL_2:
+		lsb_1g = 4096;
+		break;
+	case MPU6050_ACCEL_AFS_SEL_3:
+		lsb_1g = 2048;
+		break;
+	default:
+		break;
+	}
+
+	return accel * 9.80665 / lsb_1g;
+}
+
+
 static HAL_StatusTypeDef mpu6050_read_accel(struct MPU6050 *handle, struct MPU6050_ACCEL *accel)
 {
 	uint8_t accel_bytes[6] = {0};
@@ -121,12 +148,42 @@ static HAL_StatusTypeDef mpu6050_read_accel(struct MPU6050 *handle, struct MPU60
 	HAL_StatusTypeDef ret = mpu6050_read_bytes(handle, MPU6050_ACCEL_XOUT_H, accel_bytes, sizeof(accel_bytes));
 	if (HAL_OK == ret)
 	{
-		accel->x = (accel_bytes[0] << 8) + accel_bytes[1];
-		accel->y = (accel_bytes[2] << 8) + accel_bytes[3];
-		accel->z = (accel_bytes[4] << 8) + accel_bytes[5];
+		accel->x = (int16_t)(accel_bytes[0] << 8) | accel_bytes[1];
+		accel->y = (int16_t)(accel_bytes[2] << 8) | accel_bytes[3];
+		accel->z = (int16_t)(accel_bytes[4] << 8) | accel_bytes[5];
+
+		accel->x = mpu6050_accel_convert(handle, accel->x);
+		accel->y = mpu6050_accel_convert(handle, accel->y);
+		accel->z = mpu6050_accel_convert(handle, accel->z);
 	}
 
 	return ret;
+}
+
+
+static inline float mpu6050_gyro_convert(struct MPU6050 *handle, float gyro)
+{
+	float lsb_1degree = 0;
+
+	switch (handle->gyro_config & 0x18)
+	{
+	case MPU6050_GYRO_FS_SEL_0:
+		lsb_1degree = 131;
+		break;
+	case MPU6050_GYRO_FS_SEL_1:
+		lsb_1degree = 65.5;
+		break;
+	case MPU6050_GYRO_FS_SEL_2:
+		lsb_1degree = 32.8;
+		break;
+	case MPU6050_GYRO_FS_SEL_3:
+		lsb_1degree = 16.4;
+		break;
+	default:
+		break;
+	}
+
+	return gyro / lsb_1degree;
 }
 
 
@@ -137,9 +194,13 @@ static HAL_StatusTypeDef mpu6050_read_gyro(struct MPU6050 *handle, struct MPU605
 	HAL_StatusTypeDef ret = mpu6050_read_bytes(handle, MPU6050_GYRO_XOUT_H, gyro_bytes, sizeof(gyro_bytes));
 	if (HAL_OK == ret)
 	{
-		gyro->x = (gyro_bytes[0] << 8) + gyro_bytes[1];
-		gyro->y = (gyro_bytes[2] << 8) + gyro_bytes[3];
-		gyro->z = (gyro_bytes[4] << 8) + gyro_bytes[5];
+		gyro->x = (int16_t)(gyro_bytes[0] << 8) | gyro_bytes[1];
+		gyro->y = (int16_t)(gyro_bytes[2] << 8) | gyro_bytes[3];
+		gyro->z = (int16_t)(gyro_bytes[4] << 8) | gyro_bytes[5];
+
+		gyro->x = mpu6050_gyro_convert(handle, gyro->x);
+		gyro->y = mpu6050_gyro_convert(handle, gyro->y);
+		gyro->z = mpu6050_gyro_convert(handle, gyro->z);
 	}
 
 	return ret;

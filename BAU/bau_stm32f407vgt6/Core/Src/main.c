@@ -27,6 +27,7 @@
 
 #include "lis302dl.h"
 #include "mpu6050.h"
+#include "libsnp_app.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -81,17 +82,11 @@ const osThreadAttr_t uart1_diff_attr = {
 	.priority = (osPriority_t) osPriorityNormal
 };
 
-osThreadId_t lis302dl_task_handle;
-const osThreadAttr_t lis302dl_task_attr = {
-	.name = "lis302dl",
-	.stack_size = 128 * 4,
-	.priority = (osPriority_t) osPriorityNormal
-};
 
 osThreadId_t mpu6050_task_handle;
 const osThreadAttr_t mpu6050_task_attr = {
 	.name = "mpu6050",
-	.stack_size = 128 * 4,
+	.stack_size = 128 * 8,
 	.priority = (osPriority_t) osPriorityNormal
 };
 
@@ -128,7 +123,6 @@ void StartDefaultTask(void *argument);
 
 /* USER CODE BEGIN PFP */
 void mpu6050_task(void *arg);
-void lis302ld_task(void *arg);
 void running_led_task(void *arg);
 void watchdog_task(void *arg);
 void uart1_diff_task(void *arg);
@@ -205,8 +199,10 @@ int main(void)
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
+	libmotor_app_init();
+	libsnp_app_init();
+
 	mpu6050_task_handle = osThreadNew(mpu6050_task, NULL, &mpu6050_task_attr);
-	lis302dl_task_handle = osThreadNew(lis302ld_task, NULL, &lis302dl_task_attr);
 	running_led_task_handle = osThreadNew(running_led_task, NULL, &running_led_task_attr);
 	watchdog_task_handle = osThreadNew(watchdog_task, NULL, &watchdog_task_attr);
 	// uart1_diff_task_handle = osThreadNew(uart1_diff_task, NULL, &uart1_diff_attr);
@@ -746,105 +742,13 @@ void mpu6050_task(void *arg)
 		char upload_mpu6050[128] = {0};
 
 		snprintf(upload_mpu6050, sizeof(upload_mpu6050) - 1,
-			"accel(x: %6d, y: %6d, z: %6d), gyro(x: %6d, y: %6d, z: %6d)\r\n",
+			"accel(x: %4.6f, y: %4.6f, z: %4.6f), gyro(x: %4.6f, y: %4.6f, z: %4.6f)\r\n",
 			accel.x, accel.y, accel.z,
 			gyro.x, gyro.y, gyro.z
 		);
 
 		HAL_UART_Transmit(&huart2, upload_mpu6050, strlen(upload_mpu6050), 100);
 		osDelay(100);
-	} while (true);
-	
-}
-
-static void lis302dl_read_if(void *spi, uint8_t *buffer, uint8_t read_addr, uint16_t read_num)
-{
-	HAL_StatusTypeDef ret = HAL_OK;
-	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_RESET);
-	ret = HAL_SPI_Transmit(spi, &read_addr, sizeof(read_addr), 100);
-	if (HAL_OK != ret)
-	{
-		ret = HAL_OK;
-	}
-
-	ret = HAL_SPI_Receive(spi, buffer, read_num, 100);
-	if (HAL_OK != ret)
-	{
-		ret = HAL_OK;
-	}
-	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET);
-}
-
-
-static void lis302dl_write_if(void *spi, uint8_t *buffer, uint8_t write_addr, uint16_t write_num)
-{
-	HAL_StatusTypeDef ret = HAL_OK;
-	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_RESET);
-	ret = HAL_SPI_Transmit(spi, &write_addr, sizeof(write_addr), 100);
-	if (HAL_OK != ret)
-	{
-		ret = HAL_OK;
-	}
-
-	ret = HAL_SPI_Transmit(spi, buffer, write_num, 100);
-	if (HAL_OK != ret)
-	{
-		ret = HAL_OK;
-	}
-	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET);
-}
-
-
-void lis302ld_task(void *arg)
-{
-	uint8_t device_idx = 0;
-	uint8_t ctrl = 0;
-
-	// lis302dl_read(lis302dl, &device_idx, LIS302DL_WHO_AM_I_ADDR, 1);
-	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_RESET);
-
-	ctrl = LIS302DL_WHO_AM_I_ADDR | 0x80;
-	HAL_SPI_Transmit(&hspi1, &ctrl, sizeof(ctrl), 100);
-	HAL_SPI_Receive(&hspi1, &device_idx, sizeof(device_idx), 100);
-
-	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_3, GPIO_PIN_SET);
-
-	struct LIS302DL *lis302dl =  lis302dl_init(&hspi1, lis302dl_read_if, lis302dl_write_if);
-
-	lis302dl_interrupt_config(lis302dl, LIS302DL_INTERRUPTREQUEST_LATCHED, LIS302DL_CLICKINTERRUPT_Z_ENABLE, LIS302DL_DOUBLECLICKINTERRUPT_Z_ENABLE);
-	osDelay(30);
-
-	ctrl = 0x07;
-	lis302dl_write(lis302dl, &ctrl, LIS302DL_CTRL_REG3_ADDR, 1);
-
-	ctrl = 0x70;
-	lis302dl_write(lis302dl, &ctrl, LIS302DL_CLICK_CFG_REG_ADDR, 1);
-
-	ctrl = 0xAA;
-	lis302dl_write(lis302dl, &ctrl, LIS302DL_CLICK_THSY_X_REG_ADDR, 1);
-
-	ctrl = 0x0A;
-	lis302dl_write(lis302dl, &ctrl, LIS302DL_CLICK_THSZ_REG_ADDR, 1);
-
-	ctrl = 0x03;
-	lis302dl_write(lis302dl, &ctrl, LIS302DL_CLICK_TIMELIMIT_REG_ADDR, 1);
-
-	ctrl = 0x7E;
-	lis302dl_write(lis302dl, &ctrl, LIS302DL_CLICK_LATENCY_REG_ADDR, 1);
-
-	ctrl = 0x7F;
-	lis302dl_write(lis302dl, &ctrl, LIS302DL_CLICK_WINDOW_REG_ADDR, 1);
-
-
-	do
-	{
-		static int32_t acc[3] = {0};
-		lis302dl_read_acc(lis302dl, acc);
-
-		uint8_t status = 0x00;
-		lis302dl_read(lis302dl, &status, LIS302DL_STATUS_REG_ADDR, 1);
-
-		osDelay(10);
 	} while (true);
 	
 }
