@@ -22,6 +22,7 @@ const osThreadAttr_t snp_task_attr = {
 	.priority = (osPriority_t) osPriorityNormal
 };
 
+struct SSNP *ssnp_handle = NULL;
 
 extern struct MOTOR *left_position_ctrl;
 extern struct MOTOR *right_position_ctrl;
@@ -156,11 +157,26 @@ int32_t ssnp_wheel_motor_ctrl_msg_proc(void *cb_handle, struct SSNP *ssnp, struc
 }
 
 
+/**
+ * @brief 通过协议栈发送mpu6050消息数据
+*/
+void libssnp_send_mpu6050_data(struct SMT_MPU6050_DATA_PUSH_MSG *msg)
+{
+	if (NULL == msg)
+	{
+		return;
+	}
+	ssnp_send_msg(ssnp_handle, SMT_MPU6050_DATA_PUSH, (uint8_t *)msg, sizeof(struct SMT_MPU6050_DATA_PUSH_MSG));
+}
+
+
 void libssnp_task_thread_exec(void const *argument)
 {
 	ssnp_shell_init();
 
 	struct SSNP *ssnp = ssnp_create();
+	ssnp_handle = ssnp;
+
 	ssnp_recv_if_setup(ssnp, &huart2, bau_ssnp_read);
 	ssnp_trans_if_setup(ssnp, &huart2, bau_ssnp_write);
 

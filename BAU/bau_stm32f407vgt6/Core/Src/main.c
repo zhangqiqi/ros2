@@ -757,6 +757,8 @@ void mpu6050_task(void *arg)
 		msg.gyro_y = gyro.y * 1000;
 		msg.gyro_z = gyro.z * 1000;
 
+		libssnp_send_mpu6050_data(&msg);
+
 		HAL_UART_Transmit(&huart2, upload_mpu6050, strlen(upload_mpu6050), 100);
 		osDelay(100);
 	} while (true);

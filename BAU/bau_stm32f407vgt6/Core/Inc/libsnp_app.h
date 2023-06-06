@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 
+#include "ssnp_msgs_def.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -10,6 +11,8 @@ extern "C" {
 
 
 void libsnp_app_init(void);
+
+void libssnp_send_mpu6050_data(struct SMT_MPU6050_DATA_PUSH_MSG *msg);
 
 #ifdef __cplusplus
 }
