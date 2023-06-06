@@ -27,6 +27,8 @@
 
 #include "mpu6050.h"
 #include "libsnp_app.h"
+#include "ssnp_msgs_def.h"
+#include "stdio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -735,6 +737,8 @@ void mpu6050_task(void *arg)
 	struct MPU6050_ACCEL accel = {0};
 	struct MPU6050_GYRO gyro = {0};
 
+	struct SMT_MPU6050_DATA_PUSH_MSG msg = {0};
+
 	do
 	{
 		mpu6050_exec(mpu6050, &accel, &gyro);
@@ -745,6 +749,13 @@ void mpu6050_task(void *arg)
 			accel.x, accel.y, accel.z,
 			gyro.x, gyro.y, gyro.z
 		);
+
+		msg.accel_x = accel.x * 1000;
+		msg.accel_y = accel.y * 1000;
+		msg.accel_z = accel.z * 1000;
+		msg.gyro_x = gyro.x * 1000;
+		msg.gyro_y = gyro.y * 1000;
+		msg.gyro_z = gyro.z * 1000;
 
 		HAL_UART_Transmit(&huart2, upload_mpu6050, strlen(upload_mpu6050), 100);
 		osDelay(100);

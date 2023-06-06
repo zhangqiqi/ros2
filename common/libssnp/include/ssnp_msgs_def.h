@@ -21,6 +21,8 @@ enum SSNP_MSG_TYPE {
 
 	SMT_WHEEL_MOTOR_CTRL,      /**< 轮子电机控制 */
 	SMT_WHEEL_MOTOR_DATA_PUSH,      /**< 轮子电机数据推送 */
+
+	SMT_MPU6050_DATA_PUSH,      /**< mpu6050数据推送 */
 };
 
 
@@ -67,6 +69,19 @@ struct WHEEL_MOTOR_DATA {
 struct SMT_WHEEL_MOTOR_DATA_PUSH_MSG {
 	struct WHEEL_MOTOR_DATA left_motor_data;
 	struct WHEEL_MOTOR_DATA right_motor_data;
+};
+
+
+/**
+ * mpu6050数据推送
+*/
+struct SMT_MPU6050_DATA_PUSH_MSG {
+	int32_t accel_x;      /**< 加速度计 x轴数据 0.001 m/s² */
+	int32_t accel_y;      /**< 加速度计 y轴数据 0.001 m/s² */
+	int32_t accel_z;      /**< 加速度计 z轴数据 0.001 m/s² */
+	int32_t gyro_x;      /**< 陀螺仪 x轴数据 0.001 °/s */
+	int32_t gyro_y;      /**< 陀螺仪 y轴数据 0.001 °/s */
+	int32_t gyro_z;      /**< 陀螺仪 z轴数据 0.001 °/s */
 };
 
 

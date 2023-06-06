@@ -9,7 +9,7 @@ extern "C" {
 
 
 /**
- * 加速度计采样值
+ * 加速度计采样值 m/s²
 */
 struct MPU6050_ACCEL {
 	float x;
@@ -19,7 +19,7 @@ struct MPU6050_ACCEL {
 
 
 /**
- * 陀螺仪采样值
+ * 陀螺仪采样值 单位 °/s
 */
 struct MPU6050_GYRO {
 	float x;
